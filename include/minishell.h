@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:46:28 by adias-do          #+#    #+#             */
-/*   Updated: 2025/05/29 17:45:24 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:45:39 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include <stdlib.h>
+# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -33,5 +34,8 @@ typedef struct s_token
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
+
+// tokenizer
+char	*read_input(char *input);
 
 #endif
