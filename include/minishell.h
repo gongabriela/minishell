@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 15:46:28 by adias-do          #+#    #+#             */
-/*   Updated: 2025/05/30 18:45:39 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:44:11 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ typedef struct s_token
 }	t_token;
 
 // tokenizer
-char	*read_input(char *input);
 
 #endif
