@@ -33,6 +33,6 @@ int	main(int argc, char **argv, char **envp)
 	check_args(argc, argv, envp);
 	get_env(&shell, envp);
 	minishell(shell);
-	ft_free_shell(&shell);
+	ft_free_shell(shell);
 	return (0);
 }

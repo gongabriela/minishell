@@ -12,79 +12,25 @@
 
 #include "minishell.h"
 
+void	reset_structs(t_shell shell)
+{
+	(void)shell; ///???????????????????
+
+	shell.input = NULL;
+	shell.prompt = NULL;
+}
+
 void	minishell(t_shell shell)
 {
-	char	*prompt;
+	reset_structs(shell);
 
-	prompt = create_prompt(shell.env);
-	printf("prompt: %s\n", prompt);
-	free(prompt);
-	//shell.input = ft_readline(shell);
-}
-
-char	*create_prompt(t_env *env)
-{
-	char	*logname;
-	char	*name;
-	char	*home;
-	char	*cwd;
-
-	while (env != NULL)
-	{
-		if (ft_strncmp(env->key, "LOGNAME", 7) == 0)
-			logname = ft_strdup(env->content);
-		if (ft_strncmp(env->key, "NAME", 4) == 0)
-			name = ft_strdup(env->content);
-		if (ft_strncmp(env->key, "HOME", 4) == 0)
-			home = ft_strdup(env->content);
-		env = env->next;
-	}
-	if (!logname || !name || !home)
-		return (NULL);
-	cwd = get_cwd(home);
-	if (!cwd)
-		return (NULL);
-	return (get_full_prompt(logname, name, cwd));
-}
-
-char	*get_cwd(char *home)
-{
-	char	*temp;
-	char	*cwd;
-
-	temp = getcwd(NULL, 0);
-	if (temp == NULL)
-		return (NULL);
-	if (ft_strncmp(temp, home, ft_strlen(home)) == 0)
-	{
-		if (ft_strlen(temp) > ft_strlen(home))
-		{
-			cwd = ft_strjoin("~", temp + ft_strlen(home));
-		}
-		else
-			cwd = "~";
-		free(temp);
-	}
+	shell.prompt = create_prompt(shell.env);
+	shell.input = readline(shell.prompt);
+	if (!shell.input) //quando usa ctrl + D
+		printf("Error retaining input\n");
 	else
-		cwd = temp;
-	free(home);
-	return (cwd);
+		printf("you wrote this: %s\n", shell.input);
+	//add_history(shell.input);
+	//pre_parsing(shell.input);
 }
 
-char	*get_full_prompt(char *logname, char *name, char *cwd)
-{
-	char	*prompt;
-	size_t	len;
-
-	len = ft_strlen(logname) + ft_strlen(name) + ft_strlen(cwd) + 5;
-	prompt = ft_calloc(len, sizeof(char));
-	if (!prompt)
-		return (NULL);
-	ft_strlcat(prompt, logname, len);
-	ft_strlcat(prompt, "@", len);
-	ft_strlcat(prompt, name, len);
-	ft_strlcat(prompt, ":", len);
-	ft_strlcat(prompt, cwd, len);
-	ft_strlcat(prompt, "$ ", len);
-	return (free(logname), free(name), free(cwd), prompt);
-}

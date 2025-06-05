@@ -27,13 +27,13 @@ void	ft_free_split(char **arr)
 	free(arr);
 }
 
-void	ft_free_shell(t_shell *shell)
+void	ft_free_shell(t_shell shell)
 {
 	t_env	*tmp;
 	t_env	*curr;
 
-	curr = shell->env;
-	while (curr)
+	curr = shell.env;
+	while (curr) //fazer uma funcao separada para essa struct
 	{
 		tmp = curr->next;
 		free(curr->key);
@@ -41,5 +41,9 @@ void	ft_free_shell(t_shell *shell)
 		free(curr);
 		curr = tmp;
 	}
-	ft_free_split(shell->cmd_paths);
+/**	if (shell.prompt != NULL)
+		free(shell.prompt);
+	if (shell.input != NULL)
+		free(shell.input);*/
+	ft_free_split(shell.cmd_paths);
 }

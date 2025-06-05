@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = free.c env.c debug.c loop.c main.c
+SRC = free.c env.c debug.c loop.c prompt.c main.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = ./Libft/libft.a
@@ -27,7 +27,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C ./Libft
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 debug:
 	make -C ./Libft

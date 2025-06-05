@@ -16,12 +16,15 @@
 # include <stdlib.h>
 # include "Libft/libft.h"
 # include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 //estrutura principal
 typedef struct s_shell
 {
 	struct s_env	*env;
 	char			**cmd_paths;
+	char			*prompt;
 	char			*input;
 
 }					t_shell;
@@ -41,7 +44,7 @@ void	check_args(int argc, char **argv, char **envp);
 void	init_structs(t_shell *shell);
 void	get_env(t_shell *shell, char **envp);
 void	get_cmd_paths(t_shell *shell, char *path_str);
-void	ft_free_shell(t_shell *shell);
+void	ft_free_shell(t_shell shell);
 
 //loop
 void	minishell(t_shell shell);
