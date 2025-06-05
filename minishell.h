@@ -15,19 +15,25 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "Libft/libft.h"
+# include <unistd.h>
 
+//estrutura principal
 typedef struct s_shell
 {
 	struct s_env	*env;
 	char			**cmd_paths;
+	char			*input;
+
 }					t_shell;
 
+//variaveis de ambiente
 typedef struct s_env
 {
 	char			*key;
 	char			*content;
 	struct s_env	*next;
 }						t_env;
+
 
 // --------- Funções principais ---------
 
@@ -36,6 +42,12 @@ void	init_structs(t_shell *shell);
 void	get_env(t_shell *shell, char **envp);
 void	get_cmd_paths(t_shell *shell, char *path_str);
 void	ft_free_shell(t_shell *shell);
+
+//loop
+void	minishell(t_shell shell);
+char	*create_prompt(t_env *env);
+char	*get_cwd(char *home);
+char	*get_full_prompt(char *logname, char *name, char *cwd);
 
 // --------- Funções auxiliares de lista ---------
 

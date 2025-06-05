@@ -32,8 +32,7 @@ int	main(int argc, char **argv, char **envp)
 	init_structs(&shell);
 	check_args(argc, argv, envp);
 	get_env(&shell, envp);
-	print_env_list(shell.env);
-	print_cmd_paths(shell.cmd_paths);
+	minishell(shell);
 	ft_free_shell(&shell);
 	return (0);
 }
