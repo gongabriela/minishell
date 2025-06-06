@@ -12,38 +12,53 @@
 
 #include "minishell.h"
 
-void	ft_free_split(char **arr)
+//dar free nos **cmd_path
+void	free_cmd_paths(char **cmd)
 {
 	int	i;
 
-	if (!arr)
+	if (!cmd)
 		return ;
 	i = 0;
-	while (arr[i])
+	while (cmd[i])
 	{
-		free(arr[i]);
+		free(cmd[i]);
 		i++;
 	}
-	free(arr);
+	free(cmd);
 }
 
-void	ft_free_shell(t_shell shell)
+//dar free na t_env
+void	free_struct_env(t_env *env)
 {
 	t_env	*tmp;
-	t_env	*curr;
 
-	curr = shell.env;
-	while (curr) //fazer uma funcao separada para essa struct
+	while (env)
 	{
-		tmp = curr->next;
-		free(curr->key);
-		free(curr->content);
-		free(curr);
-		curr = tmp;
+		tmp = env->next;
+		free(env->key);
+		free(env->content);
+		free(env);
+		env = tmp;
 	}
-/**	if (shell.prompt != NULL)
-		free(shell.prompt);
-	if (shell.input != NULL)
-		free(shell.input);*/
-	ft_free_split(shell.cmd_paths);
+}
+
+//funcao principal
+void	ft_free_shell(t_shell *shell)
+{
+
+	if (shell->prompt != NULL)
+		free(shell->prompt);
+	if (shell->input != NULL)
+		free(shell->input);
+	free_struct_env(shell->env);
+	free_cmd_paths(shell->cmd_paths);
+	init_structs(shell);
+}
+
+void	ft_error(char *msg, t_shell *shell)
+{
+	perror(msg);
+	ft_free_shell(shell);
+	exit(-1);
 }

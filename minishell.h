@@ -18,8 +18,9 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 
-//estrutura principal
+//estrutura principal--------------------------------------------
 typedef struct s_shell
 {
 	struct s_env	*env;
@@ -29,7 +30,7 @@ typedef struct s_shell
 
 }					t_shell;
 
-//variaveis de ambiente
+//estrutura para as variaveis de ambiente-------------------------
 typedef struct s_env
 {
 	char			*key;
@@ -38,30 +39,34 @@ typedef struct s_env
 }						t_env;
 
 
-// --------- Funções principais ---------
+// --------- Funções principais -------------------------------
 
 void	check_args(int argc, char **argv, char **envp);
 void	init_structs(t_shell *shell);
+void	minishell(t_shell *shell, char **envp);
+
+// --------- Funções auxiliares para pegar as env --------------
+
 void	get_env(t_shell *shell, char **envp);
 void	get_cmd_paths(t_shell *shell, char *path_str);
-void	ft_free_shell(t_shell shell);
-
-//loop
-void	minishell(t_shell shell);
-char	*create_prompt(t_env *env);
-char	*get_cwd(char *home);
-char	*get_full_prompt(char *logname, char *name, char *cwd);
-
-// --------- Funções auxiliares de lista ---------
-
 void	ft_lstadd_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *lst);
 
-// --------- Funções auxiliares ---------
+// ------------- Funcoes de criar o prompt --------------------
 
-void	ft_free_split(char **arr);
+char	*create_prompt(t_env *env);
+char	*get_cwd(char *home);
+char	*get_full_prompt(char *logname, char *name, char *cwd);
+char	*get_hostname(void);
 
-// --------- Funcoes de debug -----------
+// --------- Funções de free -----------------------------------
+
+void	free_cmd_paths(char **cmd);
+void	free_struct_env(t_env *env);
+void	ft_free_shell(t_shell *shell);
+void	ft_error(char *msg, t_shell *shell);
+
+// --------- Funcoes de debug ----------------------------------
 
 void	print_env_list(t_env *env);
 void	print_cmd_paths(char **paths);

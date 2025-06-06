@@ -23,16 +23,16 @@ void	init_structs(t_shell *shell)
 {
 	shell->env = NULL;
 	shell->cmd_paths = NULL;
+	shell->input = NULL;
+	shell->prompt = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
-	init_structs(&shell);
 	check_args(argc, argv, envp);
-	get_env(&shell, envp);
-	minishell(shell);
-	ft_free_shell(shell);
+	init_structs(&shell);
+	minishell(&shell, envp);
 	return (0);
 }

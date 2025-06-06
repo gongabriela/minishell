@@ -12,25 +12,19 @@
 
 #include "minishell.h"
 
-void	reset_structs(t_shell shell)
+void	minishell(t_shell *shell, char **envp)
 {
-	(void)shell; ///???????????????????
-
-	shell.input = NULL;
-	shell.prompt = NULL;
-}
-
-void	minishell(t_shell shell)
-{
-	reset_structs(shell);
-
-	shell.prompt = create_prompt(shell.env);
-	shell.input = readline(shell.prompt);
-	if (!shell.input) //quando usa ctrl + D
+	get_env(shell, envp);
+	shell->prompt = create_prompt(shell->env);
+	if (!shell->prompt)
+		ft_error("env not found", shell);
+	shell->input = readline(shell->prompt);
+	if (!shell->input) //quando usa ctrl + D
 		printf("Error retaining input\n");
 	else
-		printf("you wrote this: %s\n", shell.input);
+		printf("you wrote this: %s\n", shell->input);
 	//add_history(shell.input);
 	//pre_parsing(shell.input);
+	ft_free_shell(shell); //e dar reset ao mesmo tempo????
 }
 

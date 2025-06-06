@@ -23,7 +23,7 @@ void	get_env(t_shell *shell, char **envp)
 	{
 		node = malloc(sizeof(t_env));
 		if (!node)
-			exit(1);
+			ft_error("malloc failed", shell);
 		ft_memset(node, 0, sizeof(t_env));
 
 		j = 0;
@@ -31,16 +31,17 @@ void	get_env(t_shell *shell, char **envp)
 			j++;
 		node->key = ft_substr(envp[i], 0, j);
 		if (!node->key)
-			exit(1);
+			ft_error("malloc failed", shell);
 		if (envp[i][j] == '=')
-			node->content = ft_substr(envp[i], j + 1,
-					ft_strlen(envp[i]) - j - 1);
+		{
+			node->content = ft_substr(envp[i], j + 1, ft_strlen(envp[i]) - j - 1);
+			if (!node->content)
+				ft_error("malloc failed", shell);
+		}
 		else
 			node->content = NULL;
-
 		if (ft_strncmp(node->key, "PATH", 4) == 0)
 			get_cmd_paths(shell, node->content);
-
 		ft_lstadd_back(&shell->env, node);
 		i++;
 	}
@@ -68,4 +69,6 @@ void	get_cmd_paths(t_shell *shell, char *path_str)
 	if (!path_str)
 		return ;
 	shell->cmd_paths = ft_split(path_str, ':');
+	if (!shell->cmd_paths)
+		ft_error("malloc failed", shell);
 }

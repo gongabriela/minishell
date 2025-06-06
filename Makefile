@@ -31,7 +31,7 @@ $(NAME): $(OBJ)
 
 debug:
 	make -C ./Libft
-	$(CC) $(CFLAGS) -g $(SRC) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) -g $(SRC) $(LIBFT) -lreadline -o $(NAME)
 	gdb --tui $(NAME)
 
 
