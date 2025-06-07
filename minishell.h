@@ -59,6 +59,7 @@ char	*create_prompt(t_env *env);
 char	*get_cwd(char *home);
 char	*get_full_prompt(char *logname, char *name, char *cwd);
 char	*get_hostname(void);
+char	*get_hostname_line(int fd);
 
 // --------- Funções de free -----------------------------------
 

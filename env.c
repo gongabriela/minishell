@@ -68,6 +68,7 @@ void	get_env(t_shell *shell, char **envp)
 		node = create_env_node(envp[i], shell);
 		if (ft_strncmp(node->key, "PATH", 4) == 0)
 			get_cmd_paths(shell, node->content);
+			//verificar se o path existe, se nao existir, ???????
 		ft_lstadd_back(&shell->env, node);
 		i++;
 	}
