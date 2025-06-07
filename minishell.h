@@ -51,6 +51,7 @@ void	get_env(t_shell *shell, char **envp);
 void	get_cmd_paths(t_shell *shell, char *path_str);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *lst);
+t_env	*create_env_node(char *env, t_shell *shell);
 
 // ------------- Funcoes de criar o prompt --------------------
 

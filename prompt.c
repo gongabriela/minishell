@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-//melhorar as verificacoes de erro nas funcoes auxiliares
-//se uma das envs dar NULL, tem que verificar quais e que nao estao para dar free e dar exit no programa
-//se nao foi possivel pegar uma das env sai do programa, certo? ou so continua com o prompt mal feito?
 char	*create_prompt(t_env *env)
 {
 	char	*user;
@@ -25,7 +22,7 @@ char	*create_prompt(t_env *env)
 	while (env != NULL)
 	{
 		if (ft_strncmp(env->key, "USER", 4) == 0)
-			user = ft_strdup(env->content);
+			user = ft_strdup(env->content); //eu preciso mesmo alocar memoria com strdup? posso so apontar
 		if (ft_strncmp(env->key, "HOME", 4) == 0)
 			home = ft_strdup(env->content);
 		env = env->next;
@@ -61,8 +58,10 @@ char	*get_hostname(void)
 	if (temp != NULL)
 	{
 		fd = 0;
-		while (temp[fd] != '.')
+		while (temp[fd] != '.' && temp[fd] != '\0' && temp[fd] != '\n')
 			fd++;
+		if (temp[fd] == '\n')
+			temp[fd] = '\0';
 		hostname = ft_substr(temp, 0, fd);
 		free(temp);
 		if (!hostname)

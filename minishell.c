@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+//colocar do prompt ao parsing quotes numa funcao separada para nao flodar a funcao principal
+//mas nao chamar de ft_readline() kkkkk
 void	minishell(t_shell *shell, char **envp)
 {
 	get_env(shell, envp);

@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = free.c env.c debug.c loop.c prompt.c main.c
+SRC = free.c env.c debug.c minishell.c prompt.c parse_quotes.c main.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = ./Libft/libft.a
