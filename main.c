@@ -12,6 +12,15 @@
 
 #include "minishell.h"
 
+/**
+ * @brief Checks program arguments and environment validity.
+ *
+ * Exits if the argument count is not 1 or if the environment is missing.
+ *
+ * @param argc Argument count.
+ * @param argv Argument vector (unused).
+ * @param envp Environment variables.
+ */
 void	check_args(int argc, char **argv, char **envp)
 {
 	(void)argv;
@@ -19,6 +28,13 @@ void	check_args(int argc, char **argv, char **envp)
 		exit(1);
 }
 
+/**
+ * @brief Initializes the t_shell structure fields to NULL.
+ *
+ * Sets all pointers in the shell struct to NULL before use.
+ *
+ * @param shell Pointer to the t_shell struct to initialize.
+ */
 void	init_structs(t_shell *shell)
 {
 	shell->env = NULL;

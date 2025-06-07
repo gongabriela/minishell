@@ -29,4 +29,3 @@ void	minishell(t_shell *shell, char **envp)
 	//pre_parsing(shell.input);
 	ft_free_shell(shell); //e dar reset ao mesmo tempo????
 }
-

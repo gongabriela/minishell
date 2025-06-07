@@ -12,7 +12,13 @@
 
 #include "minishell.h"
 
-//dar free nos **cmd_path
+/**
+ * @brief Frees a NULL-terminated array of strings.
+ *
+ * Iterates through the array, freeing each string, then frees the array itself.
+ *
+ * @param cmd The NULL-terminated array of strings to free.
+ */
 void	free_cmd_paths(char **cmd)
 {
 	int	i;
@@ -28,7 +34,13 @@ void	free_cmd_paths(char **cmd)
 	free(cmd);
 }
 
-//dar free na t_env
+/**
+ * @brief Frees a linked list of t_env environment variable nodes.
+ *
+ * Iterates through the list, freeing the key, content, and node itself.
+ *
+ * @param env Pointer to the head of the t_env linked list.
+ */
 void	free_struct_env(t_env *env)
 {
 	t_env	*tmp;
@@ -43,10 +55,16 @@ void	free_struct_env(t_env *env)
 	}
 }
 
-//funcao principal
+/**
+ * @brief Frees all dynamically allocated memory in the t_shell struct.
+ *
+ * Frees the prompt, input, environment list, and command paths.
+ * Re-initializes the shell struct after freeing.
+ *
+ * @param shell Pointer to the t_shell struct to free.
+ */
 void	ft_free_shell(t_shell *shell)
 {
-
 	if (shell->prompt != NULL)
 		free(shell->prompt);
 	if (shell->input != NULL)
@@ -56,6 +74,14 @@ void	ft_free_shell(t_shell *shell)
 	init_structs(shell);
 }
 
+/**
+ * @brief Prints an error message, frees all resources, and exits.
+ *
+ * Uses perror to print the error, frees the shell, and exits with code -1.
+ *
+ * @param msg The error message to print.
+ * @param shell Pointer to the t_shell struct to free.
+ */
 void	ft_error(char *msg, t_shell *shell)
 {
 	perror(msg);
