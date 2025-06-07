@@ -12,20 +12,26 @@
 
 #include "minishell.h"
 
-//colocar do prompt ao parsing quotes numa funcao separada para nao flodar a funcao principal
-//mas nao chamar de ft_readline() kkkkk
+//colocar do prompt ao parsing quotes numa funcao separada para nao flodar a funcao principal, mas nao chamar de ft_readline() kkkkk
 void	minishell(t_shell *shell, char **envp)
 {
-	get_env(shell, envp);
-	shell->prompt = create_prompt(shell->env);
-	if (!shell->prompt)
-		ft_error("env not found", shell); //erro ou printo um prompt qualquer? nao ter acesso a env da problemas no futuro? ou so path?
-	shell->input = readline(shell->prompt);
-	if (!shell->input) //quando usa ctrl + D
-		printf("Error retaining input\n");
-	else
-		printf("you wrote this: %s\n", shell->input);
-	//add_history(shell.input);
-	//pre_parsing(shell.input);
-	ft_free_shell(shell); //e dar reset ao mesmo tempo????
+	while (1)
+	{
+		get_env(shell, envp);
+		shell->prompt = create_prompt(shell->env);
+		if (!shell->prompt)
+			ft_error("error creating prompt", shell); //transformar em ft_exit, e so retornar erro se for o caso...
+		shell->input = readline(shell->prompt);
+		if (!shell->input)
+		{
+			ft_free_shell(shell);
+			rl_clear_history(); //so chamar essa funcao se sair do programa! se usar o exit(). nao juntar com o ft_free_shell
+			exit(1);
+		}
+		if (shell->input && *(shell->input) != '\0')
+			add_history(shell->input); //tenho que dar free no add history?
+		/*if (pre_parsing(shell->input))
+			printf("not an empty line, proceed to parsing and execution\n");*/
+		ft_free_shell(shell);
+	}
 }
