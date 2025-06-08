@@ -60,6 +60,8 @@ char	*get_cwd(char *home);
 char	*get_full_prompt(char *logname, char *name, char *cwd);
 char	*get_hostname(void);
 char	*get_hostname_line(int fd);
+int	pre_parsing(char *input);
+int	get_input(t_shell *shell);
 
 // --------- Funções de free -----------------------------------
 
