@@ -71,8 +71,8 @@ void	get_env(t_shell *shell, char **envp)
 		ft_lstadd_back(&shell->env, node);
 		i++;
 	}
-	if (!shell->cmd_paths)
-		ft_error("PATH not found in env", shell);
+	/*if (!shell->cmd_paths)
+		ft_error("PATH not found in env", shell);*/
 }
 
 /**

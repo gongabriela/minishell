@@ -27,11 +27,12 @@ char	*create_prompt(t_env *env)
 	char	*home;
 	char	*cwd;
 
+	home = NULL;
 	while (env != NULL)
 	{
 		if (ft_strncmp(env->key, "USER", 4) == 0)
 			user = env->content;
-		if (ft_strncmp(env->key, "HOME", 4) == 0)
+		if (ft_strncmp(env->key, "HOME", 4) == 0) //se nao encontrar so ignora e faz o cwd sem tirar o path do home
 			home = env->content;
 		env = env->next;
 	}

@@ -16,7 +16,7 @@ int	get_input(t_shell *shell)
 {
 		shell->prompt = create_prompt(shell->env);
 		if (!shell->prompt)
-			ft_error("error creating prompt", shell); //transformar em ft_exit, e so retornar erro se for o caso...
+			ft_error("error creating prompt", shell); //essa funcao nao ta boa
 		shell->input = readline(shell->prompt);
 		if (!shell->input)
 		{
