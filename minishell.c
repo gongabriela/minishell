@@ -14,31 +14,31 @@
 
 int	get_input(t_shell *shell)
 {
-		shell->prompt = create_prompt(shell->env);
+		shell->prompt = create_prompt(shell);
 		if (!shell->prompt)
-			ft_error("error creating prompt", shell); //essa funcao nao ta boa
+		{
+			ft_free_shell(shell);
+			rl_clear_history();
+			exit(-1);
+		}
 		shell->input = readline(shell->prompt);
 		if (!shell->input)
 		{
 			ft_free_shell(shell);
-			rl_clear_history(); //so chamar essa funcao se sair do programa! se usar o exit(). nao juntar com o ft_free_shell
+			rl_clear_history();
 			exit(1);
 		}
 		if (pre_parsing(shell->input))
 			return (1);
 		return (0);
 }
-void	minishell(t_shell *shell, char **envp)
+void	minishell(t_shell *shell)
 {
 	while (1)
 	{
-		//handle_signals();
-		get_env(shell, envp);
+		handle_signals(shell);
 		if (get_input(shell))
 			printf("proceed to parsing\n");
-		/*if (parsing)
-			printf("proceed to execution\n");
-		execution()*/
-		ft_free_shell(shell); //transformar num ft_reset? free, = NULL, reset nos pipes, etc!
+		ft_free_shell(shell);
 	}
 }

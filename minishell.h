@@ -43,7 +43,7 @@ typedef struct s_env
 
 void	check_args(int argc, char **argv, char **envp);
 void	init_structs(t_shell *shell);
-void	minishell(t_shell *shell, char **envp);
+void	minishell(t_shell *shell);
 
 // --------- Funções auxiliares para pegar as env --------------
 
@@ -55,7 +55,7 @@ t_env	*create_env_node(char *env, t_shell *shell);
 
 // ------------- Funcoes de criar o prompt --------------------
 
-char	*create_prompt(t_env *env);
+char	*create_prompt(t_shell *shell);
 char	*get_cwd(char *home);
 char	*get_full_prompt(char *logname, char *name, char *cwd);
 char	*get_hostname(void);

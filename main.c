@@ -49,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 
 	check_args(argc, argv, envp);
 	init_structs(&shell);
-	minishell(&shell, envp);
+	get_env(&shell, envp);
+	minishell(&shell);
 	return (0);
 }

@@ -30,4 +30,3 @@ void	handle_sigint(int sig)
 		rl_redisplay();
 	}
 }
-

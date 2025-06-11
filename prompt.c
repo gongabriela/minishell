@@ -13,46 +13,77 @@
 #include "minishell.h"
 
 /**
- * @brief Creates the shell prompt string using env variables.
+ * @brief Creates the shell prompt string using environment variables.
  *
- * Finds USER and HOME in env, gets hostname and cwd, and builds the prompt.
+ * Retrieves the USER, HOME, and PWD environment variables, gets the hostname,
+ * and builds the prompt string in the format: user@hostname:cwd$ .
  *
- * @param env Pointer to the environment list.
- * @return Allocated prompt string, or NULL on error.
+ * @param shell Pointer to the shell state (unused).
+ * @return Newly allocated prompt string, or NULL on error.
  */
-char	*create_prompt(t_env *env)
+char	*create_prompt(t_shell *shell)
 {
 	char	*user;
 	char	*hostname;
 	char	*home;
-	char	*cwd;
+	char	*pwd;
 
-	home = NULL;
-	while (env != NULL)
-	{
-		if (ft_strncmp(env->key, "USER", 4) == 0)
-			user = env->content;
-		if (ft_strncmp(env->key, "HOME", 4) == 0) //se nao encontrar so ignora e faz o cwd sem tirar o path do home
-			home = env->content;
-		env = env->next;
-	}
-	if (!user || !home)
-		return (NULL);
+	home == NULL;
+	home = getenv("HOME");
+	pwd = get_cwd(home);
+	user = getenv("USER");
+	if (!user)
+		user = "me";
 	hostname = get_hostname();
 	if (!hostname)
+	{
+		free(pwd);
+		free(user);
 		return (NULL);
-	cwd = get_cwd(home);
-	if (!cwd)
-		return (NULL);
-	return (get_full_prompt(user, hostname, cwd));
+	}
+	return (get_full_prompt(user, hostname, pwd));
+}
+
+/**
+ * @brief Gets the current working directory, replacing $HOME with ~ if applicable.
+ *
+ * Uses the PWD environment variable if available, otherwise calls getcwd().
+ * If the current directory is inside HOME, replaces the HOME prefix with '~'.
+ *
+ * @param home The HOME directory string.
+ * @return Newly allocated cwd string, or "?" on error.
+ */
+char	*get_cwd(char *home)
+{
+	char	*temp;
+	char	*cwd;
+
+	temp = getenv("PWD");
+	if (temp == NULL)
+	{
+		cwd = getcwd(NULL, 0);
+		if (cwd == NULL)
+			return ("?");
+		return (cwd);
+	}
+	if (home != NULL && ft_strncmp(temp, home, ft_strlen(home)) == 0)
+	{
+		if (ft_strlen(temp) > ft_strlen(home))
+			cwd = ft_strjoin("~", temp + ft_strlen(home));
+		else
+			cwd = ft_strdup("~");
+		free(temp);
+	}
+	else
+		cwd = temp;
+	return (cwd);
 }
 
 /**
  * @brief Gets the machine hostname from /etc/hostname.
  *
- * Opens /etc/hostname, reads the first line using get_hostname_line,
- * and extracts the hostname up to the first '.' or '\n'. Returns a newly
- * allocated string with the hostname, or NULL on error.
+ * Reads the first line from /etc/hostname and extracts the hostname up to the
+ * first '.' or newline. Returns a newly allocated string.
  *
  * @return Newly allocated hostname string, or NULL on error.
  */
@@ -65,26 +96,29 @@ char	*get_hostname(void)
 
 	fd = open("/etc/hostname", O_RDONLY);
 	if (fd < 0)
-		return (NULL);
+		return (perror("open failed"), NULL);
 	temp = get_hostname_line(fd);
 	close(fd);
 	if (!temp)
-		return (NULL);
+		return (perror("malloc failed"), NULL);
 	i = 0;
 	while (temp[i] != '.' && temp[i] != '\0' && temp[i] != '\n')
 		i++;
 	hostname = ft_substr(temp, 0, i);
 	free(temp);
 	if (!hostname)
-		return (NULL);
+		return (perror("malloc failed"), NULL);
 	return (hostname);
 }
 
 /**
  * @brief Reads the first line from a file descriptor.
  *
+ * Reads all lines from the file descriptor, returns the first line as a newly
+ * allocated string, and frees any additional lines.
+ *
  * @param fd File descriptor to read from.
- * @return Allocated string with the first line, or NULL on error.
+ * @return Newly allocated string with the first line, or NULL on error.
  */
 char	*get_hostname_line(int fd)
 {
@@ -101,42 +135,17 @@ char	*get_hostname_line(int fd)
 	return (temp);
 }
 
-/**
- * @brief Gets the current working directory, replacing $HOME with ~.
- *
- * @param home The HOME directory string.
- * @return Allocated cwd string, or NULL on error.
- */
-char	*get_cwd(char *home)
-{
-	char	*temp;
-	char	*cwd;
-
-	temp = getcwd(NULL, 0);
-	if (temp == NULL)
-		return (NULL);
-	if (ft_strncmp(temp, home, ft_strlen(home)) == 0)
-	{
-		if (ft_strlen(temp) > ft_strlen(home))
-			cwd = ft_strjoin("~", temp + ft_strlen(home));
-		else
-			cwd = ft_strdup("~");
-		free(temp);
-	}
-	else
-		cwd = temp;
-	return (cwd);
-}
 
 /**
  * @brief Builds the full shell prompt string.
  *
- * Concatenates user, hostname, cwd, and prompt symbols.
+ * Concatenates user, hostname, cwd, and prompt symbols into a single string.
+ * Frees the hostname and cwd arguments.
  *
  * @param user The username string.
  * @param hostname The hostname string (allocated).
  * @param cwd The current working directory string (allocated).
- * @return Allocated prompt string, or NULL on error.
+ * @return Newly allocated prompt string, or NULL on error.
  */
 char	*get_full_prompt(char *user, char *hostname, char *cwd)
 {
