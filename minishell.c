@@ -16,18 +16,10 @@ int	get_input(t_shell *shell)
 {
 		shell->prompt = create_prompt(shell);
 		if (!shell->prompt)
-		{
-			ft_free_shell(shell);
-			rl_clear_history();
-			exit(-1);
-		}
+			ft_exit(shell, -1);
 		shell->input = readline(shell->prompt);
 		if (!shell->input)
-		{
-			ft_free_shell(shell);
-			rl_clear_history();
-			exit(1);
-		}
+			ft_exit(shell, 0);
 		if (pre_parsing(shell->input))
 			return (1);
 		return (0);
@@ -42,3 +34,4 @@ void	minishell(t_shell *shell)
 		ft_free_shell(shell);
 	}
 }
+

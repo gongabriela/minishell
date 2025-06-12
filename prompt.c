@@ -155,7 +155,7 @@ char	*get_full_prompt(char *user, char *hostname, char *cwd)
 	len = ft_strlen(user) + ft_strlen(hostname) + ft_strlen(cwd) + 5;
 	prompt = ft_calloc(len, sizeof(char));
 	if (!prompt)
-		return (NULL);
+		return (perror("malloc failed"), NULL);
 	ft_strlcat(prompt, user, len);
 	ft_strlcat(prompt, "@", len);
 	ft_strlcat(prompt, hostname, len);

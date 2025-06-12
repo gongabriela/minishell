@@ -75,16 +75,17 @@ void	ft_free_shell(t_shell *shell)
 }
 
 /**
- * @brief Prints an error message, frees all resources, and exits.
+ * @brief Frees all resources and exits the shell.
  *
- * Uses perror to print the error, frees the shell, and exits with code -1.
+ * Calls ft_free_shell to free dynamically allocated memory in the t_shell struct,
+ * clears the readline history, and exits the program with the given exit code.
  *
- * @param msg The error message to print.
  * @param shell Pointer to the t_shell struct to free.
+ * @param exit_code The exit status code to return to the operating system.
  */
-void	ft_error(char *msg, t_shell *shell)
+void	ft_exit(t_shell *shell, int exit_code)
 {
-	perror(msg);
 	ft_free_shell(shell);
-	exit(-1);
+	rl_clear_history();
+	exit(exit_code);
 }
