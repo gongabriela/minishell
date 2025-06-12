@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "inc/minishell.h"
 
 int	get_input(t_shell *shell)
 {
@@ -28,9 +28,9 @@ void	minishell(t_shell *shell)
 {
 	while (1)
 	{
-		handle_signals(shell);
 		if (get_input(shell))
 			printf("proceed to parsing\n");
+		//test_builtins(shell);
 		ft_free_shell(shell);
 	}
 }

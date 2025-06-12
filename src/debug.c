@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/08 11:42:32 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/08 11:42:32 by ggoncalv         ###   ########.fr       */
+/*   Created: 2025/06/03 11:44:43 by ggoncalv          #+#    #+#             */
+/*   Updated: 2025/06/03 11:44:43 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "inc/minishell.h"
 
-//ctrl c
-//ctrl d
-
-void	handle_signals(void)
+void	print_env_list(t_env *env)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN); //ignorar o ctrl + \ (SIGQUIT)
-}
-void	handle_sigint(int sig)
-{
-	if (sig == SIGINT)
+	while (env)
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		printf("%s=%s\n", env->key, env->content);
+		env = env->next;
+	}
+}
+
+void	print_cmd_paths(char **paths)
+{
+	int	i = 0;
+
+	if (!paths)
+		return;
+	while (paths[i])
+	{
+		printf("PATH[%d]: %s\n", i, paths[i]);
+		i++;
 	}
 }

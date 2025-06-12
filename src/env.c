@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "inc/minishell.h"
 
 /**
  * @brief Creates a new environment variable node from a string.
@@ -73,6 +73,9 @@ void	get_env(t_shell *shell, char **envp)
 	}
 	/*if (!shell->cmd_paths)
 		ft_error("PATH not found in env", shell);*/
+	shell->pwd = getcwd(NULL, 0);
+	if (!shell->pwd)
+		return (perror("pwd"), ft_exit(shell, -1));
 }
 
 /**

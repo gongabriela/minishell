@@ -27,6 +27,8 @@ typedef struct s_shell
 	char			**cmd_paths;
 	char			*prompt;
 	char			*input;
+	char			*pwd;
+	int				exit_code;
 
 }					t_shell;
 
@@ -74,5 +76,11 @@ void	ft_error(char *msg, t_shell *shell);
 
 void	print_env_list(t_env *env);
 void	print_cmd_paths(char **paths);
+
+// --------- Funcoes de builtins -------------------------------
+void	echo(t_shell *shell, char **args);
+int	check_n_flags(int *n_flag, char **args);
+
+void	pwd(t_shell *shell);
 
 #endif
