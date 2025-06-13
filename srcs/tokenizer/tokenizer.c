@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 03:00:29 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/13 03:02:57 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ t_token	*handle_operator(char *input, int *i)
 	return (NULL);
 }
 
+// main tokenizer function: iterates over input
+// and builds a linked list of tokens
 t_token	*tokenize(char *input)
 {
 	int		i;
