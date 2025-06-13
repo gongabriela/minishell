@@ -103,17 +103,11 @@ t_token	*tokenize(char *input)
 	{
 		while (input[i] == 32 || input[i] == '\t')
 			i++;
-		if (input[i] == '|')
-			new_token = create_token("|", PIPE);
-		else if (input[i] == '>' && input[i + 1] == '>')
-			new_token = create_token(">>", APPEND);
-		else if (input[i] == '<' && input[i + 1] == '<')
-			new_token = create_token("<<", HEREDOC);
-		else if (input[i] == '<')
-			new_token = create_token("<", REDIR_IN);
-		else if (input[i] == '>')
-			new_token = create_token(">", REDIR_OUT);
-		i++;
+		if (is_operator(input[i]))
+			new_token = handle_operator(input, &i);
+		else
+			new_token = handle_word(input, &i);
+		add_token_to_list(&head, &curr, new_token);
 	}
 	return (head);
 }
