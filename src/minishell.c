@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 int	get_input(t_shell *shell)
 {
-		shell->prompt = create_prompt(shell);
+		shell->prompt = create_prompt();
 		if (!shell->prompt)
 			ft_exit(shell, -1);
 		shell->input = readline(shell->prompt);
@@ -24,13 +24,51 @@ int	get_input(t_shell *shell)
 			return (1);
 		return (0);
 }
+
+void	execute_builtin_test(t_shell *shell, char **args)
+{
+	if (!args || !args[0])
+		return;
+	if (ft_strncmp(args[0], "echo", 5) == 0)
+		echo(shell, args);
+	/*else if (ft_strncmp(args[0], "cd", 3) == 0)
+		cd(shell, args);
+	else if (ft_strncmp(args[0], "pwd", 4) == 0)
+		pwd(shell);
+	else if (ft_strncmp(args[0], "export", 7) == 0)
+		export(shell, args);
+	else if (ft_strncmp(args[0], "unset", 6) == 0)
+		unset(shell, args);
+	else if (ft_strncmp(args[0], "env", 4) == 0)
+		env(shell);
+	else if (ft_strncmp(args[0], "exit", 5) == 0)
+		exit_builtin(shell, args);*/
+	else
+		printf("Comando builtin não reconhecido: %s\n", args[0]);
+}
+
+void	test_builtins(t_shell *shell)
+{
+	char	**args;
+	int		i;
+
+	args = split_args(shell->input);
+	execute_builtin_test(shell, args);
+	i = 0;
+	while (args && args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
+
 void	minishell(t_shell *shell)
 {
 	while (1)
 	{
 		if (get_input(shell))
-			printf("proceed to parsing\n");
-		//test_builtins(shell);
+			test_builtins(shell);
 		ft_free_shell(shell);
 	}
 }

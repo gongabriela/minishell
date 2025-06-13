@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 /**
  * @brief Creates the shell prompt string using environment variables.
@@ -21,14 +21,14 @@
  * @param shell Pointer to the shell state (unused).
  * @return Newly allocated prompt string, or NULL on error.
  */
-char	*create_prompt(t_shell *shell)
+char	*create_prompt(void)
 {
 	char	*user;
 	char	*hostname;
 	char	*home;
 	char	*pwd;
 
-	home == NULL;
+	//home == NULL;
 	home = getenv("HOME");
 	pwd = get_cwd(home);
 	user = getenv("USER");
@@ -72,7 +72,6 @@ char	*get_cwd(char *home)
 			cwd = ft_strjoin("~", temp + ft_strlen(home));
 		else
 			cwd = ft_strdup("~");
-		free(temp);
 	}
 	else
 		cwd = temp;

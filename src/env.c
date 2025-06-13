@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../inc/minishell.h"
 
 /**
  * @brief Creates a new environment variable node from a string.
@@ -29,19 +29,19 @@ t_env	*create_env_node(char *env, t_shell *shell)
 
 	node = malloc(sizeof(t_env));
 	if (!node)
-		ft_error("malloc failed", shell);
+		return (perror("malloc failed"), ft_exit(shell, -1), NULL);
 	ft_memset(node, 0, sizeof(t_env));
 	j = 0;
 	while (env[j] && env[j] != '=')
 		j++;
 	node->key = ft_substr(env, 0, j);
 	if (!node->key)
-		ft_error("malloc failed", shell);
+		return (perror("malloc failed"), ft_exit(shell, -1), NULL);
 	if (env[j] == '=')
 	{
 		node->content = ft_substr(env, j + 1, ft_strlen(env) - j - 1);
 		if (!node->content)
-			ft_error("malloc failed", shell);
+			return (perror("malloc failed"), ft_exit(shell, -1), NULL);
 	}
 	else
 		node->content = NULL;
@@ -118,5 +118,8 @@ void	get_cmd_paths(t_shell *shell, char *path_str)
 		return ;
 	shell->cmd_paths = ft_split(path_str, ':');
 	if (!shell->cmd_paths)
-		ft_error("malloc failed", shell);
+	{
+		perror("malloc failed");
+		ft_exit(shell, -1);
+	}
 }

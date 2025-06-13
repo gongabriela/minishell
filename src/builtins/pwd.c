@@ -6,11 +6,11 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:27:14 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/12 16:13:38 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:43:08 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void pwd(t_shell *shell)
 {

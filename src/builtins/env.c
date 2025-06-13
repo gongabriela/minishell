@@ -6,9 +6,9 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:48:51 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/12 16:48:58 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/06/13 15:43:16 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/minishell.h"
+#include "../../inc/minishell.h"
 
