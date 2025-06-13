@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 03:02:57 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/13 03:05:15 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,17 @@ t_token	*tokenize(char *input)
 	}
 	return (head);
 }
-
-/*
-new_token = create_token("|", PIPE);
-if (!head)
+// validar o input dos tokens
+/* int	validate_token(t_token *tokens)
 {
-	head = new_token;
-	curr = new_token;
-}
-else
-{
-	curr->next = new_token;
-	curr = new_token;
-}
-*/
+	// ver se os tokens sao validos
+	while (tokens)
+	{
+		if (tokens->type == PIPE && (!tokens->next || tokens->next->type == PIPE))
+			return (ft_printf("syntax error '|'\n"));
+	}
+	return (0);
+} */
 
 /* int	main(void)
 {
