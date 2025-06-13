@@ -23,6 +23,7 @@ int	is_operator(char c)
 	return (0);
 }
 
+// creates a new token node with given content and type
 t_token	*create_token(char *content, t_token_type type)
 {
 	t_token	*new_token;
