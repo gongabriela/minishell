@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 02:58:45 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/13 03:00:29 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,24 @@ void	add_token_to_list(t_token **head, t_token **curr, t_token *new_token)
 		(*curr)->next = new_token;
 		*curr = new_token;
 	}
+}
+
+// checks for special operator tokens:
+// (|, <, >, >>, <<)
+// and returns the matching token
+t_token	*handle_operator(char *input, int *i)
+{
+	if (input[*i] == '>' && input[*i + 1] == '>')
+		return (*i += 2, create_token(">>", APPEND));
+	if (input[*i] == '<' && input[*i + 1] == '<')
+		return (*i += 2, create_token("<<", HEREDOC));
+	if (input[*i] == '>')
+		return (*i += 1, create_token(">", REDIR_OUT));
+	if (input[*i] == '<')
+		return (*i += 1, create_token("<", REDIR_IN));
+	if (input[*i] == '|')
+		return (*i += 1, create_token("|", PIPE));
+	return (NULL);
 }
 
 t_token	*tokenize(char *input)
