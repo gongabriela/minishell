@@ -6,16 +6,22 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/05 21:46:17 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/13 02:02:41 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/* void	validate_token(char *input)
+// (delete) separar outro arquivo de utils com is_operator,
+// (delete) add_token_to_list (talvez mudar o nome), create_token e os handle
+
+// returns 1 if the character is a valid operator
+int	is_operator(char c)
 {
-	// ver se os tokens sao validos
-}*/
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}
 
 t_token	*create_token(char *content, t_token_type type)
 {
