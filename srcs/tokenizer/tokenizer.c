@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 02:02:41 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/13 02:57:28 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,23 @@ t_token	*create_token(char *content, t_token_type type)
 	return (new_token);
 }
 
-// separar strings e setar tokens
+// extracts a word (cmd or arg) from the input and returns a token
+t_token	*handle_word(char *input, int *i)
+{
+	int		start;
+	char	*word;
+	t_token	*new_token;
+
+	start = *i;
+	while (input[*i] && input[*i] != ' ' && input[*i] != '\t'
+		&& !is_operator(input[*i]))
+		(*i)++;
+	word = ft_substr(input, start, *i - start);
+	new_token = create_token(word, CMD);
+	free(word);
+	return (new_token);
+}
+
 t_token	*tokenize(char *input)
 {
 	int		i;
