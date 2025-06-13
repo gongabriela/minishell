@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 02:57:28 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/13 02:58:45 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ t_token	*handle_word(char *input, int *i)
 	new_token = create_token(word, CMD);
 	free(word);
 	return (new_token);
+}
+
+// add a new token to the end of the token linked list
+void	add_token_to_list(t_token **head, t_token **curr, t_token *new_token)
+{
+	if (!*head)
+	{
+		*head = new_token;
+		*curr = new_token;
+	}
+	else
+	{
+		(*curr)->next = new_token;
+		*curr = new_token;
+	}
 }
 
 t_token	*tokenize(char *input)
