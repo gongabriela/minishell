@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ./src/free.c ./src/env.c ./src/debug.c ./src/minishell.c ./src/prompt.c ./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c ./src/builtins/env.c ./src/builtins/pwd.c ./src/main.c
+SRC = ./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c ./src/prompt.c ./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c ./src/builtins/env.c ./src/builtins/pwd.c ./src/main.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = ./Libft/libft.a
@@ -43,3 +43,7 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+test: all
+	@chmod +x tests.sh
+	@./tests.sh ./minishell

@@ -37,10 +37,11 @@ void	check_args(int argc, char **argv, char **envp)
  */
 void	init_structs(t_shell *shell)
 {
-	shell->env = NULL;
-	shell->cmd_paths = NULL;
+
 	shell->input = NULL;
 	shell->prompt = NULL;
+	shell->exit_code = 0;
+	shell->envp = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,6 +50,9 @@ int	main(int argc, char **argv, char **envp)
 
 	check_args(argc, argv, envp);
 	init_structs(&shell);
+	shell.env = NULL;
+	shell.cmd_paths = NULL;
+	shell.pwd = NULL;
 	get_env(&shell, envp);
 	minishell(&shell);
 	return (0);

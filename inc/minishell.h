@@ -30,6 +30,7 @@ typedef struct s_shell
 	char			*input;
 	char			*pwd;
 	int				exit_code;
+	char			**envp;
 
 }					t_shell;
 
@@ -75,7 +76,6 @@ void	ft_exit(t_shell *shell, int exit_code);
 
 // --------- Funcoes de debug ----------------------------------
 
-void	print_env_list(t_env *env);
 void	print_cmd_paths(char **paths);
 
 // --------- Funcoes de builtins -------------------------------
@@ -83,6 +83,8 @@ void	print_cmd_paths(char **paths);
 void	echo(t_shell *shell, char **args);
 int	check_n_flags(int *n_flag, char **args);
 void	pwd(t_shell *shell);
+void	env(t_shell *shell);
+void	print_env_list(t_env *env);
 
 // ------------Funcoes de teste dos builtins -------------------
 

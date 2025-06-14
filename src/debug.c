@@ -12,15 +12,6 @@
 
 #include "../inc/minishell.h"
 
-void	print_env_list(t_env *env)
-{
-	while (env)
-	{
-		printf("%s=%s\n", env->key, env->content);
-		env = env->next;
-	}
-}
-
 void	print_cmd_paths(char **paths)
 {
 	int	i = 0;

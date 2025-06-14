@@ -69,8 +69,6 @@ void	ft_free_shell(t_shell *shell)
 		free(shell->prompt);
 	if (shell->input != NULL)
 		free(shell->input);
-	free_struct_env(shell->env);
-	free_cmd_paths(shell->cmd_paths);
 	init_structs(shell);
 }
 
@@ -86,6 +84,12 @@ void	ft_free_shell(t_shell *shell)
 void	ft_exit(t_shell *shell, int exit_code)
 {
 	ft_free_shell(shell);
+
+	if (shell->pwd != NULL)
+		free(shell->pwd);
+	free_struct_env(shell->env);
+	free_cmd_paths(shell->cmd_paths);
+
 	rl_clear_history();
 	exit(exit_code);
 }
