@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:48:51 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/14 17:15:42 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:24:40 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,6 @@ void	print_env_list(t_env *env)
 		env = env->next;
 	}
 }
+
+/*se o input for env + alguma coisa, desconsidera-se o "env" do input!
+podemos tentar resolver isso no pre parsing...*/

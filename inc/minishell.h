@@ -81,10 +81,15 @@ void	print_cmd_paths(char **paths);
 // --------- Funcoes de builtins -------------------------------
 
 void	echo(t_shell *shell, char **args);
-int	check_n_flags(int *n_flag, char **args);
+int		check_n_flags(int *n_flag, char **args);
 void	pwd(t_shell *shell);
+
 void	env(t_shell *shell);
 void	print_env_list(t_env *env);
+
+void	ft_exit_builtin(t_shell *shell, char **args);
+void	check_exit_args(t_shell *shell, char **args);
+void	get_exit_code(t_shell *shell, char **args);
 
 // ------------Funcoes de teste dos builtins -------------------
 
