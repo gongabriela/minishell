@@ -6,11 +6,11 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:21:18 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 16:34:55 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:59:36 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/minishell.h"
 
 // returns 1 if the character is a valid operator
 int	is_operator(char c)

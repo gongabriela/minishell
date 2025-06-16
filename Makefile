@@ -6,7 +6,7 @@
 #    By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/30 16:20:18 by adias-do          #+#    #+#              #
-#    Updated: 2025/05/30 17:35:58 by adias-do         ###   ########.fr        #
+#    Updated: 2025/06/16 16:58:14 by adias-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 RDLINE = -lreadline
 LIBFTDIR = libft
 RM = rm -rf
-SRCS = srcs/rl_test.c srcs/tokenizer/tokenizer.c
+SRCS = srcs/rl_test.c srcs/tokenizer/tokenizer.c srcs/tokenizer/tokenizer_utils.c 
 OBJS = $(SRCS:.c=.o)
 
 INCLUDE = -L ./libft -lft

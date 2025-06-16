@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:18:33 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/13 03:02:52 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:05:32 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,15 @@ int	main(void)
 	while (1)
 	{
 		rl = readline("minishell$ ");
-		ft_printf("%s\n", rl);
-		if (strcmp(rl, "oi") == 0)
+		//ft_printf("%s\n", rl);
+		if (strcmp(rl, "exit") == 0)
 		{
-			ft_printf("minishell$ ok\n");
 			free(rl);
 			exit(0);
 		}
 		tokens = tokenize(rl);
 		print_tokens(tokens);
-		//validate_token(tokens);
+		validate_token(tokens);
 		free(rl);
 	}
 	return (0);
