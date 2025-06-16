@@ -14,7 +14,7 @@
 
 int	get_input(t_shell *shell)
 {
-		shell->prompt = create_prompt();
+		shell->prompt = create_prompt(shell);
 		if (!shell->prompt)
 			ft_exit(shell, -1);
 		shell->input = readline(shell->prompt);
@@ -37,9 +37,9 @@ void	execute_builtin_test(t_shell *shell, char **args)
 		pwd(shell);
 	else if (ft_strncmp(args[0], "exit", 5) == 0)
 		ft_exit_builtin(shell, args);
-	/*else if (ft_strncmp(args[0], "cd", 3) == 0)
+	else if (ft_strncmp(args[0], "cd", 3) == 0)
 		cd(shell, args);
-	else if (ft_strncmp(args[0], "export", 7) == 0)
+	/*else if (ft_strncmp(args[0], "export", 7) == 0)
 		export(shell, args);
 	else if (ft_strncmp(args[0], "unset", 6) == 0)
 		unset(shell, args);*/

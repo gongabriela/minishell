@@ -59,8 +59,8 @@ t_env	*create_env_node(char *env, t_shell *shell);
 
 // ------------- Funcoes de criar o prompt --------------------
 
-char	*create_prompt(void);
-char	*get_cwd(char *home);
+char	*create_prompt(t_shell *shell);
+char	*get_cwd(char *home, char *pwd);
 char	*get_full_prompt(char *logname, char *name, char *cwd);
 char	*get_hostname(void);
 char	*get_hostname_line(int fd);
@@ -102,5 +102,6 @@ char	*copy_arg(const char *s, int len);
 char	*extract_arg(const char **s);
 char	**split_args(const char *s);
 void	execute_builtin_test(t_shell *shell, char **args);
+void	cd(t_shell *shell, char **args);
 
 #endif
