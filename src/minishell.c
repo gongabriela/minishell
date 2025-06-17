@@ -40,9 +40,9 @@ void	execute_builtin_test(t_shell *shell, char **args)
 	else if (ft_strncmp(args[0], "cd", 3) == 0)
 		cd(shell, args);
 	/*else if (ft_strncmp(args[0], "export", 7) == 0)
-		export(shell, args);
+		export(shell, args);*/
 	else if (ft_strncmp(args[0], "unset", 6) == 0)
-		unset(shell, args);*/
+		unset(shell, args);
 	else
 		printf("Comando builtin não reconhecido: %s\n", args[0]);
 }

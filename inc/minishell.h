@@ -103,5 +103,6 @@ char	*extract_arg(const char **s);
 char	**split_args(const char *s);
 void	execute_builtin_test(t_shell *shell, char **args);
 void	cd(t_shell *shell, char **args);
+void	unset(t_shell *shell, char **args);
 
 #endif
