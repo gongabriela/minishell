@@ -15,7 +15,11 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c ./src/prompt.c ./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c ./src/builtins/env.c ./src/builtins/pwd.c ./src/builtins/exit.c ./src/builtins/cd.c ./src/builtins/unset.c ./src/main.c
+SRC = ./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c ./src/prompt.c \
+		./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c \
+		./src/builtins/env.c ./src/builtins/pwd.c ./src/builtins/exit.c \
+		./src/builtins/cd.c ./src/builtins/unset.c ./src/builtins/export.c \
+		./src/builtins/export_utils.c ./src/main.c
 OBJ = $(SRC:.c=.o)
 
 LIBFT = ./Libft/libft.a

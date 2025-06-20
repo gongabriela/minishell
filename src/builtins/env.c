@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:48:51 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/14 17:24:40 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/06/20 14:09:59 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	print_env_list(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->key, env->content);
+		if (env->env == true)
+			printf("%s=%s\n", env->key, env->content);
 		env = env->next;
 	}
 }

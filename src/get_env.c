@@ -45,6 +45,8 @@ t_env	*create_env_node(char *env, t_shell *shell)
 	}
 	else
 		node->content = NULL;
+	node->export = true;
+	node->env = true;
 	return (node);
 }
 

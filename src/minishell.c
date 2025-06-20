@@ -39,8 +39,8 @@ void	execute_builtin_test(t_shell *shell, char **args)
 		ft_exit_builtin(shell, args);
 	else if (ft_strncmp(args[0], "cd", 3) == 0)
 		cd(shell, args);
-	/*else if (ft_strncmp(args[0], "export", 7) == 0)
-		export(shell, args);*/
+	else if (ft_strncmp(args[0], "export", 7) == 0)
+		export(shell, args);
 	else if (ft_strncmp(args[0], "unset", 6) == 0)
 		unset(shell, args);
 	else
