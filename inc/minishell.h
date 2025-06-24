@@ -60,12 +60,13 @@ t_env	*create_env_node(char *env, t_shell *shell);
 // ------------- Funcoes de criar o prompt --------------------
 
 char	*create_prompt(t_shell *shell);
-char	*get_cwd(char *home, char *pwd);
+char	*get_env_value(t_env *env, const char *key);
+char	*get_cwd(t_env *env, char *pwd);
 char	*get_full_prompt(char *logname, char *name, char *cwd);
 char	*get_hostname(void);
 char	*get_hostname_line(int fd);
-int	pre_parsing(char *input);
-int	get_input(t_shell *shell);
+int		pre_parsing(char *input);
+int		get_input(t_shell *shell);
 
 // --------- Funções de free -----------------------------------
 

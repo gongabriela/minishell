@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Creates the shell prompt string using environment variables.
@@ -21,43 +21,26 @@
  * @param shell Pointer to the shell state (unused).
  * @return Newly allocated prompt string, or NULL on error.
  */
-char	*create_prompt(t_shell *shell)
+
+ char	*create_prompt(t_shell *shell)
 {
 	char	*user;
 	char	*hostname;
-	char	*home;
-	char	*pwd;
 	char	*cwd;
-	t_env *env;
+	t_env	*env;
 
 	env = shell->env;
-	user = NULL;
-	hostname = NULL;
-	home = NULL;
-	pwd = NULL;
-	while (env != NULL)
-	{
-		if (ft_strncmp(env->key, "USER", 5) == 0)
-			user = env->content;
-		else if (ft_strncmp(env->key, "HOME", 5) == 0)
-			home = env->content;
-		else if (ft_strncmp(env->key, "PWD", 4) == 0)
-			pwd = env->content;
-		env = env->next;
-	}
-	if (user == NULL)
-		user = "";
-	if (home == NULL)
-		home = "";
-	if (!pwd)
-		pwd = shell->pwd;
-	cwd = get_cwd(home, pwd);
+	user = get_env_value(env, "USER");
+	cwd = get_cwd(shell->env, shell->pwd);
 	if (!cwd)
-		ft_exit(shell, -1);
+		return (NULL);
 	hostname = get_hostname();
 	if (!hostname)
+	{
+		if (cwd)
+			free(cwd);
 		return (NULL);
-	//aqui voce manda o pwd que e so um ponteiro pro shell->pwd entao vc da free no shell e dps gera double free
+	}
 	return (get_full_prompt(user, hostname, cwd));
 }
 
@@ -70,10 +53,12 @@ char	*create_prompt(t_shell *shell)
  * @param home The HOME directory string.
  * @return Newly allocated cwd string, or "?" on error.
  */
-char	*get_cwd(char *home, char *pwd)
+char	*get_cwd(t_env *env, char *pwd)
 {
 	char	*cwd;
+	char	*home;
 
+	home = get_env_value(env, "HOME");
 	if (home != NULL && ft_strncmp(pwd, home, ft_strlen(home)) == 0)
 	{
 		if (ft_strlen(pwd) > ft_strlen(home))
@@ -161,6 +146,8 @@ char	*get_full_prompt(char *user, char *hostname, char *cwd)
 	char	*prompt;
 	size_t	len;
 
+	if (!user)
+		user = "";
 	len = ft_strlen(user) + ft_strlen(hostname) + ft_strlen(cwd) + 5;
 	prompt = ft_calloc(len, sizeof(char));
 	if (!prompt)

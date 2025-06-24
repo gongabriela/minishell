@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-static char	*get_env_value(t_env *env, const char *key)
+static char	*get_env_value_cd(t_env *env, const char *key)
 {
     while (env)
     {
@@ -97,8 +97,8 @@ void	cd(t_shell *shell, char **args)
     char	*oldpwd;
     char	*path;
 
-    home = get_env_value(shell->env, "HOME");
-    oldpwd = get_env_value(shell->env, "OLDPWD");
+    home = get_env_value_cd(shell->env, "HOME");
+    oldpwd = get_env_value_cd(shell->env, "OLDPWD");
     if (cd_too_many_args(args))
         return (cd_error("too many arguments", NULL), (void)0);
     path = cd_get_path(args, home, oldpwd);

@@ -29,9 +29,6 @@ int	pre_parsing(char *input)
 	int		single_quote;
 	int		double_quote;
 
-	if (!input || *input == '\0')
-		return (0);
-	add_history(input);
 	i = 0;
 	single_quote = 0;
 	double_quote = 0;
