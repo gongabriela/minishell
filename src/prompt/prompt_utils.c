@@ -13,10 +13,13 @@
 #include "../../inc/minishell.h"
 
 /**
- * @brief Searches for and returns the value of an environment variable in the linked list.
+ * @brief Searches for and returns the value of an environment variable in the
+ * linked list.
  *
- * Iterates through the linked list of environment variables (t_env) and compares the keys.
- * Returns a pointer to the value (content) of the variable if found, or NULL if not found.
+ * Iterates through the linked list of environment variables (t_env) and compares
+ * the keys.
+ * Returns a pointer to the value (content) of the variable if found, or NULL if
+ * not found.
  *
  * @param env Linked list of environment variables.
  * @param key Name of the variable to search for.

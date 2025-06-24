@@ -37,7 +37,6 @@ void	check_args(int argc, char **argv, char **envp)
  */
 void	init_structs(t_shell *shell)
 {
-
 	shell->input = NULL;
 	shell->prompt = NULL;
 	shell->exit_code = 0;

@@ -14,22 +14,22 @@
 
 int	get_input(t_shell *shell)
 {
-		shell->prompt = create_prompt(shell);
-		if (!shell->prompt)
-			ft_exit(shell, -1);
-		shell->input = readline(shell->prompt);
-		if (!shell->input)
-			ft_exit(shell, 0);
-		add_history(input);
-		if (pre_parsing(shell->input))
-			return (1);
-		return (0);
+	shell->prompt = create_prompt(shell);
+	if (!shell->prompt)
+		ft_exit(shell, -1);
+	shell->input = readline(shell->prompt);
+	if (!shell->input)
+		ft_exit(shell, 0);
+	add_history(input);
+	if (pre_parsing(shell->input))
+		return (1);
+	return (0);
 }
 
 void	execute_builtin_test(t_shell *shell, char **args)
 {
 	if (!args || !args[0])
-		return;
+		return ;
 	if (ft_strncmp(args[0], "echo", 5) == 0)
 		echo(shell, args);
 	else if (ft_strncmp(args[0], "env", 4) == 0)
@@ -73,4 +73,3 @@ void	minishell(t_shell *shell)
 		ft_free_shell(shell);
 	}
 }
-

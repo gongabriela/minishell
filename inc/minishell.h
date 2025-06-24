@@ -43,7 +43,6 @@ typedef struct s_env
 	bool			env;
 }						t_env;
 
-
 // --------- Funções principais -------------------------------
 
 void	check_args(int argc, char **argv, char **envp);

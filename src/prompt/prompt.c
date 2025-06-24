@@ -22,7 +22,7 @@
  * @return Newly allocated prompt string, or NULL on error.
  */
 
- char	*create_prompt(t_shell *shell)
+char	*create_prompt(t_shell *shell)
 {
 	char	*user;
 	char	*hostname;
@@ -45,7 +45,8 @@
 }
 
 /**
- * @brief Gets the current working directory, replacing $HOME with ~ if applicable.
+ * @brief Gets the current working directory, replacing $HOME with ~
+ * if applicable.
  *
  * Uses the PWD environment variable if available, otherwise calls getcwd().
  * If the current directory is inside HOME, replaces the HOME prefix with '~'.
@@ -128,7 +129,6 @@ char	*get_hostname_line(int fd)
 	}
 	return (temp);
 }
-
 
 /**
  * @brief Builds the full shell prompt string.

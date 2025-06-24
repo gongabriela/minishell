@@ -53,7 +53,8 @@ void	ft_free_shell(t_shell *shell)
 /**
  * @brief Frees all resources and exits the shell.
  *
- * Calls ft_free_shell to free dynamically allocated memory in the t_shell struct,
+ * Calls ft_free_shell to free dynamically allocated memory in the
+ * t_shell struct,
  * clears the readline history, and exits the program with the given exit code.
  *
  * @param shell Pointer to the t_shell struct to free.
@@ -62,11 +63,9 @@ void	ft_free_shell(t_shell *shell)
 void	ft_exit(t_shell *shell, int exit_code)
 {
 	ft_free_shell(shell);
-
 	if (shell->pwd != NULL)
 		free(shell->pwd);
 	free_struct_env(shell->env);
-
 	rl_clear_history();
 	exit(exit_code);
 }
