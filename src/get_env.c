@@ -68,13 +68,9 @@ void	get_env(t_shell *shell, char **envp)
 	while (envp[i])
 	{
 		node = create_env_node(envp[i], shell);
-		if (ft_strncmp(node->key, "PATH", 4) == 0)
-			get_cmd_paths(shell, node->content);
 		ft_lstadd_back(&shell->env, node);
 		i++;
 	}
-	/*if (!shell->cmd_paths)
-		ft_error("PATH not found in env", shell);*/
 	shell->pwd = getcwd(NULL, 0);
 	if (!shell->pwd)
 		return (perror("pwd"), ft_exit(shell, -1));
@@ -103,25 +99,4 @@ void	ft_lstadd_back(t_env **lst, t_env *new)
 	while (last->next)
 		last = last->next;
 	last->next = new;
-}
-
-/**
- * @brief Splits the PATH variable and updates shell command paths.
- *
- * Splits the PATH string by ':' and stores the result in shell->cmd_paths.
- * If allocation fails, calls ft_error and exits.
- *
- * @param shell Pointer to the shell structure.
- * @param path_str The PATH string to split.
- */
-void	get_cmd_paths(t_shell *shell, char *path_str)
-{
-	if (!path_str)
-		return ;
-	shell->cmd_paths = ft_split(path_str, ':');
-	if (!shell->cmd_paths)
-	{
-		perror("malloc failed");
-		ft_exit(shell, -1);
-	}
 }

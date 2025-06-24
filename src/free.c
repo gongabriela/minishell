@@ -13,28 +13,6 @@
 #include "../inc/minishell.h"
 
 /**
- * @brief Frees a NULL-terminated array of strings.
- *
- * Iterates through the array, freeing each string, then frees the array itself.
- *
- * @param cmd The NULL-terminated array of strings to free.
- */
-void	free_cmd_paths(char **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
-
-/**
  * @brief Frees a linked list of t_env environment variable nodes.
  *
  * Iterates through the list, freeing the key, content, and node itself.
@@ -88,7 +66,6 @@ void	ft_exit(t_shell *shell, int exit_code)
 	if (shell->pwd != NULL)
 		free(shell->pwd);
 	free_struct_env(shell->env);
-	free_cmd_paths(shell->cmd_paths);
 
 	rl_clear_history();
 	exit(exit_code);

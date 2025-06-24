@@ -51,7 +51,6 @@ int	main(int argc, char **argv, char **envp)
 	check_args(argc, argv, envp);
 	init_structs(&shell);
 	shell.env = NULL;
-	shell.cmd_paths = NULL;
 	shell.pwd = NULL;
 	get_env(&shell, envp);
 	minishell(&shell);
