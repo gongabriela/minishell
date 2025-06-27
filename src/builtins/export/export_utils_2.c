@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   export_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 14:53:10 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/20 15:20:34 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/06/27 12:26:01 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Creates a deep copy of an environment variable node.
@@ -45,19 +45,16 @@ void insert_sorted(t_env **sorted, t_env *node)
 
 	curr = *sorted;
 	prev = NULL;
-	//procura a posição correta para inserir o novo nó
 	while (curr && ft_strncmp(node->key, curr->key, ft_strlen(node->key) + 1) > 0)
 	{
 		prev = curr;
 		curr = curr->next;
 	}
-	//se o nó deve ser inserido no início da lista ou se a lista está vazia
 	if (!prev)
 	{
 		node->next = *sorted;
 		*sorted = node;
 	}
-	//se nao, insere o nó entre prev e curr que e a posição correta
 	else
 	{
 		prev->next = node;

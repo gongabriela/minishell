@@ -20,7 +20,7 @@ int	get_input(t_shell *shell)
 	shell->input = readline(shell->prompt);
 	if (!shell->input)
 		ft_exit(shell, 0);
-	add_history(input);
+	add_history(shell->input);
 	if (pre_parsing(shell->input))
 		return (1);
 	return (0);
