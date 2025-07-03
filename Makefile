@@ -15,7 +15,9 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c \
+SRC =	./srcs/rl_test.c ./srcs/tokenizer/tokenizer.c \
+		./srcs/tokenizer/tokenizer_utils.c ./srcs/tokenizer/free.c \
+		./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c \
 		./src/prompt/prompt.c ./src/prompt/prompt_utils.c \
 		./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c \
 		./src/builtins/env.c ./src/builtins/pwd.c ./src/builtins/exit.c \
@@ -23,7 +25,7 @@ SRC = ./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c \
 		./src/builtins/export/export_utils.c ./src/builtins/export/export_utils_2.c ./src/main.c
 OBJ = $(SRC:.c=.o)
 
-LIBFT = ./Libft/libft.a
+LIBFT = ./libft/libft.a
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -31,7 +33,7 @@ LIBFT = ./Libft/libft.a
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C ./Libft
+	make -C ./libft
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 
 debug:
@@ -41,7 +43,7 @@ debug:
 
 
 clean:
-	make -C ./Libft fclean
+	make -C ./libft fclean
 	rm -rf $(OBJ)
 
 fclean: clean

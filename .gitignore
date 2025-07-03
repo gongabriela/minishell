@@ -1,6 +1,9 @@
 # ignore .vscode folder
 .vscode/
 
-#ignore *.o | *.a
+# ignore *.o | *.a
 *.o
 *.a
+
+# ignore exec
+minishell
