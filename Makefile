@@ -15,8 +15,8 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC =	./srcs/rl_test.c ./srcs/tokenizer/tokenizer.c \
-		./srcs/tokenizer/tokenizer_utils.c ./srcs/tokenizer/free.c \
+SRC =	./src/rl_test.c ./src/tokenizer/tokenizer.c \
+		./src/tokenizer/tokenizer_utils.c ./src/tokenizer/free.c \
 		./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c \
 		./src/prompt/prompt.c ./src/prompt/prompt_utils.c \
 		./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c \
