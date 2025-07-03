@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:21:18 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/16 16:59:36 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/07/03 04:47:42 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,65 +21,105 @@ int	is_operator(char c)
 }
 
 // creates a new token node with given content and type
-t_token	*create_token(char *content, t_token_type type)
+t_token	*create_token(char *str, t_token_type type, int len)
 {
 	t_token	*new_token;
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->content = ft_strdup(content);
+	new_token->content = ft_substr(str, 0, len);
 	new_token->type = type;
+	new_token->len = len;
+	new_token->to_del = (new_token->content[0] != '\''
+			&& new_token->content[0] != '\"');
 	new_token->next = NULL;
 	return (new_token);
 }
 
-// add a new token to the end of the token linked list
-void	add_token_to_list(t_token **head, t_token **curr, t_token *new_token)
+// add a new token to the end of the token the list
+void	add_token(t_token **list, t_token *new_token)
 {
-	if (!*head)
-	{
-		*head = new_token;
-		*curr = new_token;
-	}
+	t_token	*curr;
+
+	if (!list || !new_token)
+		return ;
+	if (!*list)
+		*list = new_token;
 	else
 	{
-		(*curr)->next = new_token;
-		*curr = new_token;
+		curr = *list;
+		while (curr->next)
+			curr = curr->next;
+		curr->next = new_token;
 	}
+}
+
+// adds token to list and releases token from auxiliary structure
+void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt)
+{
+	add_token(list, token);
+	if (oprt->token)
+		free(oprt->token);
+}
+
+// updates state of current quote (to handle parsing of quotes)
+char	update_quote_state(char quote_state, char curr_char)
+{
+	if ((quote_state == '\'' && curr_char == '\'')
+		|| (quote_state == '\"' && curr_char == '\"'))
+		return (0);
+	if (quote_state == 0 && (curr_char == '\'' || curr_char == '\"'))
+		return (curr_char);
+	return (quote_state);
 }
 
 // extracts a word (cmd or arg) from the input and returns a token
 t_token	*handle_word(char *input, int *i)
 {
-	int		start;
-	char	*word;
-	t_token	*new_token;
+	int	start;
 
 	start = *i;
-	while (input[*i] && input[*i] != ' ' && input[*i] != '\t'
-		&& !is_operator(input[*i]))
+	while (input[*i] && input[*i] != ' '
+		&& input[*i] != '\t' && !is_operator(input[*i]))
 		(*i)++;
-	word = ft_substr(input, start, *i - start);
-	new_token = create_token(word, CMD);
-	free(word);
-	return (new_token);
+	return (create_token(&input[start], CMD, *i - start));
+}
+
+void	init_token_ops(t_token_oprt *oprt)
+{
+	oprt[0] = (t_token_oprt){2, "<<", HEREDOC};
+	oprt[1] = (t_token_oprt){1, "<", REDIR_IN};
+	oprt[2] = (t_token_oprt){2, ">>", APPEND};
+	oprt[3] = (t_token_oprt){1, ">", REDIR_OUT};
+	oprt[4] = (t_token_oprt){1, "|", PIPE};
+	oprt[5] = (t_token_oprt){0, NULL, 0};// end of array
 }
 
 // checks for special operator tokens:
 // (|, <, >, >>, <<)
 // and returns the matching token
-t_token	*handle_operator(char *input, int *i)
+t_token_oprt	handle_operator(char *input)
 {
-	if (input[*i] == '>' && input[*i + 1] == '>')
-		return (*i += 2, create_token(">>", APPEND));
-	if (input[*i] == '<' && input[*i + 1] == '<')
-		return (*i += 2, create_token("<<", HEREDOC));
-	if (input[*i] == '>')
-		return (*i += 1, create_token(">", REDIR_OUT));
-	if (input[*i] == '<')
-		return (*i += 1, create_token("<", REDIR_IN));
-	if (input[*i] == '|')
-		return (*i += 1, create_token("|", PIPE));
-	return (NULL);
+	int				i;
+	t_token_oprt	oprt[6];  // 5 oprts + NULL
+	t_token_oprt	result;
+
+	i = 0;
+	init_token_ops(oprt);
+	while (oprt[i].token)
+	{
+		if (ft_strncmp(input, oprt[i].token, oprt[i].len) == 0)
+		{
+			result.len = oprt[i].len;
+			result.token = ft_strdup(oprt[i].token);
+			result.type = oprt[i].type;
+			return (result);
+		}
+		i++;
+	}
+	result.len = 0;
+	result.token = NULL;
+	result.type = CMD;
+	return (result);
 }
