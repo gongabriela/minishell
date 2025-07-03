@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rl_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:18:33 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/16 17:05:32 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:56:03 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../inc/minishell.h"
 
 void	print_tokens(t_token *head)
 {

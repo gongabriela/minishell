@@ -14,7 +14,7 @@
 # define MINISHELL_H
 # include <stdio.h>
 # include <stdlib.h>
-# include "../Libft/libft.h"
+# include "../libft/libft.h"
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -43,6 +43,38 @@ typedef struct s_env
 	bool			env;
 }						t_env;
 
+// commands, args and strings (delete)
+// |
+// <
+// >
+// >>
+// << (delete)
+typedef enum e_token_type
+{
+	CMD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
+	HEREDOC
+}	t_token_type;
+
+typedef struct s_token
+{
+	char			*content;
+	t_token_type	type;
+	int				len;	/* tamanho original (delete) */
+	bool			to_del;	/* o que deve ser deletado depois (ex: aspas) (delete) */
+	struct s_token	*next;
+}	t_token;
+
+typedef struct s_token_oprt
+{
+	int				len;
+	char			*token;
+	t_token_type	type;
+}	t_token_oprt;
+
 // --------- Funções principais -------------------------------
 
 void	check_args(int argc, char **argv, char **envp);
@@ -66,6 +98,21 @@ char	*get_hostname(void);
 char	*get_hostname_line(int fd);
 int		pre_parsing(char *input);
 int		get_input(t_shell *shell);
+
+// --------- Funções de tokenizer ------------------------------
+t_token			*tokenize(char *input);
+/*int		validate_token(t_token *tokens);*/
+
+// tokenizer_utils
+int				is_operator(char c);
+/*int		is_incomplete_input(t_token *tokens);*/
+void			free_tokens(t_token *head);
+void			add_token(t_token **list, t_token *new_token);
+void			add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
+char			update_quote_state(char quote_state, char curr_char);
+t_token			*handle_word(char *input, int *i);
+t_token			*create_token(char *str, t_token_type type, int len);
+t_token_oprt	handle_operator(char *input);
 
 // --------- Funções de free -----------------------------------
 

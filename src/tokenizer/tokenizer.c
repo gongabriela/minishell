@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/07/03 04:50:11 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/07/03 19:55:56 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../inc/minishell.h"
 
 // main tokenizer function: iterates over input
 // and builds a linked list of tokens
@@ -56,7 +56,7 @@ int	validate_token(t_token *tokens)
 			if (!prev || !tokens->next || tokens->next->type == PIPE)
 				return (ft_printf("zsh: parse error near `||'\n"), 1);
 		}
-		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT 
+		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
 			|| tokens->type == APPEND || tokens->type == HEREDOC)
 		{
 			if (!tokens->next || tokens->next->type != CMD)
