@@ -41,6 +41,7 @@ void	init_structs(t_shell *shell)
 	shell->prompt = NULL;
 	shell->exit_code = 0;
 	shell->envp = NULL;
+	shell->tokens = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)

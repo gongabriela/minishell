@@ -47,6 +47,8 @@ void	ft_free_shell(t_shell *shell)
 		free(shell->prompt);
 	if (shell->input != NULL)
 		free(shell->input);
+	if (shell->tokens != NULL)
+		free_struct_tokens(shell->tokens);
 	init_structs(shell);
 }
 
@@ -68,4 +70,18 @@ void	ft_exit(t_shell *shell, int exit_code)
 	free_struct_env(shell->env);
 	rl_clear_history();
 	exit(exit_code);
+}
+
+void	free_struct_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens->next;
+		if (tokens->content)
+			free(tokens->content);
+		free(tokens);
+		tokens = tmp;
+	}
 }

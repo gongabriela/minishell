@@ -119,6 +119,7 @@ t_token_oprt	handle_operator(char *input);
 void	free_struct_env(t_env *env);
 void	ft_free_shell(t_shell *shell);
 void	ft_exit(t_shell *shell, int exit_code);
+void	free_struct_tokens(t_token *tokens);
 
 // --------- Funcoes de debug ----------------------------------
 
