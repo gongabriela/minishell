@@ -69,7 +69,32 @@ void	minishell(t_shell *shell)
 	while (1)
 	{
 		if (get_input(shell))
+			shell->tokens = tokenize(shell->input);
+		if(is_bultin(shell->tokens))
 			test_builtins(shell);
+		//free tokens ???
 		ft_free_shell(shell);
 	}
+}
+
+int	is_bultin(t_token *token)
+{
+	 if (token->type == CMD)
+	 {
+		if (ft_strncmp(token->content, "echo", 5) == 0)
+			return (1);
+		else if (ft_strncmp(token->content, "env", 4) == 0)
+			return (1);
+		else if (ft_strncmp(token->content, "pwd", 4) == 0)
+			return (1);
+		else if (ft_strncmp(token->content, "exit", 5) == 0)
+			return (1);
+		else if (ft_strncmp(token->content, "cd", 3) == 0)
+			return (1);
+		else if (ft_strncmp(token->content, "export", 7) == 0)
+			return (1);
+		else if (ft_strncmp(token->content, "unset", 6) == 0)
+			return (1);
+	}
+	return (0);
 }

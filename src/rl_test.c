@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:18:33 by adias-do          #+#    #+#             */
-/*   Updated: 2025/07/03 19:56:03 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:38:19 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_tokens(t_token *head)
 }
 
 
-int	main(void)
+/*int	main(void)
 {
 	char	*rl;
 	t_token	*tokens;
@@ -53,4 +53,4 @@ int	main(void)
 		free(rl);
 	}
 	return (0);
-}
+}*/

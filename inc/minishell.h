@@ -25,6 +25,7 @@
 typedef struct s_shell
 {
 	struct s_env	*env;
+	struct s_token	*tokens;
 	char			*prompt;
 	char			*input;
 	char			*pwd;
@@ -84,8 +85,7 @@ void	minishell(t_shell *shell);
 // --------- Funções auxiliares para pegar as env --------------
 
 void	get_env(t_shell *shell, char **envp);
-void	ft_lstadd_back(t_env **lst, t_env *new);
-t_env	*ft_lstlast(t_env *lst);
+void	ft_lstadd_back_env(t_env **lst, t_env *new);
 t_env	*create_env_node(char *env, t_shell *shell);
 
 // ------------- Funcoes de criar o prompt --------------------
@@ -125,6 +125,8 @@ void	ft_exit(t_shell *shell, int exit_code);
 void	print_cmd_paths(char **paths);
 
 // --------- Funcoes de builtins -------------------------------
+
+int	is_bultin(t_token *token);
 
 // --------- Builtin: echo ----------------------------------
 void	echo(t_shell *shell, char **args);

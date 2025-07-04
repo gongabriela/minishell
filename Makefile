@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRC =	./src/rl_test.c ./src/tokenizer/tokenizer.c \
-		./src/tokenizer/tokenizer_utils.c ./src/tokenizer/free.c \
+		./src/tokenizer/tokenizer_utils.c \
 		./src/free.c ./src/get_env.c ./src/debug.c ./src/minishell.c \
 		./src/prompt/prompt.c ./src/prompt/prompt_utils.c \
 		./src/pre_parsing.c ./src/builtins/builtin_testing.c ./src/builtins/echo.c \

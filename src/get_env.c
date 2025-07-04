@@ -68,7 +68,7 @@ void	get_env(t_shell *shell, char **envp)
 	while (envp[i])
 	{
 		node = create_env_node(envp[i], shell);
-		ft_lstadd_back(&shell->env, node);
+		ft_lstadd_back_env(&shell->env, node);
 		i++;
 	}
 	shell->pwd = getcwd(NULL, 0);
@@ -84,7 +84,7 @@ void	get_env(t_shell *shell, char **envp)
  * @param lst Pointer to the head of the environment list.
  * @param new The new node to add.
  */
-void	ft_lstadd_back(t_env **lst, t_env *new)
+void	ft_lstadd_back_env(t_env **lst, t_env *new)
 {
 	t_env	*last;
 
