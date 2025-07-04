@@ -66,7 +66,7 @@ int	cd_too_many_args(char **args)
 	i= 0;
 	while (args[i])
 		i++;
-	if (i < 2)
+	if (i > 2)
 		return (1);
 	return (0);
 }
