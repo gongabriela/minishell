@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:02:05 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/27 12:26:17 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:44:26 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
  * @param shell The shell state.
  * @param args The arguments passed to export.
  */
-void export(t_shell *shell, char **args)
+void	export(t_shell *shell, char **args)
 {
-	int i;
-	t_env *var;
+	int		i;
+	t_env	*var;
 
 	if (args[1] == NULL)
 	{
 		print_export_table(shell);
-		return;
+		return ;
 	}
 	i = 1;
 	while (args[i])

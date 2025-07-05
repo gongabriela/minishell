@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 14:53:10 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/27 12:26:01 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:52:52 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
  * @param src The source environment variable node.
  * @return Pointer to the new copied node, or NULL on allocation failure.
  */
-t_env *copy_env_node(t_env *src)
+t_env	*copy_env_node(t_env *src)
 {
-	t_env *copy;
+	t_env	*copy;
 
 	copy = malloc(sizeof(t_env));
 	if (!copy)
 		return (NULL);
 	copy->key = ft_strdup(src->key);
-	copy->content = src->content ? ft_strdup(src->content) : NULL;
+	if (src->content)
+		copy->content = ft_strdup(src->content);
+	else
+		copy->content = NULL;
 	copy->export = src->export;
 	copy->next = NULL;
 	return (copy);
@@ -38,14 +41,15 @@ t_env *copy_env_node(t_env *src)
  * @param sorted Pointer to the head of the sorted list.
  * @param node The node to insert.
  */
-void insert_sorted(t_env **sorted, t_env *node)
+void	insert_sorted(t_env **sorted, t_env *node)
 {
-	t_env *curr;
-	t_env *prev;
+	t_env	*curr;
+	t_env	*prev;
 
 	curr = *sorted;
 	prev = NULL;
-	while (curr && ft_strncmp(node->key, curr->key, ft_strlen(node->key) + 1) > 0)
+	while (curr && ft_strncmp(node->key, curr->key, ft_strlen(node->key) + 1)
+		> 0)
 	{
 		prev = curr;
 		curr = curr->next;
@@ -67,7 +71,7 @@ void insert_sorted(t_env **sorted, t_env *node)
  *
  * @param sorted The head of the sorted environment variable list.
  */
-void print_sorted_env(t_env *sorted)
+void	print_sorted_env(t_env *sorted)
 {
 	while (sorted)
 	{
@@ -84,9 +88,9 @@ void print_sorted_env(t_env *sorted)
  *
  * @param lst The head of the list to free.
  */
-void free_env_list(t_env *lst)
+void	free_env_list(t_env *lst)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while (lst)
 	{
@@ -104,11 +108,11 @@ void free_env_list(t_env *lst)
  *
  * @param shell The shell state containing the environment list.
  */
-void print_export_table(t_shell *shell)
+void	print_export_table(t_shell *shell)
 {
-	t_env *curr;
-	t_env *sorted;
-	t_env *copy;
+	t_env	*curr;
+	t_env	*sorted;
+	t_env	*copy;
 
 	curr = shell->env;
 	sorted = NULL;

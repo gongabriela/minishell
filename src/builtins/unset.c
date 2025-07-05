@@ -39,10 +39,25 @@ void	delete_env_node(t_shell *shell, t_env *target)
 	}
 }
 
+static void	unset_one(t_shell *shell, char *arg)
+{
+	t_env	*env;
+
+	env = shell->env;
+	while (env)
+	{
+		if (ft_strncmp(env->key, arg, ft_strlen(env->key) + 1) == 0)
+		{
+			delete_env_node(shell, env);
+			break ;
+		}
+		env = env->next;
+	}
+}
+
 void	unset(t_shell *shell, char **args)
 {
-	int		i;
-	t_env	*env;
+	int	i;
 
 	i = 1;
 	if (!args[1])
@@ -55,18 +70,8 @@ void	unset(t_shell *shell, char **args)
 	}
 	while (args[i])
 	{
-		env = shell->env;
-		while (env)
-		{
-			if (ft_strncmp(env->key, args[i], ft_strlen(env->key) + 1) == 0)
-			{
-				delete_env_node(shell, env);
-				break ;
-			}
-			env = env->next;
-		}
+		unset_one(shell, args[i]);
 		i++;
 	}
 	shell->exit_code = 0;
 }
-

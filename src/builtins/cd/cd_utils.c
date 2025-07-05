@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/14 19:46:10 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/06/14 19:46:10 by ggoncalv         ###   ########.fr       */
+/*   Created: 2025/07/05 10:37:26 by ggoncalv          #+#    #+#             */
+/*   Updated: 2025/07/05 10:37:26 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Retrieves the value of an environment variable by key.
@@ -20,7 +20,8 @@
  *
  * @param env Pointer to the environment variable list.
  * @param key The name of the environment variable to search for.
- * @return Pointer to the value/content of the environment variable, or NULL if not found.
+ * @return Pointer to the value/content of the environment variable, or NULL if
+ * not found.
  */
 char	*get_env_value_cd(t_env *env, const char *key)
 {
@@ -63,7 +64,7 @@ int	cd_too_many_args(char **args)
 {
 	int	i;
 
-	i= 0;
+	i = 0;
 	while (args[i])
 		i++;
 	if (i > 2)
@@ -104,7 +105,8 @@ char	*cd_get_path(char **args, char *home, char *oldpwd)
 }
 
 /**
- * @brief Updates the PWD and OLDPWD environment variables after a directory change.
+ * @brief Updates the PWD and OLDPWD environment variables after a directory
+ * change.
  *
  * Also updates the shell's internal pwd field.
  *
@@ -136,37 +138,4 @@ void	update_pwd_env(t_shell *shell, char *oldpwd)
 		free(shell->pwd);
 		shell->pwd = ft_strdup(cwd);
 	}
-}
-
-/**
- * @brief Implements the cd builtin command.
- *
- * Handles argument parsing, error reporting, directory changing, and environment updates.
- *
- * @param shell Pointer to the shell structure.
- * @param args The argument vector for the cd command.
- */
-void	cd(t_shell *shell, char **args)
-{
-	char	*home;
-	char	*oldpwd;
-	char	*path;
-
-	home = get_env_value_cd(shell->env, "HOME");
-	oldpwd = get_env_value_cd(shell->env, "OLDPWD");
-	if (cd_too_many_args(args))
-		return (cd_error("too many arguments", NULL), (void)0);
-	path = cd_get_path(args, home, oldpwd);
-	if (!path)
-	{
-		if (!args[1] || args[1][0] == '~')
-			return (cd_error("HOME not set", NULL), (void)0);
-		if (!ft_strncmp(args[1], "-", 2))
-			return (cd_error("OLDPWD not set", NULL), (void)0);
-	}
-	if (chdir(path) == -1)
-		cd_error("No such file or directory", path);
-	else
-		update_pwd_env(shell, shell->pwd);
-	free(path);
 }

@@ -6,11 +6,11 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:18:33 by adias-do          #+#    #+#             */
-/*   Updated: 2025/07/04 10:38:19 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:38:08 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	print_tokens(t_token *head)
 {
@@ -31,26 +31,3 @@ void	print_tokens(t_token *head)
 		head = head->next;
 	}
 }
-
-
-/*int	main(void)
-{
-	char	*rl;
-	t_token	*tokens;
-
-	while (1)
-	{
-		rl = readline("minishell$ ");
-		//ft_printf("%s\n", rl);
-		if (strcmp(rl, "exit") == 0)
-		{
-			free(rl);
-			exit(0);
-		}
-		tokens = tokenize(rl);
-		print_tokens(tokens);
-		validate_token(tokens);
-		free(rl);
-	}
-	return (0);
-}*/

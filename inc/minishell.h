@@ -64,8 +64,8 @@ typedef struct s_token
 {
 	char			*content;
 	t_token_type	type;
-	int				len;	/* tamanho original (delete) */
-	bool			to_del;	/* o que deve ser deletado depois (ex: aspas) (delete) */
+	int				len;
+	bool			to_del;
 	struct s_token	*next;
 }	t_token;
 
@@ -100,18 +100,18 @@ int		pre_parsing(char *input);
 int		get_input(t_shell *shell);
 
 // --------- Funções de tokenizer ------------------------------
-t_token			*tokenize(char *input);
+t_token	*tokenize(char *input);
 /*int		validate_token(t_token *tokens);*/
 
 // tokenizer_utils
-int				is_operator(char c);
+int		is_operator(char c);
 /*int		is_incomplete_input(t_token *tokens);*/
-void			free_tokens(t_token *head);
-void			add_token(t_token **list, t_token *new_token);
-void			add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
-char			update_quote_state(char quote_state, char curr_char);
-t_token			*handle_word(char *input, int *i);
-t_token			*create_token(char *str, t_token_type type, int len);
+void	free_tokens(t_token *head);
+void	add_token(t_token **list, t_token *new_token);
+void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
+char	update_quote_state(char quote_state, char curr_char);
+t_token	*handle_word(char *input, int *i);
+t_token	*create_token(char *str, t_token_type type, int len);
 t_token_oprt	handle_operator(char *input);
 
 // --------- Funções de free -----------------------------------
@@ -127,7 +127,7 @@ void	print_cmd_paths(char **paths);
 
 // --------- Funcoes de builtins -------------------------------
 
-int	is_bultin(t_token *token);
+int		is_bultin(t_token *token);
 
 // --------- Builtin: echo ----------------------------------
 void	echo(t_shell *shell, char **args);
