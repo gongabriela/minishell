@@ -6,13 +6,11 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:18:33 by adias-do          #+#    #+#             */
-/*   Updated: 2025/07/03 04:09:03 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:52:16 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../../inc/minishell.h"
 
 void	print_tokens(t_token *head)
 {

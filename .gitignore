@@ -4,3 +4,6 @@
 # ignore *.o | *.a
 *.o
 *.a
+
+# ignore exec
+minishell

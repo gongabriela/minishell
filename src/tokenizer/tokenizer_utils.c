@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:21:18 by adias-do          #+#    #+#             */
-/*   Updated: 2025/07/03 04:47:42 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/07/04 10:36:01 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../inc/minishell.h"
 
 // returns 1 if the character is a valid operator
 int	is_operator(char c)
