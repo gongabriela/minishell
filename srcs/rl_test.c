@@ -6,11 +6,13 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 16:18:33 by adias-do          #+#    #+#             */
-/*   Updated: 2025/06/16 17:05:32 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/07/03 04:09:03 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 void	print_tokens(t_token *head)
 {
@@ -32,25 +34,39 @@ void	print_tokens(t_token *head)
 	}
 }
 
-
-int	main(void)
+int main(int argc, char **argv, char **envp)
 {
-	char	*rl;
-	t_token	*tokens;
+	char    *line;
+	t_token *tokens;
+	t_token *curr;
 
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	while (1)
 	{
-		rl = readline("minishell$ ");
-		//ft_printf("%s\n", rl);
-		if (strcmp(rl, "exit") == 0)
+		line = readline("minishell> ");
+		if (!line)
+			break;
+		if (*line)
+			add_history(line);
+
+		tokens = tokenize(line);
+		curr = tokens;
+		while (curr)
 		{
-			free(rl);
-			exit(0);
+			printf("Token: %-10s | Type: %d\n", curr->content, curr->type);
+			curr = curr->next;
 		}
-		tokens = tokenize(rl);
-		print_tokens(tokens);
-		validate_token(tokens);
-		free(rl);
+		while (tokens)
+		{
+			curr = tokens;
+			tokens = tokens->next;
+			free(curr->content);
+			free(curr);
+		}
+		free(line);
 	}
-	return (0);
+	return 0;
 }
+
