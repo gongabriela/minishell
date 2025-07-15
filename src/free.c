@@ -49,6 +49,8 @@ void	ft_free_shell(t_shell *shell)
 		free(shell->input);
 	if (shell->tokens != NULL)
 		free_struct_tokens(shell->tokens);
+	if (shell->tree != NULL)
+		ft_free_ast(shell->tree);
 	init_structs(shell);
 }
 
@@ -83,5 +85,25 @@ void	free_struct_tokens(t_token *tokens)
 			free(tokens->content);
 		free(tokens);
 		tokens = tmp;
+	}
+}
+
+void	ft_free_ast(t_exec *tree)
+{
+	int	i;
+
+	i = 0;
+	if (tree)
+	{
+		if (tree->cmd)
+		{
+			while (tree->cmd[i])
+			{
+				free(tree->cmd[i]);
+				i++;
+			}
+			free(tree->cmd);
+		}
+		free(tree);
 	}
 }

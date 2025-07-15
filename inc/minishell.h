@@ -26,6 +26,7 @@ typedef struct s_shell
 {
 	struct s_env	*env;
 	struct s_token	*tokens;
+	struct s_exec	*tree;
 	char			*prompt;
 	char			*input;
 	char			*pwd;
@@ -76,6 +77,14 @@ typedef struct s_token_oprt
 	t_token_type	type;
 }	t_token_oprt;
 
+// estrutura temporaria para AST -----------------------------
+typedef struct s_exec
+{
+	char				**cmd;
+	t_token_type		type;
+	struct s_exec		*next;
+}	t_exec;
+
 // --------- Funções principais -------------------------------
 
 void	check_args(int argc, char **argv, char **envp);
@@ -120,14 +129,14 @@ void	free_struct_env(t_env *env);
 void	ft_free_shell(t_shell *shell);
 void	ft_exit(t_shell *shell, int exit_code);
 void	free_struct_tokens(t_token *tokens);
+void	ft_free_ast(t_exec *tree);
+void	free_cmd_and_args(char **cmd);
 
 // --------- Funcoes de debug ----------------------------------
 
 void	print_cmd_paths(char **paths);
 
 // --------- Funcoes de builtins -------------------------------
-
-int		is_bultin(t_token *token);
 
 // --------- Builtin: echo ----------------------------------
 void	echo(t_shell *shell, char **args);
@@ -178,5 +187,15 @@ int		count_args(const char *s);
 char	*copy_arg(const char *s, int len);
 char	*extract_arg(const char **s);
 char	**split_args(const char *s);
+
+// --------- Funções de execução ------------------------------
+int		create_ast(t_shell *shell, t_token *tokens);
+t_exec	*create_node_cmd(t_shell *shell, t_token **tokens);
+void	add_node_to_tree(t_exec **tree, t_exec *node);
+char	**get_cmd_and_args(t_token **tokens, t_shell *shell);
+void	execution(t_exec *tree, t_shell *shell);
+void	execute_builtin(t_shell *shell, t_exec *tree, char **cmd);
+void	execution(t_exec *tree, t_shell *shell);
+int	is_builtin(char **cmd);
 
 #endif

@@ -171,3 +171,41 @@ char	**split_args(const char *s)
 	args[i] = NULL;
 	return (args);
 }
+
+void	test_builtins(t_shell *shell)
+{
+	char	**args;
+	int		i;
+
+	args = split_args(shell->input);
+	execute_builtin_test(shell, args);
+	i = 0;
+	while (args && args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
+
+void	execute_builtin_test(t_shell *shell, char **args)
+{
+	if (!args || !args[0])
+		return ;
+	if (ft_strncmp(args[0], "echo", 5) == 0)
+		echo(shell, args);
+	else if (ft_strncmp(args[0], "env", 4) == 0)
+		env(shell);
+	else if (ft_strncmp(args[0], "pwd", 4) == 0)
+		pwd(shell);
+	else if (ft_strncmp(args[0], "exit", 5) == 0)
+		ft_exit_builtin(shell, args);
+	else if (ft_strncmp(args[0], "cd", 3) == 0)
+		cd(shell, args);
+	else if (ft_strncmp(args[0], "export", 7) == 0)
+		export(shell, args);
+	else if (ft_strncmp(args[0], "unset", 6) == 0)
+		unset(shell, args);
+	else
+		printf("Comando builtin não reconhecido: %s\n", args[0]);
+}
