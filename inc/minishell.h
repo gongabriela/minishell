@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <stdbool.h>
+#include <sys/wait.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -193,9 +194,12 @@ int		create_ast(t_shell *shell, t_token *tokens);
 t_exec	*create_node_cmd(t_shell *shell, t_token **tokens);
 void	add_node_to_tree(t_exec **tree, t_exec *node);
 char	**get_cmd_and_args(t_token **tokens, t_shell *shell);
-void	execution(t_exec *tree, t_shell *shell);
 void	execute_builtin(t_shell *shell, t_exec *tree, char **cmd);
 void	execution(t_exec *tree, t_shell *shell);
-int	is_builtin(char **cmd);
+int		is_builtin(char **cmd);
 
+void	execute_external_cmd(t_exec *tree, t_shell *shell);
+char	*get_cmd_path(char **cmd, t_shell *shell);
+char	*find_exec_path(char **split_paths, char *cmd);
+void	ft_free_split(char **split);
 #endif
