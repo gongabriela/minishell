@@ -32,16 +32,9 @@ void	minishell(t_shell *shell)
 	{
 		if (get_input(shell))
 			shell->tokens = tokenize(shell->input);
-		if (create_ast(shell, shell->tokens))
-			execution(shell->tree, shell);
-		/*if (is_bultin(shell->tokens))
-			test_builtins(shell);
-		t_token *current = shell->tokens;
-		while (current)
-		{
-			printf("Tokens: %s\n", current->content);
-			current = current->next;
-		}*/
+		create_ast(shell, shell->tokens);
+		print_ast(shell->tree, 0);
+		//execution(shell->tree, shell);
 		ft_free_shell(shell);
 	}
 }

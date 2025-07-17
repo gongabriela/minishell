@@ -88,22 +88,3 @@ void	free_struct_tokens(t_token *tokens)
 	}
 }
 
-void	ft_free_ast(t_exec *tree)
-{
-	int	i;
-
-	i = 0;
-	if (tree)
-	{
-		if (tree->cmd)
-		{
-			while (tree->cmd[i])
-			{
-				free(tree->cmd[i]);
-				i++;
-			}
-			free(tree->cmd);
-		}
-		free(tree);
-	}
-}
