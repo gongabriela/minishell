@@ -26,6 +26,7 @@ typedef struct s_shell
 {
 	struct s_env	*env;
 	struct s_token	*tokens;
+	struct s_exec	*tree;
 	char			*prompt;
 	char			*input;
 	char			*pwd;
@@ -76,6 +77,16 @@ typedef struct s_token_oprt
 	t_token_type	type;
 }	t_token_oprt;
 
+// estrutura temporaria para AST -----------------------------
+typedef struct s_exec
+{
+	char				**cmd;
+	char				*oprt;
+	t_token_type		type;
+	struct s_exec		*left;
+	struct s_exec		*right;
+}	t_exec;
+
 // --------- Funções principais -------------------------------
 
 void	check_args(int argc, char **argv, char **envp);
@@ -120,6 +131,7 @@ void	free_struct_env(t_env *env);
 void	ft_free_shell(t_shell *shell);
 void	ft_exit(t_shell *shell, int exit_code);
 void	free_struct_tokens(t_token *tokens);
+void	free_cmd_and_args(char **cmd);
 
 // --------- Funcoes de debug ----------------------------------
 
@@ -178,5 +190,14 @@ int		count_args(const char *s);
 char	*copy_arg(const char *s, int len);
 char	*extract_arg(const char **s);
 char	**split_args(const char *s);
+
+// --------- Funções da AST -----------------------------------
+void	create_ast(t_shell *shell, t_token *tokens);
+t_exec	*create_node_ast(t_token **tokens);
+void	add_node_ast(t_exec *node, t_exec **root);
+void	ft_free_ast(t_exec *tree);
+char	**get_cmd_and_args(t_token **tokens, t_shell *shell);
+char	**get_full_cmd(t_token **tokens);
+void	print_ast(t_exec *node, int level);
 
 #endif

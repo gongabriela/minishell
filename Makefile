@@ -23,7 +23,9 @@ SRC =	./src/tokenizer/rl_test.c ./src/tokenizer/tokenizer.c \
 		./src/builtins/env.c ./src/builtins/pwd.c ./src/builtins/exit.c \
 		./src/builtins/cd/cd.c ./src/builtins/cd/cd_utils.c ./src/builtins/unset.c \
 		./src/builtins/export/export.c \
-		./src/builtins/export/export_utils.c ./src/builtins/export/export_utils_2.c ./src/main.c
+		./src/builtins/export/export_utils.c ./src/builtins/export/export_utils_2.c \
+		./src/ast/create_ast.c ./src/ast/print_ast.c ./src/main.c \
+
 OBJ = $(SRC:.c=.o)
 
 LIBFT = ./libft/libft.a

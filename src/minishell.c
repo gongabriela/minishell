@@ -26,6 +26,19 @@ int	get_input(t_shell *shell)
 	return (0);
 }
 
+void	minishell(t_shell *shell)
+{
+	while (1)
+	{
+		if (get_input(shell))
+			shell->tokens = tokenize(shell->input);
+		create_ast(shell, shell->tokens);
+		print_ast(shell->tree, 0);
+		//execution(shell->tree, shell);
+		ft_free_shell(shell);
+	}
+}
+
 void	execute_builtin_test(t_shell *shell, char **args)
 {
 	if (!args || !args[0])
@@ -62,18 +75,6 @@ void	test_builtins(t_shell *shell)
 		i++;
 	}
 	free(args);
-}
-
-void	minishell(t_shell *shell)
-{
-	while (1)
-	{
-		if (get_input(shell))
-			shell->tokens = tokenize(shell->input);
-		if (is_bultin(shell->tokens))
-			test_builtins(shell);
-		ft_free_shell(shell);
-	}
 }
 
 int	is_bultin(t_token *token)
