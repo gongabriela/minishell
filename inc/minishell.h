@@ -33,7 +33,10 @@ typedef struct s_shell
 	char			*pwd;
 	int				exit_code;
 	char			**envp;
-
+	int				**pipe_fds;
+	int				cmd_total;
+	int				pid_index;
+	pid_t			**pids;
 }					t_shell;
 
 //estrutura para as variaveis de ambiente-------------------------
@@ -86,6 +89,8 @@ typedef struct s_exec
 	t_token_type		type;
 	struct s_exec		*left;
 	struct s_exec		*right;
+	int					stdin;
+	int					stdout;
 }	t_exec;
 
 // --------- Funções principais -------------------------------
@@ -125,6 +130,7 @@ char	update_quote_state(char quote_state, char curr_char);
 t_token	*handle_word(char *input, int *i);
 t_token	*create_token(char *str, t_token_type type, int len);
 t_token_oprt	handle_operator(char *input);
+void	print_tokens(t_token *head);
 
 // --------- Funções de free -----------------------------------
 
@@ -196,6 +202,7 @@ t_exec	*create_node_ast(t_token **tokens);
 void	add_node_ast(t_exec *node, t_exec **root);
 void	ft_free_ast(t_exec *tree);
 char	**get_cmd_and_args(t_token **tokens, t_shell *shell);
+char	**get_simple_cmd(t_token **tokens);
 char	**get_full_cmd(t_token **tokens);
 void	print_ast(t_exec *node, int level);
 
@@ -204,8 +211,16 @@ void	execute_builtin(t_shell *shell, t_exec *tree, char **cmd);
 void	execution(t_exec *tree, t_shell *shell);
 int		is_builtin(char **cmd);
 
-void	execute_external_cmd(t_exec *tree, t_shell *shell);
+void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index);
 char	*get_cmd_path(char **cmd, t_shell *shell);
 char	*find_exec_path(char **split_paths, char *cmd);
 void	ft_free_split(char **split);
+
+void	pre_execution(t_exec *tree, t_shell *shell);
+int		get_cmd_total(t_token *head);
+int		**init_pipes(t_shell *shell);
+int		create_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
+int		get_redir_info_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int cmd);
+void	ft_free_pipes(int **pipe_fds, int cmd_total);
+
 #endif

@@ -42,10 +42,15 @@ t_exec	*create_node_ast(t_token **tokens)
 	node->oprt = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->stdin = 0;
+	node->stdout = 1;
 	node->type = (*tokens)->type;
 	if (node->type == CMD)
 	{
-		node->cmd = get_full_cmd(tokens);
+		if ((*tokens)->next && (*tokens)->next->type == CMD)
+			node->cmd = get_full_cmd(tokens);
+		else
+			node->cmd = get_simple_cmd(tokens);
 		if (!node->cmd)
 			return (free(node), perror("malloc failed"), NULL);
 	}
@@ -58,6 +63,21 @@ t_exec	*create_node_ast(t_token **tokens)
 			*tokens = (*tokens)->next;
 	}
 	return (node);
+}
+
+char	**get_simple_cmd(t_token **tokens)
+{
+	char	**cmd;
+
+	cmd = malloc(sizeof(char *) * 2);
+	if (!cmd)
+		return (NULL);
+	cmd[0] = ft_strdup((*tokens)->content);
+	if (!cmd[0])
+		perror("malloc failed");
+	cmd[1] = NULL;
+	*tokens = (*tokens)->next;
+	return (cmd);
 }
 
 void	add_node_ast(t_exec *node, t_exec **root)

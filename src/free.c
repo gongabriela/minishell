@@ -51,6 +51,8 @@ void	ft_free_shell(t_shell *shell)
 		free_struct_tokens(shell->tokens);
 	if (shell->tree != NULL)
 		ft_free_ast(shell->tree);
+	if (shell->pipe_fds != NULL)
+		ft_free_pipes(shell->pipe_fds, shell->cmd_total - 1);
 	init_structs(shell);
 }
 

@@ -32,9 +32,29 @@ void	minishell(t_shell *shell)
 	{
 		if (get_input(shell))
 			shell->tokens = tokenize(shell->input);
+		shell->cmd_total = get_cmd_total(shell->tokens);
 		create_ast(shell, shell->tokens);
+		pre_execution(shell->tree, shell);
 		print_ast(shell->tree, 0);
-		//execution(shell->tree, shell);
+		/*execution(shell->tree, shell);
+		for (int i = -1; i < shell->pid_index; i++) {
+			waitpid(shell->pids[i][0], &shell->exit_code, 0);
+		}*/
 		ft_free_shell(shell);
 	}
+}
+//e se tiver um pipe a mais? tipo erro de sintaxe
+//e se tiver pipe duplo? tipo | | ls
+int	get_cmd_total(t_token *head)
+{
+	int cmds;
+
+	cmds = 0;
+	while (head)
+	{
+		if (head->type == PIPE)
+			cmds++;
+		head = head->next;
+	}
+	return (cmds + 1);
 }

@@ -12,22 +12,21 @@
 
 #include "../../inc/minishell.h"
 
-void	execute_external_cmd(t_exec *tree, t_shell *shell)
+void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index)
 {
-	pid_t	pid;
 	char	*path;
 
 	path = get_cmd_path(tree->cmd, shell);
 	if (!path)
 		return ;
-	pid = fork();
-	if (pid < 0)
+	shell->pids[pid_index][0] = fork();
+	if (shell->pids[pid_index][0] < 0)
 	{
 		perror("Fork failed");
 		shell->exit_code = 1;
 		return ;
 	}
-	if (pid == 0)
+	if (shell->pids[pid_index][0] == 0)
 	{
 		if (execve(path, tree->cmd, shell->envp) == -1)
 		{
@@ -36,7 +35,6 @@ void	execute_external_cmd(t_exec *tree, t_shell *shell)
 			ft_exit(shell, 1);
 		}
 	}
-	waitpid(pid, &shell->exit_code, 0);
 	free(path);
 }
 
