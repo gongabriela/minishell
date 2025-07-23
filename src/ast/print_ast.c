@@ -43,7 +43,7 @@ void	print_ast(t_exec *node, int level)
 	// Indenta e mostra stdin e stdout
 	for (i = 0; i < level + 1; i++)
 		printf("  ");
-	printf("stdin: %d, stdout: %d\n", node->stdin, node->stdout);
+	//printf("stdin: %d, stdout: %d\n", node->stdin, node->stdout);
 
 	// Recursão para esquerda e direita
 	print_ast(node->left, level + 1);

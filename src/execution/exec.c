@@ -20,6 +20,7 @@ void	pre_execution(t_exec *tree, t_shell *shell)
 		create_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
 		get_redir_info_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
 	}
+	//get_redir_info(shell, tree);
 	shell->pids = malloc(sizeof(pid_t) * shell->cmd_total);
 	if (!shell->pids)
 		perror("malloc failed");

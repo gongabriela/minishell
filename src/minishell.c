@@ -28,20 +28,21 @@ int	get_input(t_shell *shell)
 
 void	minishell(t_shell *shell)
 {
-	int	pid_index;
+	//int	pid_index;
 
 	while (1)
 	{
-		pid_index = 0;
+		//pid_index = 0;
 		if (get_input(shell))
 		{
 			shell->tokens = tokenize(shell->input);
 			shell->cmd_total = get_cmd_total(shell->tokens);
 			create_ast(shell, shell->tokens);
-			pre_execution(shell->tree, shell);
-			execution(shell->tree, shell, &pid_index);
-			close_all_pipes(shell);
-			wait_pids(shell);
+			print_ast(shell->tree, 0);
+			//pre_execution(shell->tree, shell);
+			//execution(shell->tree, shell, &pid_index);
+			//close_all_pipes(shell);
+			//wait_pids(shell);
 		}
 		ft_free_shell(shell);
 	}
@@ -60,6 +61,7 @@ int	get_cmd_total(t_token *head)
 	}
 	return (cmds + 1);
 }
+
 void	close_all_pipes(t_shell *shell)
 {
 	int	i;

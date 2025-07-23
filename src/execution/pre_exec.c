@@ -86,3 +86,17 @@ void	ft_free_pipes(int **pipe_fds, int cmd_total)
 	}
 	free(pipe_fds);
 }
+
+/*void	get_redir_info(t_shell *shell, t_exec *tree)
+{
+	if (!tree)
+		return ;
+	if (tree->type == REDIR_IN)
+
+	else if (tree->type == REDIR_OUT)
+
+	else if (tree->type == APPEND)
+
+	get_redir_info(shell, tree->left);
+	get_redir_info(shell, tree->right);
+}*/
