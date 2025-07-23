@@ -12,13 +12,15 @@
 
 #include "../../inc/minishell.h"
 
-/*
 
-	get_redir_info_pipes(shell, tree, shell->pipe_fds, shell->cmd_total);
-	shell->pids = malloc(sizeof(pid_t *) * shell->cmd_total);
-	if (!shell->pids)
-		perror("malloc failed");
-	shell->pid_index = -1;*/
+	/*printf("PRE_EXECUTION COMPLETED!---------------------------\n");
+	printf("Total commands: %d\n", shell->cmd_total);
+	if (shell->pipe_fds[0] != 0)
+		printf("Pipe created: %d\n", shell->pipe_fds[0][0]);
+	if (shell->pids[0] != 0 && shell->pids[1] != 0)
+		printf("PIDs created: %d\n & %d\n", shell->pids[0], shell->pids[1]);*/
+
+
 void	execution(t_exec *tree, t_shell *shell)
 {
 	if (tree->type == CMD)
@@ -74,115 +76,84 @@ execution()
 	//waitpid em formato while()
 */
 
-int	calculate_cmd_total(t_exec *tree, int cmds)
-{
-	t_exec *temp;
+/* ls | wc -l
 
-	temp = tree;
-	if (!temp)
-		return ;
-	while(temp)
+minishell()
+while (1)
+{
+	if (get_input(shell))
+		shell->tokens = tokenize(shell->input);
+	shell->cmd_total = get_cmd_total(shell->tokens);
+	create_ast(shell, shell->tokens);
+	pre_execution(shell->tree, shell);
+	execution(shell->tree, shell);
+	wait_pids();
+	ft_free_shell(shell);
+}
+---------------------------------
+pre_execution()
+ver total de comandos para criar o numero de pipes
+criar array 2d para guardar o fd de todos os pipes
+	int pipes[cmd_total - 1][2]; //NMAO PQ PODE SER 1 CMD SO
+criar os pipes e guardar os fds no array
+guardar info de redirecionamento de cada comando no no da arvore
+	ver se funcao funciona bem com mais de 2 pipes
+criar array de pids para guardar os pids de cada comando e usar no waitpid depois
+	int pids[cmd_total]; PODE SER 1 CMD SO E SER BUILTIN!
+----------------------------------
+execution()
+if (!tree)
+	return ;
+
+if (tree->type == PIPE)
+	execution(tree->left);
+	execution(tree->right);
+if (tree->type == CMD)
+	exec_cmd;
+----------------------------------
+exec_cmd() - fazer como no pipex
+pid = fork()
+if (pid == 0)
+	//pegar path
+	//dup2 e close pipes
+	if (is builtin)
+		exec_builtin()
+	else
+		//execve(path, cmd, shell->envp) //precisa mandar a envp?
+
+-----------------------------------------
+o que falta:
+	fechar pipes
+	entender como passar os indices de pipe_fds e pids corretamente
+*/
+
+/*void	debug_pipes_pids(t_shell *shell)
+{
+	int	i;
+
+	printf("cmd total: %d\n", shell->cmd_total);
+	i = 0;
+	while(i < shell->cmd_total - 1)
 	{
-		if (tree->type == CMD)
-			cmds = cmds + 1;
-		calculate_cmd_total(temp->left, cmds);
-		calculate_cmd_total(temp->right, cmds);
+		printf("pipe %d - fd[0] = %d; fd[1] = %d\n", i + 1, shell->pipe_fds[i][0], shell->pipe_fds[i][1]);
+		i++;
 	}
-	return (cmds);
 }
 
-void	create_pipes_pids(t_shell *shell, t_exec *tree, int	**pids, int ** pipe_fds)
-{
-	shell->cmd_total = calculate_cmd_total(tree, 0);
-	*pids = malloc(sizeof(pid_t *) * shell->cmd_total);
-	if (!(*pids))
-		perror("malloc failed");
-	*pipe_fds = malloc(sizeof(int *) * (shell->cmd_total - 1));
-	if (!(*pipe_fds))
-		perror("malloc failed");
-	create_pipes(tree, pipe_fds, shell->cmd_total);
-}
-
-void	create_pipes(t_exec **tree, int *pipe_fds, int index)
+void	debug_ast(t_exec *tree, t_shell *shell)
 {
 	if (!tree)
 		return ;
-
-	while (*tree)
+	if (tree)
 	{
-		if (tree->type == PIPE)
-		{
-			pipe(pipe_fds[index]);
-			if (pipe(pipe_fds[index]) > 0)
-				perror("pipe failed");
-			index = index - 1;
-		}
-		get_redirs_info((*tree)->left, pipe_fds, index);
-		get_redirs_info((*tree)->right, pipe_fds, index);
+		debug_ast(tree->left, shell);
+		debug_ast(tree->right, shell);
 	}
-}
-
-// guardar info do stdins e stdouts nos nós dos comandos!!!
-void	get_redirs_info(t_exec *tree, int *pipe_fds, int cmds)
-{
-	while (tree)
-	{
-		if (tree->type == REDIR_IN)
-
-
-		else if (tree->type == REDIR_OUT)
-
-		else if (tree->type == APPEND)
-
-		else if (tree->type == PIPE)
-	}
-
-}
-
-void	execution(t_exec *tree, t_shell *shell, int cmds)
-{
-	pid_t	*pids;
-	int		**pipe_fds;
-
-	execute_heredocs(tree, shell);
-	create_pipes_pids(shell, tree, &pids, &pipe_fds);
-	get_redirs_info(&tree, pipe_fds, shell->cmd_total);
-	get_cmd_path(tree, shell);
-	exec_commands(tree, shell, shell->cmd_total);
-	for (int i = 0; i < shell->pid_index; i++) {
-		waitpid(shell->pids[i], &shell->exit_code, 0);
-	}
-}
-
-void	exec_commands(t_exec *tree, t_shell *shell, int cmd_index)
-{
-	pid_t	*pid;
-
-	if (!tree)
-		return ;
-	if (tree->type == REDIR_IN || tree->type == REDIR_OUT || tree->type == HEREDOC)
-	{
-		exec_commands(tree->left, shell, cmd_index);
-		exec_commands(tree->right, shell, cmd_index);
-	}
-	else if (tree->type == PIPE)
-	{
-		create_pipe(pipe_fds[cmd_index]);
-		exec_commands(tree->left, shell, cmd_index);
-		exec_commands(tree->right, shell, cmd_index + 1);
-	}
-	else if (tree->type == CMD)
-	{
-		pid = fork();
-		if (pid < 0)
-			return ; //melhorar error handling
-		if (pid == 0)
-		{
-			perform_redirs();
-			execve();
-		}
-		else
-			pids[] = pid; //ver index do pid para fica rdireito
-	}
-}
-
+	printf("type: %d\n", tree->type);
+	if (tree->oprt)
+		printf("oprt: %s\n", tree->oprt);
+	if (tree->cmd)
+		printf("cmd: %s\n", tree->cmd[0]);
+	printf("STDIN: %d\n", tree->stdin);
+	printf("STDOUT: %d\n", tree->stdout);
+}*/

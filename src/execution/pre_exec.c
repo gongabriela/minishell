@@ -50,21 +50,25 @@ int	create_pipes(t_shell *shell, t_exec *tree, int	**pipe_fds, int i)
 	return (i);
 }
 
-int	get_redir_info_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int cmd)
+int	get_redir_info_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i)
 {
 	if (!tree)
-		return (cmd);
+		return (i);
 	if (tree->type == PIPE)
 	{
-		tree->left->stdout = pipe_fds[cmd][0];
-		printf("Pipe left: %d\n", tree->left->stdout);
-		tree->right->stdin = pipe_fds[cmd][0];
-		printf("Pipe right: %d\n", tree->right->stdin);
-		cmd--;
+		if (tree->left)
+			tree->left->stdout = pipe_fds[i][1];
+		if (tree->right)
+		{
+			tree->right->stdin = pipe_fds[i][0];
+			if (tree->stdout != STDOUT_FILENO)
+				tree->right->stdout = tree->stdout;
+		}
+		i--;
 	}
-	cmd = get_redir_info_pipes(shell, tree->left, pipe_fds, cmd);
-	cmd = get_redir_info_pipes(shell, tree->right, pipe_fds, cmd);
-	return (cmd);
+	i = get_redir_info_pipes(shell, tree->left, pipe_fds, i);
+	i = get_redir_info_pipes(shell, tree->right, pipe_fds, i);
+	return (i);
 }
 
 void	ft_free_pipes(int **pipe_fds, int cmd_total)

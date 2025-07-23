@@ -28,23 +28,23 @@ int	get_input(t_shell *shell)
 
 void	minishell(t_shell *shell)
 {
+	int	pid_index;
+
 	while (1)
 	{
+		pid_index = 0;
 		if (get_input(shell))
 			shell->tokens = tokenize(shell->input);
 		shell->cmd_total = get_cmd_total(shell->tokens);
 		create_ast(shell, shell->tokens);
 		pre_execution(shell->tree, shell);
-		print_ast(shell->tree, 0);
-		/*execution(shell->tree, shell);
-		for (int i = -1; i < shell->pid_index; i++) {
-			waitpid(shell->pids[i][0], &shell->exit_code, 0);
-		}*/
+		execution(shell->tree, shell, &pid_index);
+		close_all_pipes(shell);
+		wait_pids(shell);
 		ft_free_shell(shell);
 	}
 }
-//e se tiver um pipe a mais? tipo erro de sintaxe
-//e se tiver pipe duplo? tipo | | ls
+
 int	get_cmd_total(t_token *head)
 {
 	int cmds;
@@ -57,4 +57,40 @@ int	get_cmd_total(t_token *head)
 		head = head->next;
 	}
 	return (cmds + 1);
+}
+void	close_all_pipes(t_shell *shell)
+{
+	int	i;
+
+	if (!shell->pipe_fds)
+		return ;
+	for (i = 0; i < shell->cmd_total - 1; i++)
+	{
+		close(shell->pipe_fds[i][0]);
+		close(shell->pipe_fds[i][1]);
+		free(shell->pipe_fds[i]);
+	}
+	free(shell->pipe_fds);
+	shell->pipe_fds = NULL;
+}
+
+void	wait_pids(t_shell *shell)
+{
+	int		status;
+	int		i;
+
+	i = 0;
+	while (i < shell->cmd_total)
+	{
+		if (shell->pids[i] > 0)
+			waitpid(shell->pids[i], &status, 0);
+		if (i == shell->cmd_total - 1)
+		{
+			if (WIFEXITED(status))
+				shell->exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_code = 128 + WTERMSIG(status);
+		}
+		i++;
+	}
 }

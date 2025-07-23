@@ -42,8 +42,8 @@ t_exec	*create_node_ast(t_token **tokens)
 	node->oprt = NULL;
 	node->left = NULL;
 	node->right = NULL;
-	node->stdin = 0;
-	node->stdout = 1;
+	node->stdin = STDIN_FILENO;
+	node->stdout = STDOUT_FILENO;
 	node->type = (*tokens)->type;
 	if (node->type == CMD)
 	{

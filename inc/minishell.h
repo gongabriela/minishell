@@ -36,7 +36,7 @@ typedef struct s_shell
 	int				**pipe_fds;
 	int				cmd_total;
 	int				pid_index;
-	pid_t			**pids;
+	pid_t			*pids;
 }					t_shell;
 
 //estrutura para as variaveis de ambiente-------------------------
@@ -208,10 +208,11 @@ void	print_ast(t_exec *node, int level);
 
 // --------- Funções de execução ------------------------------
 void	execute_builtin(t_shell *shell, t_exec *tree, char **cmd);
-void	execution(t_exec *tree, t_shell *shell);
+void	execution(t_exec *tree, t_shell *shell, int *pid_index);
 int		is_builtin(char **cmd);
 
 void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index);
+void	redir_io(t_exec *tree, t_shell *shell);
 char	*get_cmd_path(char **cmd, t_shell *shell);
 char	*find_exec_path(char **split_paths, char *cmd);
 void	ft_free_split(char **split);
@@ -220,7 +221,11 @@ void	pre_execution(t_exec *tree, t_shell *shell);
 int		get_cmd_total(t_token *head);
 int		**init_pipes(t_shell *shell);
 int		create_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
-int		get_redir_info_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int cmd);
+int		get_redir_info_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
 void	ft_free_pipes(int **pipe_fds, int cmd_total);
+
+void	exec_cmd(t_exec *tree, t_shell *shell, int index);
+void	wait_pids(t_shell *shell);
+void	close_all_pipes(t_shell *shell);
 
 #endif
