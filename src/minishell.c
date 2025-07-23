@@ -34,13 +34,15 @@ void	minishell(t_shell *shell)
 	{
 		pid_index = 0;
 		if (get_input(shell))
+		{
 			shell->tokens = tokenize(shell->input);
-		shell->cmd_total = get_cmd_total(shell->tokens);
-		create_ast(shell, shell->tokens);
-		pre_execution(shell->tree, shell);
-		execution(shell->tree, shell, &pid_index);
-		close_all_pipes(shell);
-		wait_pids(shell);
+			shell->cmd_total = get_cmd_total(shell->tokens);
+			create_ast(shell, shell->tokens);
+			pre_execution(shell->tree, shell);
+			execution(shell->tree, shell, &pid_index);
+			close_all_pipes(shell);
+			wait_pids(shell);
+		}
 		ft_free_shell(shell);
 	}
 }
