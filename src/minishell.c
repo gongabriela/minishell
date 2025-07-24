@@ -37,14 +37,16 @@ void	minishell(t_shell *shell)
 		{
 			shell->tokens = tokenize(shell->input);
 			shell->cmd_total = get_cmd_total(shell->tokens);
-			create_ast(shell, shell->tokens);
-			print_ast(shell->tree, 0);
-			//pre_execution(shell->tree, shell);
-			//execution(shell->tree, shell, &pid_index);
-			//close_all_pipes(shell);
-			//wait_pids(shell);
+			if (create_ast(shell, shell->tokens))
+			{
+				print_ast(shell->tree, 0);
+				//pre_execution(shell->tree, shell);
+				//execution(shell->tree, shell, &pid_index);
+				//close_all_pipes(shell);
+				//wait_pids(shell);
+			}
+			ft_free_shell(shell);
 		}
-		ft_free_shell(shell);
 	}
 }
 

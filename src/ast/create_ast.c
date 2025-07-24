@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 15:04:46 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/07/17 15:04:46 by ggoncalv         ###   ########.fr       */
+/*   Created: 2025/07/17 18:14:33 by ggoncalv          #+#    #+#             */
+/*   Updated: 2025/07/17 18:14:33 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	create_ast(t_shell *shell, t_token *tokens)
+int	create_ast(t_shell *shell, t_token *tokens)
 {
 	t_exec	*node;
 	t_exec	*root;
@@ -20,49 +20,34 @@ void	create_ast(t_shell *shell, t_token *tokens)
 	root = NULL;
 	while (tokens)
 	{
-		node = create_node_ast(&tokens);
+		node = create_node_ast(&tokens, shell);
 		if (!node)
-			ft_exit(shell, 1);
+			return (0);
 		if (!root)
 			root = node;
 		else
 			add_node_ast(node, &root);
 	}
 	shell->tree = root;
+	return (1);
 }
 
-t_exec	*create_node_ast(t_token **tokens)
+void	add_node_ast(t_exec *node, t_exec **root)
 {
-	t_exec *node;
-
-	node = malloc(sizeof(t_exec));
-	if (!node)
-		return (perror("malloc failed"), NULL);
-	node->cmd = NULL;
-	node->oprt = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	node->stdin = STDIN_FILENO;
-	node->stdout = STDOUT_FILENO;
-	node->type = (*tokens)->type;
 	if (node->type == CMD)
 	{
-		if ((*tokens)->next && (*tokens)->next->type == CMD)
-			node->cmd = get_full_cmd(tokens);
-		else
-			node->cmd = get_simple_cmd(tokens);
-		if (!node->cmd)
-			return (free(node), perror("malloc failed"), NULL);
+		if (!(*root)->left)
+			(*root)->left = node;
+		else if (!(*root)->right)
+			(*root)->right = node;
 	}
+	else if (node->type == FILENAME || node->type == DELIMITER)
+		(*root)->right = node;
 	else
 	{
-		node->oprt = ft_strdup((*tokens)->content);
-		if (!node->oprt)
-			return (free(node), perror("malloc failed"), NULL);
-		if (*tokens)
-			*tokens = (*tokens)->next;
+		node->left = *root;
+		*root = node;
 	}
-	return (node);
 }
 
 char	**get_simple_cmd(t_token **tokens)
@@ -80,38 +65,9 @@ char	**get_simple_cmd(t_token **tokens)
 	return (cmd);
 }
 
-void	add_node_ast(t_exec *node, t_exec **root)
-{
-	if (node->type == CMD)
-	{
-		if (!(*root)->left)
-			(*root)->left = node;
-		else if (!(*root)->right)
-			(*root)->right = node;
-	}
-	else
-	{
-		node->left = *root;
-		*root = node;
-	}
-}
-
-void	ft_free_ast(t_exec *tree)
-{
-	if (!tree)
-		return;
-	ft_free_ast(tree->left);
-	ft_free_ast(tree->right);
-	if (tree->cmd)
-		free_cmd_and_args(tree->cmd);
-	if (tree->oprt)
-		free(tree->oprt);
-	free(tree);
-}
-
 char	**get_full_cmd(t_token **tokens)
 {
-	t_token *temp;
+	t_token	*temp;
 	char	**cmd;
 	int		i;
 
@@ -130,10 +86,7 @@ char	**get_full_cmd(t_token **tokens)
 	{
 		cmd[i] = ft_strdup((*tokens)->content);
 		if (!cmd[i])
-		{
-			free_cmd_and_args(cmd);
-			return (NULL);
-		}
+			return (free_cmd_and_args(cmd), NULL);
 		i++;
 		*tokens = (*tokens)->next;
 	}
@@ -141,17 +94,3 @@ char	**get_full_cmd(t_token **tokens)
 	return (cmd);
 }
 
-void	free_cmd_and_args(char **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
