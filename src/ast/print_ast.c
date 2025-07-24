@@ -27,6 +27,14 @@ void	print_ast(t_exec *node, int level)
             printf("%s ", node->cmd[j]);
         printf("\n");
     }
+    else if (node->type == FILENAME)
+    {
+        printf("FILENAME: %s\n", node->filename);
+    }
+    else if (node->type == DELIMITER)
+    {
+        printf("DELIMITER: %s\n", node->delimiter);
+    }
     else
     {
         printf("OP: %s\n", node->oprt);

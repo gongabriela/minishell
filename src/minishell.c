@@ -32,9 +32,11 @@ void	minishell(t_shell *shell)
 	{
 		if (get_input(shell))
 			shell->tokens = tokenize(shell->input);
-		create_ast(shell, shell->tokens);
-		print_ast(shell->tree, 0);
-		//execution(shell->tree, shell);
+		if (create_ast(shell, shell->tokens))
+		{
+			print_ast(shell->tree, 0);
+			//execution(shell->tree, shell);
+		}
 		ft_free_shell(shell);
 	}
 }

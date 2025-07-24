@@ -58,7 +58,9 @@ typedef enum e_token_type
 	REDIR_IN,
 	REDIR_OUT,
 	APPEND,
-	HEREDOC
+	HEREDOC,
+	FILENAME,
+	DELIMITER
 }	t_token_type;
 
 typedef struct s_token
@@ -82,9 +84,13 @@ typedef struct s_exec
 {
 	char				**cmd;
 	char				*oprt;
+	char				*filename;
+	char				*delimiter;
 	t_token_type		type;
 	struct s_exec		*left;
 	struct s_exec		*right;
+	int					stdin;
+	int					stdout;
 }	t_exec;
 
 // --------- Funções principais -------------------------------
@@ -192,12 +198,19 @@ char	*extract_arg(const char **s);
 char	**split_args(const char *s);
 
 // --------- Funções da AST -----------------------------------
-void	create_ast(t_shell *shell, t_token *tokens);
-t_exec	*create_node_ast(t_token **tokens);
+int		create_ast(t_shell *shell, t_token *tokens);
+t_exec	*create_node_ast(t_token **tokens, t_shell *shell);
 void	add_node_ast(t_exec *node, t_exec **root);
 void	ft_free_ast(t_exec *tree);
 char	**get_cmd_and_args(t_token **tokens, t_shell *shell);
 char	**get_full_cmd(t_token **tokens);
+char	**get_simple_cmd(t_token **tokens);
 void	print_ast(t_exec *node, int level);
+
+void	init_node(t_exec *node, t_token **tokens);
+int		create_node_pipe(t_exec *node, t_token **tokens, t_shell *shell);
+int		create_node_redir(t_exec *node, t_token **tokens, t_shell *shell);
+int		create_node_cmd(t_exec *node, t_token **tokens, t_shell *shell);
+void	ft_free_node(t_exec *node);
 
 #endif

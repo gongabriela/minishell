@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-void	create_ast(t_shell *shell, t_token *tokens)
+int	create_ast(t_shell *shell, t_token *tokens)
 {
 	t_exec	*node;
 	t_exec	*root;
@@ -20,44 +20,16 @@ void	create_ast(t_shell *shell, t_token *tokens)
 	root = NULL;
 	while (tokens)
 	{
-		node = create_node_ast(&tokens);
+		node = create_node_ast(&tokens, shell);
 		if (!node)
-			ft_exit(shell, 1);
+			return (0);
 		if (!root)
 			root = node;
 		else
 			add_node_ast(node, &root);
 	}
 	shell->tree = root;
-}
-
-t_exec	*create_node_ast(t_token **tokens)
-{
-	t_exec *node;
-
-	node = malloc(sizeof(t_exec));
-	if (!node)
-		return (perror("malloc failed"), NULL);
-	node->cmd = NULL;
-	node->oprt = NULL;
-	node->left = NULL;
-	node->right = NULL;
-	node->type = (*tokens)->type;
-	if (node->type == CMD)
-	{
-		node->cmd = get_full_cmd(tokens);
-		if (!node->cmd)
-			return (free(node), perror("malloc failed"), NULL);
-	}
-	else
-	{
-		node->oprt = ft_strdup((*tokens)->content);
-		if (!node->oprt)
-			return (free(node), perror("malloc failed"), NULL);
-		if (*tokens)
-			*tokens = (*tokens)->next;
-	}
-	return (node);
+	return (1);
 }
 
 void	add_node_ast(t_exec *node, t_exec **root)
@@ -69,6 +41,8 @@ void	add_node_ast(t_exec *node, t_exec **root)
 		else if (!(*root)->right)
 			(*root)->right = node;
 	}
+	else if (node->type == FILENAME || node->type == DELIMITER)
+		(*root)->right = node;
 	else
 	{
 		node->left = *root;
@@ -76,22 +50,24 @@ void	add_node_ast(t_exec *node, t_exec **root)
 	}
 }
 
-void	ft_free_ast(t_exec *tree)
+char	**get_simple_cmd(t_token **tokens)
 {
-	if (!tree)
-		return;
-	ft_free_ast(tree->left);
-	ft_free_ast(tree->right);
-	if (tree->cmd)
-		free_cmd_and_args(tree->cmd);
-	if (tree->oprt)
-		free(tree->oprt);
-	free(tree);
+	char	**cmd;
+
+	cmd = malloc(sizeof(char *) * 2);
+	if (!cmd)
+		return (NULL);
+	cmd[0] = ft_strdup((*tokens)->content);
+	if (!cmd[0])
+		perror("malloc failed");
+	cmd[1] = NULL;
+	*tokens = (*tokens)->next;
+	return (cmd);
 }
 
 char	**get_full_cmd(t_token **tokens)
 {
-	t_token *temp;
+	t_token	*temp;
 	char	**cmd;
 	int		i;
 
@@ -110,10 +86,7 @@ char	**get_full_cmd(t_token **tokens)
 	{
 		cmd[i] = ft_strdup((*tokens)->content);
 		if (!cmd[i])
-		{
-			free_cmd_and_args(cmd);
-			return (NULL);
-		}
+			return (free_cmd_and_args(cmd), NULL);
 		i++;
 		*tokens = (*tokens)->next;
 	}
@@ -121,17 +94,3 @@ char	**get_full_cmd(t_token **tokens)
 	return (cmd);
 }
 
-void	free_cmd_and_args(char **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	i = 0;
-	while (cmd[i])
-	{
-		free(cmd[i]);
-		i++;
-	}
-	free(cmd);
-}
