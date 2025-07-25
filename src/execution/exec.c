@@ -14,13 +14,18 @@
 
 void	pre_execution(t_exec *tree, t_shell *shell)
 {
+	int	*pipe_index;
+	int	i;
+
 	if (shell->cmd_total > 1)
 	{
 		shell->pipe_fds = init_pipes(shell);
 		create_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
-		get_redir_info_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
+	//	get_redir_info_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
 	}
-	//get_redir_info(shell, tree);
+	i = shell->cmd_total - 2;
+	pipe_index = &i;
+	execute_redirs(tree, shell->pipe_fds, pipe_index);
 	shell->pids = malloc(sizeof(pid_t) * shell->cmd_total);
 	if (!shell->pids)
 		perror("malloc failed");
@@ -28,17 +33,17 @@ void	pre_execution(t_exec *tree, t_shell *shell)
 
 void	execution(t_exec *tree, t_shell *shell, int *pid_index)
 {
-	if (tree->type == PIPE)
+	if (tree->type == CMD)
+	{
+		exec_cmd(tree, shell, *pid_index);
+		(*pid_index)++;
+	}
+	else
 	{
 		if (tree->left)
 			execution(tree->left, shell, pid_index);
 		if (tree->right)
 			execution(tree->right, shell, pid_index);
-	}
-	if (tree->type == CMD)
-	{
-		exec_cmd(tree, shell, *pid_index);
-		(*pid_index)++;
 	}
 }
 
@@ -56,6 +61,11 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 	}
 	if (pid == 0)
 	{
+		if (tree->stdin < 0 || tree->stdout < 0)
+		{
+			shell->exit_code = 1;
+			exit(1);
+		}
 		redir_io(tree, shell);
 		if (is_builtin(tree->cmd))
 		{

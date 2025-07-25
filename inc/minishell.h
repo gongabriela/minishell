@@ -20,7 +20,8 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <stdbool.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
+# include <errno.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -231,11 +232,17 @@ void	pre_execution(t_exec *tree, t_shell *shell);
 int		get_cmd_total(t_token *head);
 int		**init_pipes(t_shell *shell);
 int		create_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
-int		get_redir_info_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
 void	ft_free_pipes(int **pipe_fds, int cmd_total);
 
 void	exec_cmd(t_exec *tree, t_shell *shell, int index);
 void	wait_pids(t_shell *shell);
 void	close_all_pipes(t_shell *shell);
+
+void	handle_infile(t_exec *tree, char *file);
+void	handle_outfile(t_exec *tree, char *file);
+void	handle_append(t_exec *tree, char *file);
+
+void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
+void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
 
 #endif

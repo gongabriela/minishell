@@ -39,6 +39,8 @@ void	print_ast(t_exec *node, int level)
     {
         printf("OP: %s\n", node->oprt);
     }
+    printf("stdin: %d\n", node->stdin);
+    printf("stdout: %d\n", node->stdout);
     print_ast(node->left, level + 1);
     print_ast(node->right, level + 1);
 }
