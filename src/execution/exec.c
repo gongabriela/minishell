@@ -17,11 +17,11 @@ void	pre_execution(t_exec *tree, t_shell *shell)
 	int	*pipe_index;
 	int	i;
 
+	//execute_heredocs(tree);
 	if (shell->cmd_total > 1)
 	{
 		shell->pipe_fds = init_pipes(shell);
 		create_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
-	//	get_redir_info_pipes(shell, tree, shell->pipe_fds, shell->cmd_total - 2);
 	}
 	i = shell->cmd_total - 2;
 	pipe_index = &i;
@@ -53,6 +53,11 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 	pid_t	pid;
 	char	*path;
 
+	if (shell->cmd_total == 1 && is_builtin(tree->cmd))
+	{
+		execute_builtin(shell, tree, tree->cmd);
+		return ;
+	}
 	pid = fork();
 	if (pid < 0)
 	{

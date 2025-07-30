@@ -32,7 +32,6 @@ int	**init_pipes(t_shell *shell)
 	return(pipe_fds);
 }
 
-//i = shell->cmd_total - 1 -> i = 1;
 int	create_pipes(t_shell *shell, t_exec *tree, int	**pipe_fds, int i)
 {
 
