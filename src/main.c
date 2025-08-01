@@ -42,6 +42,11 @@ void	init_structs(t_shell *shell)
 	shell->exit_code = 0;
 	shell->envp = NULL;
 	shell->tokens = NULL;
+	shell->tree = NULL;
+	shell->pipe_fds = NULL;
+	shell->cmd_total = 0;
+	shell->pids = NULL;
+	shell->pid_index = -1;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -53,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.env = NULL;
 	shell.pwd = NULL;
 	get_env(&shell, envp);
+	shell.envp = envp;
 	minishell(&shell);
 	return (0);
 }

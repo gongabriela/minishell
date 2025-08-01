@@ -44,3 +44,37 @@ int	pre_parsing(char *input)
 		return (printf("syntax error: unclosed quotes\n"), 0);
 	return (1);
 }
+
+/*int	pre_parsing(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'')
+		{
+			if (parse_single_quotes(input, &i))
+				return (0);
+		}
+		if (input[i] == '\"')
+		{
+			if (parse_double_quotes(input, &i))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	parse_single_quotes(char *input, int *i)
+{
+	int	single_quotes;
+
+	single_quotes = 0;
+	while(input[*i])
+	{
+		if (input[*i] == '\'')
+			i++;
+	}
+}*/

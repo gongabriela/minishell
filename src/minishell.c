@@ -26,74 +26,77 @@ int	get_input(t_shell *shell)
 	return (0);
 }
 
-void	execute_builtin_test(t_shell *shell, char **args)
-{
-	if (!args || !args[0])
-		return ;
-	if (ft_strncmp(args[0], "echo", 5) == 0)
-		echo(shell, args);
-	else if (ft_strncmp(args[0], "env", 4) == 0)
-		env(shell);
-	else if (ft_strncmp(args[0], "pwd", 4) == 0)
-		pwd(shell);
-	else if (ft_strncmp(args[0], "exit", 5) == 0)
-		ft_exit_builtin(shell, args);
-	else if (ft_strncmp(args[0], "cd", 3) == 0)
-		cd(shell, args);
-	else if (ft_strncmp(args[0], "export", 7) == 0)
-		export(shell, args);
-	else if (ft_strncmp(args[0], "unset", 6) == 0)
-		unset(shell, args);
-	else
-		printf("Comando builtin não reconhecido: %s\n", args[0]);
-}
-
-void	test_builtins(t_shell *shell)
-{
-	char	**args;
-	int		i;
-
-	args = split_args(shell->input);
-	execute_builtin_test(shell, args);
-	i = 0;
-	while (args && args[i])
-	{
-		free(args[i]);
-		i++;
-	}
-	free(args);
-}
-
 void	minishell(t_shell *shell)
 {
+	int	pid_index;
+
 	while (1)
 	{
+		pid_index = 0;
 		if (get_input(shell))
+		{
 			shell->tokens = tokenize(shell->input);
-		if (is_bultin(shell->tokens))
-			test_builtins(shell);
-		ft_free_shell(shell);
+			shell->cmd_total = get_cmd_total(shell->tokens);
+			if (create_ast(shell, shell->tokens))
+			{
+				pre_execution(shell->tree, shell);
+				//print_ast(shell->tree, 0);
+				execution(shell->tree, shell, &pid_index);
+				close_all_pipes(shell);
+				wait_pids(shell);
+			}
+			ft_free_shell(shell);
+		}
 	}
 }
 
-int	is_bultin(t_token *token)
+int	get_cmd_total(t_token *head)
 {
-	if (token->type == CMD)
+	int cmds;
+
+	cmds = 0;
+	while (head)
 	{
-		if (ft_strncmp(token->content, "echo", 5) == 0)
-			return (1);
-		else if (ft_strncmp(token->content, "env", 4) == 0)
-			return (1);
-		else if (ft_strncmp(token->content, "pwd", 4) == 0)
-			return (1);
-		else if (ft_strncmp(token->content, "exit", 5) == 0)
-			return (1);
-		else if (ft_strncmp(token->content, "cd", 3) == 0)
-			return (1);
-		else if (ft_strncmp(token->content, "export", 7) == 0)
-			return (1);
-		else if (ft_strncmp(token->content, "unset", 6) == 0)
-			return (1);
+		if (head->type == PIPE)
+			cmds++;
+		head = head->next;
 	}
-	return (0);
+	return (cmds + 1);
+}
+
+void	close_all_pipes(t_shell *shell)
+{
+	int	i;
+
+	if (!shell->pipe_fds)
+		return ;
+	for (i = 0; i < shell->cmd_total - 1; i++)
+	{
+		close(shell->pipe_fds[i][0]);
+		close(shell->pipe_fds[i][1]);
+		free(shell->pipe_fds[i]);
+	}
+	free(shell->pipe_fds);
+	shell->pipe_fds = NULL;
+}
+
+void	wait_pids(t_shell *shell)
+{
+	int		status;
+	int		i;
+
+	i = 0;
+	while (i < shell->cmd_total)
+	{
+		if (shell->pids[i] > 0)
+			waitpid(shell->pids[i], &status, 0);
+		if (i == shell->cmd_total - 1)
+		{
+			if (WIFEXITED(status))
+				shell->exit_code = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				shell->exit_code = 128 + WTERMSIG(status);
+		}
+		i++;
+	}
 }

@@ -20,18 +20,24 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <sys/wait.h>
+# include <errno.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
 {
 	struct s_env	*env;
 	struct s_token	*tokens;
+	struct s_exec	*tree;
 	char			*prompt;
 	char			*input;
 	char			*pwd;
 	int				exit_code;
 	char			**envp;
-
+	int				**pipe_fds;
+	int				cmd_total;
+	int				pid_index;
+	pid_t			*pids;
 }					t_shell;
 
 //estrutura para as variaveis de ambiente-------------------------
@@ -57,7 +63,9 @@ typedef enum e_token_type
 	REDIR_IN,
 	REDIR_OUT,
 	APPEND,
-	HEREDOC
+	HEREDOC,
+	FILENAME,
+	DELIMITER
 }	t_token_type;
 
 typedef struct s_token
@@ -75,6 +83,20 @@ typedef struct s_token_oprt
 	char			*token;
 	t_token_type	type;
 }	t_token_oprt;
+
+// estrutura temporaria para AST -----------------------------
+typedef struct s_exec
+{
+	char				**cmd;
+	char				*oprt;
+	char				*filename;
+	char				*delimiter;
+	t_token_type		type;
+	struct s_exec		*left;
+	struct s_exec		*right;
+	int					stdin;
+	int					stdout;
+}	t_exec;
 
 // --------- Funções principais -------------------------------
 
@@ -101,18 +123,26 @@ int		get_input(t_shell *shell);
 
 // --------- Funções de tokenizer ------------------------------
 t_token	*tokenize(char *input);
-/*int		validate_token(t_token *tokens);*/
 
-// tokenizer_utils
+// tokenizer utils
 int		is_operator(char c);
-/*int		is_incomplete_input(t_token *tokens);*/
-void	free_tokens(t_token *head);
 void	add_token(t_token **list, t_token *new_token);
 void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
 char	update_quote_state(char quote_state, char curr_char);
 t_token	*handle_word(char *input, int *i);
 t_token	*create_token(char *str, t_token_type type, int len);
 t_token_oprt	handle_operator(char *input);
+void	print_tokens(t_token *head);
+
+// tokenize expander
+int		is_valid_var_char(char c);
+int		is_valid_var_start(char c);
+char	*ft_get_var(char *key, char **envp);
+char	*ft_expander(t_shell *sh, char *token);
+char	*expand_var(t_shell *shell, char *token);
+char	*ft_join_list_and_free(t_list **lst, char sep);
+void	expand_tokens(t_shell *sh);
+void	add_str_to_list(t_list **list, void *content);
 
 // --------- Funções de free -----------------------------------
 
@@ -120,14 +150,13 @@ void	free_struct_env(t_env *env);
 void	ft_free_shell(t_shell *shell);
 void	ft_exit(t_shell *shell, int exit_code);
 void	free_struct_tokens(t_token *tokens);
+void	free_cmd_and_args(char **cmd);
 
 // --------- Funcoes de debug ----------------------------------
 
 void	print_cmd_paths(char **paths);
 
 // --------- Funcoes de builtins -------------------------------
-
-int		is_bultin(t_token *token);
 
 // --------- Builtin: echo ----------------------------------
 void	echo(t_shell *shell, char **args);
@@ -178,5 +207,49 @@ int		count_args(const char *s);
 char	*copy_arg(const char *s, int len);
 char	*extract_arg(const char **s);
 char	**split_args(const char *s);
+
+// --------- Funções da AST -----------------------------------
+int		create_ast(t_shell *shell, t_token *tokens);
+t_exec	*create_node_ast(t_token **tokens, t_shell *shell);
+void	add_node_ast(t_exec *node, t_exec **root);
+void	ft_free_ast(t_exec *tree);
+char	**get_cmd_and_args(t_token **tokens, t_shell *shell);
+char	**get_full_cmd(t_token **tokens);
+char	**get_simple_cmd(t_token **tokens);
+void	print_ast(t_exec *node, int level);
+
+void	init_node(t_exec *node, t_token **tokens);
+int		create_node_pipe(t_exec *node, t_token **tokens, t_shell *shell);
+int		create_node_redir(t_exec *node, t_token **tokens, t_shell *shell);
+int		create_node_cmd(t_exec *node, t_token **tokens, t_shell *shell);
+void	ft_free_node(t_exec *node);
+
+// --------- Funções de execução ------------------------------
+void	execute_builtin(t_shell *shell, t_exec *tree, char **cmd);
+void	execution(t_exec *tree, t_shell *shell, int *pid_index);
+int		is_builtin(char **cmd);
+
+void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index);
+void	redir_io(t_exec *tree, t_shell *shell);
+char	*get_cmd_path(char **cmd, t_shell *shell);
+char	*find_exec_path(char **split_paths, char *cmd);
+void	ft_free_split(char **split);
+
+void	pre_execution(t_exec *tree, t_shell *shell);
+int		get_cmd_total(t_token *head);
+int		**init_pipes(t_shell *shell);
+int		create_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
+void	ft_free_pipes(int **pipe_fds, int cmd_total);
+
+void	exec_cmd(t_exec *tree, t_shell *shell, int index);
+void	wait_pids(t_shell *shell);
+void	close_all_pipes(t_shell *shell);
+
+void	handle_infile(t_exec *tree, char *file);
+void	handle_outfile(t_exec *tree, char *file);
+void	handle_append(t_exec *tree, char *file);
+
+void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
+void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
 
 #endif

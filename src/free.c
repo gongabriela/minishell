@@ -49,6 +49,12 @@ void	ft_free_shell(t_shell *shell)
 		free(shell->input);
 	if (shell->tokens != NULL)
 		free_struct_tokens(shell->tokens);
+	if (shell->tree != NULL)
+		ft_free_ast(shell->tree);
+	//if (shell->pipe_fds != NULL)
+		//ft_free_pipes(shell->pipe_fds, shell->cmd_total - 1);
+	if (shell->pids != NULL)
+		free(shell->pids);
 	init_structs(shell);
 }
 
@@ -85,3 +91,4 @@ void	free_struct_tokens(t_token *tokens)
 		tokens = tmp;
 	}
 }
+
