@@ -17,6 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRC =	./src/tokenizer/tokenizer.c \
 		./src/tokenizer/tokenizer_utils.c \
+		./src/tokenizer/tokenizer_utils_2.c \
 		./src/tokenizer/tk_expander.c \
 		./src/tokenizer/tk_exp_utils.c \
 		./src/tokenizer/join_lists.c \
