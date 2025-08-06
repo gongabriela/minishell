@@ -54,5 +54,7 @@ void	ft_free_ast(t_exec *tree)
 		free(tree->delimiter);
 	if (tree->filename)
 		free(tree->filename);
+	if (tree->heredoc)
+		free_heredoc_struct(tree->heredoc);
 	free(tree);
 }

@@ -22,18 +22,27 @@ void	execute_redirs(t_exec *tree, int **pipe_fds, int *i)
 		handle_outfile(tree, tree->right->filename);
 	else if (tree->type == APPEND)
 		handle_append(tree, tree->right->filename);
-	/*else if(tree->type == HEREDOC)
+	else if(tree->type == HEREDOC)
 		handle_heredoc(tree);
-	else if (tree->type == PIPE)*/
+	else if (tree->type == PIPE)
 		handle_pipe(tree, pipe_fds, i);
 	execute_redirs(tree->left, pipe_fds, i);
 	execute_redirs(tree->right, pipe_fds, i);
 }
 
-/*void	handle_heredoc(t_exec *tree)
+void	handle_heredoc(t_exec *tree)
 {
-
-}*/
+	tree->heredoc->fd = open(tree->heredoc->file_name, O_RDONLY);
+	if (tree->heredoc->fd < 0)
+	{
+		perror("open failed");
+		return; //melhorar esse handle error aqui
+	}
+	if (tree->left)
+		tree->left->stdin = tree->heredoc->fd;
+	if (tree->stdout != STDOUT_FILENO)
+		tree->left->stdout = tree->stdout;
+}
 
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i)
 {

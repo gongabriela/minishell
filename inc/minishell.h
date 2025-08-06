@@ -96,7 +96,14 @@ typedef struct s_exec
 	struct s_exec		*right;
 	int					stdin;
 	int					stdout;
+	struct s_hdc		*heredoc;
 }	t_exec;
+
+typedef struct s_hdc
+{
+	char	*file_name;
+	int		fd;
+}	t_hdc;
 
 // --------- Funções principais -------------------------------
 
@@ -244,5 +251,12 @@ void	handle_append(t_exec *tree, char *file);
 
 void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
+
+void	handle_heredoc(t_exec *tree);
+void	execute_heredocs(t_exec *tree, t_shell *shell);
+void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
+char	*get_random_name(t_shell *shell);
+void	get_heredoc_input(t_exec *tree, t_hdc *heredoc);
+void	free_heredoc_struct(t_hdc *heredoc);
 
 #endif

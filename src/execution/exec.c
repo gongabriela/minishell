@@ -17,7 +17,7 @@ void	pre_execution(t_exec *tree, t_shell *shell)
 	int	*pipe_index;
 	int	i;
 
-	//execute_heredocs(tree);
+	execute_heredocs(tree, shell);
 	if (shell->cmd_total > 1)
 	{
 		shell->pipe_fds = init_pipes(shell);
