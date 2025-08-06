@@ -29,15 +29,13 @@ int	**init_pipes(t_shell *shell)
 		ft_memset(pipe_fds[i], 0, sizeof(int) * 2);
 		i--;
 	}
-	return(pipe_fds);
+	return (pipe_fds);
 }
 
 int	create_pipes(t_shell *shell, t_exec *tree, int	**pipe_fds, int i)
 {
-
 	if (!tree)
 		return (i);
-
 	if (tree->type == PIPE)
 	{
 		if (pipe(pipe_fds[i]) == -1)
@@ -45,7 +43,7 @@ int	create_pipes(t_shell *shell, t_exec *tree, int	**pipe_fds, int i)
 		i--;
 	}
 	i = create_pipes(shell, tree->left, pipe_fds, i);
-	i = create_pipes(shell, tree->right,pipe_fds, i);
+	i = create_pipes(shell, tree->right, pipe_fds, i);
 	return (i);
 }
 
@@ -56,7 +54,7 @@ void	ft_free_pipes(int **pipe_fds, int cmd_total)
 	if (!pipe_fds)
 		return ;
 	i = 0;
-	while ( i < cmd_total - 1)
+	while (i < cmd_total - 1)
 	{
 		if (pipe_fds[i])
 			free(pipe_fds[i]);

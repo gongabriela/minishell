@@ -37,4 +37,3 @@ void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index)
 	}
 	free(path);
 }
-

@@ -40,7 +40,6 @@ void	minishell(t_shell *shell)
 			if (create_ast(shell, shell->tokens))
 			{
 				pre_execution(shell->tree, shell);
-				//print_ast(shell->tree, 0);
 				execution(shell->tree, shell, &pid_index);
 				close_all_pipes(shell);
 				wait_pids(shell);
@@ -52,7 +51,7 @@ void	minishell(t_shell *shell)
 
 int	get_cmd_total(t_token *head)
 {
-	int cmds;
+	int	cmds;
 
 	cmds = 0;
 	while (head)
@@ -70,11 +69,13 @@ void	close_all_pipes(t_shell *shell)
 
 	if (!shell->pipe_fds)
 		return ;
-	for (i = 0; i < shell->cmd_total - 1; i++)
+	i = 0;
+	while (i < shell->cmd_total - 1)
 	{
 		close(shell->pipe_fds[i][0]);
 		close(shell->pipe_fds[i][1]);
 		free(shell->pipe_fds[i]);
+		i++;
 	}
 	free(shell->pipe_fds);
 	shell->pipe_fds = NULL;

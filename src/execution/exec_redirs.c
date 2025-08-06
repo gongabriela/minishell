@@ -12,31 +12,13 @@
 
 #include "../../inc/minishell.h"
 
-void	execute_redirs(t_exec *tree, int **pipe_fds, int *i)
-{
-	if (!tree)
-		return ;
-	if (tree->type == REDIR_IN)
-		handle_infile(tree, tree->right->filename);
-	else if (tree->type == REDIR_OUT)
-		handle_outfile(tree, tree->right->filename);
-	else if (tree->type == APPEND)
-		handle_append(tree, tree->right->filename);
-	else if(tree->type == HEREDOC)
-		handle_heredoc(tree);
-	else if (tree->type == PIPE)
-		handle_pipe(tree, pipe_fds, i);
-	execute_redirs(tree->left, pipe_fds, i);
-	execute_redirs(tree->right, pipe_fds, i);
-}
-
 void	handle_heredoc(t_exec *tree)
 {
 	tree->heredoc->fd = open(tree->heredoc->file_name, O_RDONLY);
 	if (tree->heredoc->fd < 0)
 	{
 		perror("open failed");
-		return; //melhorar esse handle error aqui
+		return ;
 	}
 	if (tree->left)
 		tree->left->stdin = tree->heredoc->fd;
@@ -46,15 +28,15 @@ void	handle_heredoc(t_exec *tree)
 
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i)
 {
-		if (tree->left)
-			tree->left->stdout = pipe_fds[*i][1];
-		if (tree->right)
-		{
-			tree->right->stdin = pipe_fds[*i][0];
-			if (tree->stdout != STDOUT_FILENO)
-				tree->right->stdout = tree->stdout;
-		}
-		(*i)--;
+	if (tree->left)
+		tree->left->stdout = pipe_fds[*i][1];
+	if (tree->right)
+	{
+		tree->right->stdin = pipe_fds[*i][0];
+		if (tree->stdout != STDOUT_FILENO)
+			tree->right->stdout = tree->stdout;
+	}
+	(*i)--;
 }
 
 void	handle_infile(t_exec *tree, char *file)

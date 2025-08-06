@@ -93,4 +93,3 @@ char	**get_full_cmd(t_token **tokens)
 	cmd[i] = NULL;
 	return (cmd);
 }
-

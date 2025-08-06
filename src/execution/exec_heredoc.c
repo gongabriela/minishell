@@ -28,7 +28,7 @@ void	execute_heredocs(t_exec *tree, t_shell *shell)
 void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 {
 	pid_t	pid;
-	int	exit_code;
+	int		exit_code;
 
 	heredoc->file_name = get_random_name(shell);
 	pid = fork();
@@ -39,7 +39,8 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 	}
 	if (pid == 0)
 	{
-		heredoc->fd = open(heredoc->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		heredoc->fd = open(heredoc->file_name,
+			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (heredoc->fd < 0)
 		{
 			perror("open failed");
@@ -56,10 +57,10 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 char	*get_random_name(t_shell *shell)
 {
 	static int	i = 0;
-	char	*pid;
-	char	*i_str;
-	char	*temp;
-	char *file_name;
+	char		*pid;
+	char		*i_str;
+	char		*temp;
+	char		*file_name;
 
 	pid = ft_itoa(getpid());
 	temp = ft_strjoin("/tmp/.heredoc_", pid);
@@ -91,10 +92,11 @@ void	get_heredoc_input(t_exec *tree, t_hdc *heredoc)
 	while (1)
 	{
 		input = readline(">");
-		if (!ft_strncmp(input, tree->right->delimiter, ft_strlen(tree->right->delimiter)))
+		if (!ft_strncmp(input, tree->right->delimiter,
+				ft_strlen(tree->right->delimiter)))
 		{
 			free(input);
-			break;
+			break ;
 		}
 		write(heredoc->fd, input, ft_strlen(input));
 		write(heredoc->fd, "\n", 1);
