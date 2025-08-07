@@ -32,6 +32,7 @@ void	minishell(t_shell *shell)
 
 	while (1)
 	{
+		setup_signals_prompt();
 		pid_index = 0;
 		if (get_input(shell))
 		{

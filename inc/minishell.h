@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <signal.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -258,5 +259,10 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 char	*get_random_name(t_shell *shell);
 void	get_heredoc_input(t_exec *tree, t_hdc *heredoc);
 void	free_heredoc_struct(t_hdc *heredoc);
+
+//signals
+void	handle_sigint(int sig);
+void	setup_signals_prompt(void);
+void	handle_signals_child(void);
 
 #endif

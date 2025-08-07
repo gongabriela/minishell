@@ -28,7 +28,7 @@ SRC =	./src/tokenizer/rl_test.c ./src/tokenizer/tokenizer.c \
 		./src/ast/print_ast.c ./src/execution/exec_path.c ./src/execution/exec.c \
 		 ./src/execution/exec_builtin.c ./src/execution/exec_external_cmd.c \
 		./src/execution/pre_exec.c ./src/execution/exec_redirs.c \
-		./src/execution/exec_heredoc.c ./src/main.c \
+		./src/execution/exec_heredoc.c ./src/signals.c ./src/main.c \
 
 OBJ = $(SRC:.c=.o)
 

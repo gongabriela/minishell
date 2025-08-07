@@ -83,6 +83,7 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 	}
 	if (pid == 0)
 	{
+		handle_signals_child();
 		if (tree->stdin < 0 || tree->stdout < 0)
 		{
 			shell->exit_code = 1;

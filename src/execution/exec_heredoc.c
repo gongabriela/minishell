@@ -39,6 +39,7 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 	}
 	if (pid == 0)
 	{
+		handle_signals_child();
 		heredoc->fd = open(heredoc->file_name,
 			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (heredoc->fd < 0)
