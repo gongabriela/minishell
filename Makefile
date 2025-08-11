@@ -15,20 +15,41 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC =	./src/tokenizer/rl_test.c ./src/tokenizer/tokenizer.c \
-		./src/tokenizer/tokenizer_utils.c \
-		./src/free.c ./src/get_env.c ./src/minishell.c \
-		./src/prompt/prompt.c ./src/prompt/prompt_utils.c \
-		./src/pre_parsing.c ./src/builtins/echo.c \
-		./src/builtins/env.c ./src/builtins/pwd.c ./src/builtins/exit.c \
-		./src/builtins/cd/cd.c ./src/builtins/cd/cd_utils.c ./src/builtins/unset.c \
-		./src/builtins/export/export.c \
-		./src/builtins/export/export_utils.c ./src/builtins/export/export_utils_2.c \
-		./src/ast/create_ast.c  ./src/ast/create_node_ast.c ./src/ast/ast_utils.c \
-		./src/ast/print_ast.c ./src/execution/exec_path.c ./src/execution/exec.c \
-		 ./src/execution/exec_builtin.c ./src/execution/exec_external_cmd.c \
-		./src/execution/pre_exec.c ./src/execution/exec_redirs.c \
-		./src/execution/exec_heredoc.c ./src/signals.c ./src/main.c \
+
+SRC = \
+	./src/000_main/010_main.c \
+	./src/100_get_env/110_get_env.c \
+	./src/1000_free/1100_free.c \
+	./src/200_minishell/210_minishell.c \
+	./src/300_prompt/310_prompt.c \
+	./src/300_prompt/320_prompt_utils.c \
+	./src/400_pre_parsing/410_pre_parsing.c \
+	./src/500_tokenizer/510_tokenizer.c \
+	./src/500_tokenizer/520_tokenizer_utils.c \
+	./src/500_tokenizer/530_rl_test.c \
+	./src/600_ast/610_create_ast.c \
+	./src/600_ast/620_create_node_ast.c \
+	./src/600_ast/630_ast_utils.c \
+	./src/700_execution/720_exec.c \
+	./src/700_execution/730_exec_builtin.c \
+	./src/700_execution/740_exec_path.c \
+	./src/700_execution/710_pre_exec/711_pre_exec.c \
+	./src/700_execution/710_pre_exec/712_exec_heredoc.c \
+	./src/700_execution/710_pre_exec/713_exec_heredoc_utils.c \
+	./src/700_execution/710_pre_exec/714_create_pipes.c \
+	./src/700_execution/710_pre_exec/715_exec_redirs.c \
+	./src/700_execution/710_pre_exec/716_exec_redirs_utils.c \
+	./src/800_builtins/810_cd.c \
+	./src/800_builtins/811_cd_utils.c \
+	./src/800_builtins/820_echo.c \
+	./src/800_builtins/830_env.c \
+	./src/800_builtins/840_exit.c \
+	./src/800_builtins/850_export.c \
+	./src/800_builtins/851_export_utils.c \
+	./src/800_builtins/852_export_utils_2.c \
+	./src/800_builtins/860_pwd.c \
+	./src/800_builtins/870_unset.c \
+	./src/900_signals/910_signals.c \
 
 OBJ = $(SRC:.c=.o)
 
