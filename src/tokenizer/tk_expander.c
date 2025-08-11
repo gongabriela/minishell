@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 04:13:26 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/11 13:47:01 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/11 13:50:15 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,11 @@ void	expand_tokens(t_shell *sh)
 	{
 		if (curr->type == CMD && curr->content)
 		{
-			printf("ANTES DA EXPANSAO: %s\n", curr->content); // delete
+			//printf("ANTES DA EXPANSAO: %s\n", curr->content); // delete
 			temp = ft_expander(sh, curr->content);
 			free(curr->content);
 			curr->content = temp;
-			printf("DEPOIS DA EXPANSAO: %s\n", curr->content); // delete
+			//printf("DEPOIS DA EXPANSAO: %s\n", curr->content); // delete
 		}
 		curr = curr->next;
 	}
