@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 23:56:01 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/05 22:22:20 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/11 03:47:39 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*expand_var(t_shell *shell, char *token)
 		return (ft_strdup(token));
 	if (token[1] == '?')
 		return (ft_itoa(shell->exit_code));
-	return (ft_get_var(token + 1, shell->envp));
+	return (ft_get_var(shell->env, token + 1));
 }
 
 // adds string to the end of a linked list
@@ -47,20 +47,13 @@ void	add_str_to_list(t_list **list, void *content)
 
 // searches variable in environment and 
 // returns its value (or empty string if not found)
-char	*ft_get_var(char *key, char **envp)
+char	*ft_get_var(t_env *env, const char *key)
 {
-	int		i;
-	int		len;
-
-	if (!key || !envp)
-		return (ft_strdup(""));
-	len = ft_strlen(key);
-	i = 0;
-	while (envp[i])
+	while (env)
 	{
-		if (ft_strncmp(envp[i], key, len) == 0 && envp[i][len] == '=')
-			return (ft_strdup(envp[i] + len + 1));
-		i++;
+		if (strcmp(env->key, key) == 0) //ft_strcmp
+			return (ft_strdup(env->content));
+		env = env->next;
 	}
 	return (ft_strdup(""));
 }

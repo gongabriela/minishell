@@ -137,7 +137,7 @@ void	print_tokens(t_token *head);
 // tokenize expander
 int		is_valid_var_char(char c);
 int		is_valid_var_start(char c);
-char	*ft_get_var(char *key, char **envp);
+char	*ft_get_var(t_env *env, const char *key);
 char	*ft_expander(t_shell *sh, char *token);
 char	*expand_var(t_shell *shell, char *token);
 char	*ft_join_list_and_free(t_list **lst, char sep);
