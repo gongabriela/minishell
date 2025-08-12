@@ -56,7 +56,7 @@ typedef struct s_env
 // <
 // >
 // >>
-// << (delete)
+// <<
 typedef enum e_token_type
 {
 	CMD,
@@ -129,21 +129,47 @@ char	*get_hostname_line(int fd);
 int		pre_parsing(char *input);
 int		get_input(t_shell *shell);
 
-// --------- Funções de tokenizer ------------------------------
+// --------- Main tokenizer ------------------------------
 t_token	*tokenize(char *input);
-/*int		validate_token(t_token *tokens);*/
 
-// tokenizer_utils
+// --------- tokenizer utilities -------------------------------
+
+// operator checks
 int		is_operator(char c);
-/*int		is_incomplete_input(t_token *tokens);*/
-void	free_tokens(t_token *head);
+
+// token list manipulation
 void	add_token(t_token **list, t_token *new_token);
 void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
+
+// quote state handling
 char	update_quote_state(char quote_state, char curr_char);
+
+// token creation and handling
 t_token	*handle_word(char *input, int *i);
 t_token	*create_token(char *str, t_token_type type, int len);
 t_token_oprt	handle_operator(char *input);
-void	print_tokens(t_token *head);
+
+// --------- Variable expansion and token expansion ------------
+
+// variable validation
+int		is_valid_var_char(char c);
+int		is_valid_var_start(char c);
+
+// variable expansion
+void	expand_tokens(t_shell *sh);
+char	*ft_expander(t_shell *sh, char *token);
+char	*expand_var(t_shell *shell, char *token);
+char	*ft_get_var(t_env *env, const char *key);
+
+// dolar and quotes
+char	*expand_dollar(t_shell *shell, char *str, int *i);
+char	*expand_single_quotes(char *str, int *i);
+char	*expand_double_quotes(t_shell *shell, char *str, int *i);
+
+// helper functions
+void	add_str_to_list(t_list **list, void *content);
+char	*ft_join_list_and_free(t_list **lst, char sep);
+char	*ft_strjoin_free(char *s1, char *s2, int free_flag);
 
 // --------- Funções de free -----------------------------------
 

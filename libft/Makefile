@@ -6,7 +6,7 @@
 #    By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/21 13:41:19 by adias-do          #+#    #+#              #
-#    Updated: 2025/03/11 16:01:11 by adias-do         ###   ########.fr        #
+#    Updated: 2025/08/12 01:33:23 by adias-do         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 	ft_memcmp.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c \
 	ft_strtrim.c ft_strmapi.c ft_striteri.c ft_split.c ft_itoa.c \
 	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
-	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
+	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_strcmp.c \
 	ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c \
 	./printf/ft_printf.c ./printf/ft_functions.c ./printf/ft_pointer.c \
 	./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c

@@ -6,14 +6,22 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 12:31:52 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:23:18 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// main tokenizer function: iterates over input
-// and builds a linked list of tokens
+/**
+ * @brief Tokenizes the input string into a linked list of tokens.
+ *
+ * Iterates through the input string, skipping whitespace, and
+ * separates the input into tokens representing commands, arguments,
+ * and operators (|, <, >, >>, <<).
+ *
+ * @param input The input command line string to tokenize.
+ * @return Pointer to the head of the linked list of tokens.
+ */
 t_token	*tokenize(char *input)
 {
 	t_token			*head;

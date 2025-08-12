@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.env = NULL;
 	shell.pwd = NULL;
 	get_env(&shell, envp);
+	shell.envp = envp;
 	minishell(&shell);
 	return (0);
 }
