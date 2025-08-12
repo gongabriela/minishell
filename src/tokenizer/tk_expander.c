@@ -6,13 +6,23 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 04:13:26 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/11 13:50:15 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/12 01:39:13 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// expands variable $VAR or $? found at current string position
+/**
+ * @brief Expands a dollar variable ($VAR or $?) found at the current string position.
+ *
+ * Advances the index pointer accordingly.
+ * Returns the expanded string or "$" if no valid variable is found.
+ *
+ * @param shell Pointer to the shell struct (to access environment and exit code).
+ * @param str Input string to parse.
+ * @param i Pointer to current index in the input string (gets updated).
+ * @return Newly allocated expanded string.
+ */
 char	*expand_dollar(t_shell *shell, char *str, int *i)
 {
 	char	*temp;
@@ -35,6 +45,15 @@ char	*expand_dollar(t_shell *shell, char *str, int *i)
 	return (value);
 }
 
+/**
+ * @brief Extracts the literal string inside single quotes, no expansion inside.
+ *
+ * Advances index pointer past the closing quote.
+ *
+ * @param str Input string to parse.
+ * @param i Pointer to current index in the input string (gets updated).
+ * @return Newly allocated string from inside the single quotes.
+ */
 char	*expand_single_quotes(char *str, int *i)
 {
 	int		start;
@@ -50,7 +69,17 @@ char	*expand_single_quotes(char *str, int *i)
 	return (ret);
 }
 
-char *ft_strjoin_free(char *s1, char *s2, int free_flag) 
+/**
+ * @brief Joins two strings and frees one or both depending on the free_flag.
+ *
+ * free_flag: 1 = free s1, 2 = free s2, 3 = free both, 0 = free none.
+ *
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @param free_flag Controls which strings to free.
+ * @return Newly allocated joined string.
+ */
+char	*ft_strjoin_free(char *s1, char *s2, int free_flag)
 {// tirar daqui e ajustar
 	char	*joined;
 
@@ -62,6 +91,16 @@ char *ft_strjoin_free(char *s1, char *s2, int free_flag)
 	return (joined);
 }
 
+/**
+ * @brief Expands a string inside double quotes, expanding $variables inside.
+ *
+ * Advances index pointer past the closing double quote.
+ *
+ * @param shell Pointer to the shell struct (to access environment and exit code).
+ * @param str Input string to parse.
+ * @param i Pointer to current index in the input string (gets updated).
+ * @return Newly allocated expanded string.
+ */
 char	*expand_double_quotes(t_shell *shell, char *str, int *i)
 {
 	char	*result;
@@ -93,7 +132,15 @@ char	*expand_double_quotes(t_shell *shell, char *str, int *i)
 	return (result);
 }
 
-// main function that processes all $ in a token and returns expanded string
+/**
+ * @brief Main function to expand variables and quotes in a token string.
+ *
+ * Supports expansion of $VAR, $? and handles single and double quotes correctly.
+ *
+ * @param sh Pointer to shell struct.
+ * @param token The input token string to expand.
+ * @return Newly allocated expanded string.
+ */
 char	*ft_expander(t_shell *sh, char *token)
 {
 	int		i;
@@ -132,7 +179,13 @@ char	*ft_expander(t_shell *sh, char *token)
 	return (ft_join_list_and_free(&parts, '\0'));
 }
 
-// iterates through all tokens and expands variables in CMD type tokens
+/**
+ * @brief Iterates through all tokens and expands variables only in CMD type tokens.
+ *
+ * Frees the old token content and replaces it with the expanded version.
+ *
+ * @param sh Pointer to the shell struct containing the tokens list.
+ */
 void	expand_tokens(t_shell *sh)
 {
 	char	*temp;
@@ -143,11 +196,9 @@ void	expand_tokens(t_shell *sh)
 	{
 		if (curr->type == CMD && curr->content)
 		{
-			//printf("ANTES DA EXPANSAO: %s\n", curr->content); // delete
 			temp = ft_expander(sh, curr->content);
 			free(curr->content);
 			curr->content = temp;
-			//printf("DEPOIS DA EXPANSAO: %s\n", curr->content); // delete
 		}
 		curr = curr->next;
 	}

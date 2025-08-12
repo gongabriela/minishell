@@ -121,28 +121,41 @@ char	*get_hostname_line(int fd);
 int		pre_parsing(char *input);
 int		get_input(t_shell *shell);
 
-// --------- Funções de tokenizer ------------------------------
+// --------- Main tokenizer ------------------------------
 t_token	*tokenize(char *input);
 
-// tokenizer utils
+// --------- tokenizer utilities -------------------------------
+
+// operator checks
 int		is_operator(char c);
+
+// token list manipulation
 void	add_token(t_token **list, t_token *new_token);
 void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
+
+// quote state handling
 char	update_quote_state(char quote_state, char curr_char);
+
+// token creation and handling
 t_token	*handle_word(char *input, int *i);
 t_token	*create_token(char *str, t_token_type type, int len);
 t_token_oprt	handle_operator(char *input);
-void	print_tokens(t_token *head);
 
-// tokenize expander
+// --------- Variable expansion and token expansion ------------
+
+// variable validation
 int		is_valid_var_char(char c);
 int		is_valid_var_start(char c);
-char	*ft_get_var(t_env *env, const char *key);
+
+// variable expansion
+void	expand_tokens(t_shell *sh);
 char	*ft_expander(t_shell *sh, char *token);
 char	*expand_var(t_shell *shell, char *token);
-char	*ft_join_list_and_free(t_list **lst, char sep);
-void	expand_tokens(t_shell *sh);
+char	*ft_get_var(t_env *env, const char *key);
+
+// helper functions
 void	add_str_to_list(t_list **list, void *content);
+char	*ft_join_list_and_free(t_list **lst, char sep);
 
 // --------- Funções de free -----------------------------------
 
