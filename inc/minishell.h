@@ -55,7 +55,7 @@ typedef struct s_env
 // <
 // >
 // >>
-// << (delete)
+// <<
 typedef enum e_token_type
 {
 	CMD,
@@ -153,9 +153,15 @@ char	*ft_expander(t_shell *sh, char *token);
 char	*expand_var(t_shell *shell, char *token);
 char	*ft_get_var(t_env *env, const char *key);
 
+// dolar and quotes
+char	*expand_dollar(t_shell *shell, char *str, int *i);
+char	*expand_single_quotes(char *str, int *i);
+char	*expand_double_quotes(t_shell *shell, char *str, int *i);
+
 // helper functions
 void	add_str_to_list(t_list **list, void *content);
 char	*ft_join_list_and_free(t_list **lst, char sep);
+char	*ft_strjoin_free(char *s1, char *s2, int free_flag);
 
 // --------- Funções de free -----------------------------------
 

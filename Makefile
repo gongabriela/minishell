@@ -20,7 +20,9 @@ SRC =	./src/tokenizer/tokenizer.c \
 		./src/tokenizer/tokenizer_utils_2.c \
 		./src/tokenizer/tk_expander.c \
 		./src/tokenizer/tk_exp_utils.c \
-		./src/tokenizer/join_lists.c \
+		./src/tokenizer/tk_exp_join.c \
+		./src/tokenizer/tk_exp_quotes.c \
+		./src/tokenizer/tk_exp_dolar.c \
 		./src/free.c ./src/get_env.c ./src/minishell.c \
 		./src/prompt/prompt.c ./src/prompt/prompt_utils.c \
 		./src/pre_parsing.c ./src/builtins/echo.c \
