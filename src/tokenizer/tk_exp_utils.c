@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 23:56:01 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 01:27:17 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:35:40 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
  * Valid start characters are alphabetic letters (a-z, A-Z) or underscore '_'.
  *
  * @param c The character to check.
- * @return int Returns non-zero (true) if valid start character, zero (false) otherwise.
+ * @return int Returns non-zero (true) if valid start character, 
+ * zero (false) otherwise.
  */
 int	is_valid_var_start(char c)
 {
@@ -31,7 +32,8 @@ int	is_valid_var_start(char c)
  * Valid characters are alphanumeric (a-z, A-Z, 0-9) or underscore '_'.
  *
  * @param c The character to check.
- * @return int Returns non-zero (true) if valid variable character, zero (false) otherwise.
+ * @return int Returns non-zero (true) if valid variable character, 
+ * zero (false) otherwise.
  */
 int	is_valid_var_char(char c)
 {
@@ -45,7 +47,8 @@ int	is_valid_var_char(char c)
  * it returns the corresponding value from the environment or the last exit code.
  * Otherwise, returns a duplicate of the original token.
  *
- * @param shell Pointer to the shell structure containing environment and exit code.
+ * @param shell Pointer to the shell structure containing
+ * environment and exit code.
  * @param token The token string starting with '$' to be expanded.
  * @return char* Newly allocated string with the expanded variable value.
  */
@@ -85,7 +88,8 @@ void	add_str_to_list(t_list **list, void *content)
  *
  * @param env Pointer to the head of the environment variable linked list.
  * @param key The key name of the environment variable to search for.
- * @return char* Newly allocated string with the variable's content or empty string if not found.
+ * @return char* Newly allocated string with the variable's content
+ * or empty string if not found.
  */
 char	*ft_get_var(t_env *env, const char *key)
 {

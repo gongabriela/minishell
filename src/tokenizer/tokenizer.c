@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/07/04 10:36:32 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:33:08 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,45 +42,3 @@ t_token	*tokenize(char *input)
 	}
 	return (head);
 }
-
-/* // validar o input dos tokens
-int	validate_token(t_token *tokens)
-{
-	t_token *prev = NULL;
-
-	// ver se os tokens sao validos
-	while (tokens)
-	{ // PIPE no inicio, 2 seguidos ou no fim
-		if (tokens->type == PIPE)
-		{
-			if (!prev || !tokens->next || tokens->next->type == PIPE)
-				return (ft_printf("zsh: parse error near `||'\n"), 1);
-		}
-		if (tokens->type == REDIR_IN || tokens->type == REDIR_OUT
-			|| tokens->type == APPEND || tokens->type == HEREDOC)
-		{
-			if (!tokens->next || tokens->next->type != CMD)
-				return (ft_printf("zsh: parse error near `%s'\n", tokens->content), 1);
-		}
-		prev = tokens;
-		tokens = tokens->next;
-	}
-	return (0);
-} */
-
-/* int	is_incomplete_input(t_token *tokens)
-{
-	t_token	*last;
-
-	last = NULL;
-	if (!tokens)
-		return (0);
-	while(tokens)
-	{
-		last = tokens;
-		tokens = tokens->next;
-	}
-	if (last->type != CMD)
-		return (1);
-	return (0);
-} */
