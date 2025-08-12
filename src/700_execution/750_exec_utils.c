@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:51:47 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 15:06:14 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:13:50 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	copy_envp_values(char **envp, t_env *env)
 		env = env->next;
 		i++;
 	}
-	envp[i] = "\0";
+	envp[i] = NULL;
 }
 
 void	free_envp_array(char **envp)

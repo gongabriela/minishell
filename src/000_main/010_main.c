@@ -47,6 +47,7 @@ void	init_structs(t_shell *shell)
 	shell->cmd_total = 0;
 	shell->pids = NULL;
 	shell->pid_index = -1;
+	shell->envp = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
