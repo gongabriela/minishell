@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:21:18 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 16:00:36 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:39:03 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ void	add_token(t_token **list, t_token *new_token)
  * @brief Adds a token to the list and frees operator token string.
  *
  * Calls add_token to append the token, then frees the token string
- * inside the auxiliary t_token_oprt struct to avoid memory leaks.
+ * inside the auxiliary t_oprt struct to avoid memory leaks.
  *
  * @param list Pointer to the token list.
  * @param token Token to add.
  * @param oprt Auxiliary operator token struct whose string will be freed.
  */
-void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt)
+void	add_token_and_free(t_token **list, t_token *token, t_oprt *oprt)
 {
 	add_token(list, token);
 	if (oprt->token)

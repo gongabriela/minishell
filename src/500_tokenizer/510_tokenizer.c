@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 17:36:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 16:01:08 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:39:32 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
  */
 t_token	*tokenize(char *input)
 {
-	t_token			*head;
-	t_token			*new_token;
-	t_token_oprt	oprt;
-	int				i;
+	t_token	*head;
+	t_token	*new_token;
+	t_oprt	oprt;
+	int		i;
 
 	head = NULL;
 	i = 0;

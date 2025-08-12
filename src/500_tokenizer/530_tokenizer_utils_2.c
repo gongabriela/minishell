@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 22:26:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 15:58:49 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:40:23 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ t_token	*handle_word(char *input, int *i)
  * Sets the length, token string, and token type for each operator
  * supported by the tokenizer, including redirections and pipes.
  *
- * @param oprt Array of t_token_oprt to initialize.
+ * @param oprt Array of t_oprt to initialize.
  */
-void	init_token_ops(t_token_oprt *oprt)
+void	init_token_ops(t_oprt *oprt)
 {
-	oprt[0] = (t_token_oprt){2, "<<", HEREDOC};
-	oprt[1] = (t_token_oprt){1, "<", REDIR_IN};
-	oprt[2] = (t_token_oprt){2, ">>", APPEND};
-	oprt[3] = (t_token_oprt){1, ">", REDIR_OUT};
-	oprt[4] = (t_token_oprt){1, "|", PIPE};
-	oprt[5] = (t_token_oprt){0, NULL, 0};
+	oprt[0] = (t_oprt){2, "<<", HEREDOC};
+	oprt[1] = (t_oprt){1, "<", REDIR_IN};
+	oprt[2] = (t_oprt){2, ">>", APPEND};
+	oprt[3] = (t_oprt){1, ">", REDIR_OUT};
+	oprt[4] = (t_oprt){1, "|", PIPE};
+	oprt[5] = (t_oprt){0, NULL, 0};
 }
 
 /**
@@ -59,13 +59,13 @@ void	init_token_ops(t_token_oprt *oprt)
  * Returns a default CMD token if no operator matches.
  *
  * @param input Input string starting at the potential operator.
- * @return t_token_oprt Struct containing length, token string, and type.
+ * @return t_oprt Struct containing length, token string, and type.
  */
-t_token_oprt	handle_operator(char *input)
+t_oprt	handle_operator(char *input)
 {
-	int				i;
-	t_token_oprt	oprt[6];
-	t_token_oprt	result;
+	int		i;
+	t_oprt	oprt[6];
+	t_oprt	result;
 
 	i = 0;
 	init_token_ops(oprt);

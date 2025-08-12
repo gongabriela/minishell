@@ -83,7 +83,7 @@ typedef struct s_token_oprt
 	int				len;
 	char			*token;
 	t_token_type	type;
-}	t_token_oprt;
+}	t_oprt;
 
 // estrutura temporaria para AST -----------------------------
 typedef struct s_exec
@@ -139,7 +139,7 @@ int		is_operator(char c);
 
 // token list manipulation
 void	add_token(t_token **list, t_token *new_token);
-void	add_token_and_free(t_token **list, t_token *token, t_token_oprt *oprt);
+void	add_token_and_free(t_token **list, t_token *token, t_oprt *oprt);
 
 // quote state handling
 char	update_quote_state(char quote_state, char curr_char);
@@ -147,7 +147,7 @@ char	update_quote_state(char quote_state, char curr_char);
 // token creation and handling
 t_token	*handle_word(char *input, int *i);
 t_token	*create_token(char *str, t_token_type type, int len);
-t_token_oprt	handle_operator(char *input);
+t_oprt	handle_operator(char *input);
 
 // --------- Variable expansion and token expansion ------------
 
