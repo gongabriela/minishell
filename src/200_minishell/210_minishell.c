@@ -120,6 +120,9 @@ void	wait_pids(t_shell *shell)
 	int		i;
 
 	i = 0;
+	status = 0;
+	if (!shell->pids)
+		return ;
 	while (i < shell->cmd_total)
 	{
 		if (shell->pids[i] > 0)

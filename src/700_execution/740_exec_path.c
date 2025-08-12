@@ -6,11 +6,20 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:01:20 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 12:09:55 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:36:09 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
+void	error_msg(char *msg, char *cmd, char *arg)
+{
+	printf("bash: %s: ", cmd);
+	if (arg)
+		printf("%s: ", arg);
+	printf("%s\n", msg);
+}
 
 /**
  * @brief Finds the full path of a command.
@@ -31,17 +40,17 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
 	char	*env_value;
 	char	*path;
 
-	path = check_for_slash(cmd[0]);
-	if (path)
-		return (path);
+	if (check_for_slash(cmd[0]) == 0)
+		return (ft_strdup(cmd[0]));
+	else if (check_for_slash(cmd[0]) == 1)
+		return (error_msg("Permission denied", cmd[0], NULL), NULL);
 	env_value = get_env_value(shell->env, "PATH");
-	if (!env_value)
-		return (NULL);
+	if (!env_value || env_value[0] == '\0')
+		return (error_msg("No such file or directory", cmd[0], NULL), NULL);
 	split_paths = ft_split(env_value, ':');
 	if (!split_paths)
 		return (perror("malloc failed"), NULL);
-	if (split_paths[0] == NULL)
-		return (perror("command not found"), NULL);
+	printf("ok");
 	path = find_exec_path(split_paths, cmd[0]);
 	ft_free_split(split_paths);
 	if (!path || path[0] == '\0')
@@ -49,7 +58,7 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
 		if (!path)
 			return (perror("malloc failed"), NULL);
 		else
-			return (free(path), perror("command not found"), NULL);
+			return (perror("command not found"), NULL);
 	}
 	return (path);
 }
@@ -64,15 +73,17 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
  * @return A newly allocated string with the command path if executable,
  *  or NULL otherwise.
  */
-char	*check_for_slash(char *cmd)
+int	check_for_slash(char *cmd)
 {
 	if (cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
 	{
 		if (access(cmd, X_OK) == 0)
-			return (ft_strdup(cmd));
+			return (0);
+		else
+			return (1);
 	}
-	return (NULL);
+	return (-1);
 }
 
 /**
@@ -93,6 +104,8 @@ char	*find_exec_path(char **split_paths, char *cmd)
 	int		i;
 
 	i = 0;
+	if (split_paths[0] == NULL)
+		return (ft_strdup(""), NULL);
 	while (split_paths[i] != NULL)
 	{
 		path_bar = ft_strjoin(split_paths[i], "/");

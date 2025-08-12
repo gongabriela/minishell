@@ -235,7 +235,10 @@ void	redir_io(t_exec *tree, t_shell *shell);
 void	close_unused_pipes(t_exec *tree, t_shell *shell);
 char	*get_cmd_path(char **cmd, t_shell *shell);
 char	*find_exec_path(char **split_paths, char *cmd);
-char	*check_for_slash(char *cmd);
+int		check_for_slash(char *cmd);
+void	get_envp(t_shell *shell);
+void	copy_envp_values(char **envp, t_env *env);
+void	free_envp_array(char **envp);
 void	ft_free_split(char **split);
 
 void	pre_execution(t_exec *tree, t_shell *shell);
