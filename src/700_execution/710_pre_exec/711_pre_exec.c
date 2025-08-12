@@ -13,9 +13,11 @@
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Prepares the shell for command execution by setting up pipes, heredocs, and redirections.
+ * @brief Prepares the shell for command execution by setting up pipes, heredocs,
+ *  and redirections.
  *
- * Initializes pipes, executes heredocs, sets up redirections, and allocates memory for process IDs.
+ * Initializes pipes, executes heredocs, sets up redirections, and allocates
+ * memory for process IDs.
  * @param tree Pointer to the root of the AST.
  * @param shell Pointer to the shell state structure.
  */

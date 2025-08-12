@@ -43,10 +43,13 @@ void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc)
  * @param i Index to ensure uniqueness.
  * @return Pointer to the allocated filename string.
  */
-char *heredoc_alloc_name(t_shell *shell, char *temp, int i)
+char	*heredoc_alloc_name(t_shell *shell, char *temp, int i)
 {
-	char *i_str = ft_itoa(i);
-	char *file_name = ft_strjoin(temp, i_str);
+	char	*i_str;
+	char	*file_name;
+
+	i_str = ft_itoa(i);
+	file_name = ft_strjoin(temp, i_str);
 	if (!file_name)
 	{
 		perror("malloc failed");
@@ -68,10 +71,13 @@ char *heredoc_alloc_name(t_shell *shell, char *temp, int i)
  */
 char	*get_random_name(t_shell *shell)
 {
-	static int i = 0;
-	char *pid = ft_itoa(getpid());
-	char *temp = ft_strjoin("/tmp/.heredoc_", pid);
-	char *file_name;
+	static int	i = 0;
+	char		*pid;
+	char		*temp;
+	char		*file_name;
+
+	pid = ft_itoa(getpid());
+	temp = ft_strjoin("/tmp/.heredoc_", pid);
 	if (!temp)
 	{
 		perror("malloc failed");

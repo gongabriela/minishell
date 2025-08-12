@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Deletes a node from the environment variable linked list.
  *
- * Searches for the target node in the shell's environment list and removes it, freeing its memory.
+ * Searches for the target node in the shell's env list and removes it.
  * @param shell Pointer to the shell state structure.
  * @param target Pointer to the environment node to delete.
  */
@@ -49,7 +49,7 @@ void	delete_env_node(t_shell *shell, t_env *target)
 /**
  * @brief Removes a single environment variable by key.
  *
- * Searches for the environment variable matching the given key and deletes it if found.
+ * Searches for the env var matching the given key and deletes it.
  * @param shell Pointer to the shell state structure.
  * @param arg The key of the environment variable to remove.
  */
@@ -72,7 +72,7 @@ static void	unset_one(t_shell *shell, char *arg)
 /**
  * @brief Implements the unset builtin command.
  *
- * Removes one or more environment variables specified in args from the shell's environment list.
+ * Removes one or more env vars specified in args from the shell's env list.
  * Handles invalid options and sets the shell's exit code accordingly.
  * @param shell Pointer to the shell state structure.
  * @param args Array of argument strings.

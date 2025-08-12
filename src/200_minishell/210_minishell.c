@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Main loop of the minishell program.
  *
- * Handles the shell prompt, input parsing, AST creation, execution, and cleanup in a loop.
+ * executes de minishell loop (REPL).
  * @param shell Pointer to the shell state structure.
  */
 void	minishell(t_shell *shell)
@@ -45,7 +45,8 @@ void	minishell(t_shell *shell)
 /**
  * @brief Reads and processes user input from the prompt.
  *
- * Creates the prompt, reads input using readline, adds it to history, and performs pre-parsing.
+ * Creates the prompt, reads input using readline, adds it to history,
+ *  and performs pre-parsing.
  * Exits the shell if input or prompt allocation fails.
  * @param shell Pointer to the shell state structure.
  * @return 1 if input is valid and ready for parsing, 0 otherwise.
@@ -65,7 +66,7 @@ int	get_input(t_shell *shell)
 }
 
 /**
- * @brief Counts the total number of commands separated by pipes in the token list.
+ * @brief Counts the total number of commands separated by pipes.
  *
  * @param head Pointer to the head of the token list.
  * @return The total number of commands.
@@ -85,7 +86,7 @@ int	get_cmd_total(t_token *head)
 }
 
 /**
- * @brief Closes and frees all pipe file descriptors used for inter-process communication.
+ * @brief Closes and frees all pipe file descriptors.
  *
  * @param shell Pointer to the shell state structure.
  */
@@ -108,9 +109,9 @@ void	close_all_pipes(t_shell *shell)
 }
 
 /**
- * @brief Waits for all child processes to finish and updates the shell's exit code.
+ * @brief Waits for all child processes and updates shell->exit code.
  *
- * Waits for each process ID in the shell's PID array and sets the exit code based on the last command.
+ * Waits for each process ID and sets the exit code.
  * @param shell Pointer to the shell state structure.
  */
 void	wait_pids(t_shell *shell)

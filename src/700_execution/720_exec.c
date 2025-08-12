@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	execution(t_exec *tree, t_shell *shell, int *pid_index)
 {
@@ -30,7 +30,8 @@ void	execution(t_exec *tree, t_shell *shell, int *pid_index)
 
 void	exec_cmd_child(t_exec *tree, t_shell *shell)
 {
-	char *path;
+	char	*path;
+
 	handle_signals_child();
 	if (tree->stdin < 0 || tree->stdout < 0)
 	{
@@ -45,10 +46,7 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 	}
 	path = get_cmd_path(tree->cmd, shell);
 	if (!path)
-	{
-		perror("command not found");
 		exit(127);
-	}
 	execve(path, tree->cmd, shell->envp);
 	perror("exceve failed");
 	exit(127);
@@ -75,10 +73,11 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 		shell->pids[index] = pid;
 }
 
-
 void	close_unused_pipes(t_exec *tree, t_shell *shell)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < shell->cmd_total - 1)
 	{
 		if (shell->pipe_fds[i][0] != tree->stdin &&
@@ -106,4 +105,3 @@ void	redir_io(t_exec *tree, t_shell *shell)
 	if (shell->pipe_fds)
 		close_unused_pipes(tree, shell);
 }
-

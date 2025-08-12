@@ -6,11 +6,11 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:51:08 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/11 16:19:52 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:48:11 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Handles SIGINT (Ctrl+C) signal during the shell prompt.

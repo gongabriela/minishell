@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Frees a NULL-terminated array of command/argument strings.
@@ -34,9 +34,9 @@ void	free_cmd_and_args(char **cmd)
 }
 
 /**
- * @brief Frees all dynamically allocated members of a t_exec node and the node itself.
+ * @brief Frees all dynamically allocated members of a t_exec node.
  *
- * Frees operator, command arguments, delimiter, filename, and the node structure.
+ * Frees all vars from the node struct.
  * @param node Pointer to the t_exec node to free.
  */
 void	ft_free_node(t_exec *node)
@@ -55,7 +55,7 @@ void	ft_free_node(t_exec *node)
 /**
  * @brief Recursively frees an entire AST (Abstract Syntax Tree) of t_exec nodes.
  *
- * Traverses the tree in post-order, freeing all nodes and their dynamically allocated members.
+ * Traverses the tree in post-order, freeing all nodes.
  * @param tree Pointer to the root of the AST to free.
  */
 void	ft_free_ast(t_exec *tree)
