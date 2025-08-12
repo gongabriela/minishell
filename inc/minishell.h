@@ -22,6 +22,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <signal.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -96,7 +97,14 @@ typedef struct s_exec
 	struct s_exec		*right;
 	int					stdin;
 	int					stdout;
+	struct s_hdc		*heredoc;
 }	t_exec;
+
+typedef struct s_hdc
+{
+	char	*file_name;
+	int		fd;
+}	t_hdc;
 
 // --------- Funções principais -------------------------------
 
@@ -250,6 +258,7 @@ int		is_builtin(char **cmd);
 
 void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index);
 void	redir_io(t_exec *tree, t_shell *shell);
+void	close_unused_pipes(t_exec *tree, t_shell *shell);
 char	*get_cmd_path(char **cmd, t_shell *shell);
 char	*find_exec_path(char **split_paths, char *cmd);
 void	ft_free_split(char **split);
@@ -261,6 +270,7 @@ int		create_pipes(t_shell *shell, t_exec *tree, int **pipe_fds, int i);
 void	ft_free_pipes(int **pipe_fds, int cmd_total);
 
 void	exec_cmd(t_exec *tree, t_shell *shell, int index);
+void	exec_cmd_child(t_exec *tree, t_shell *shell);
 void	wait_pids(t_shell *shell);
 void	close_all_pipes(t_shell *shell);
 
@@ -270,5 +280,19 @@ void	handle_append(t_exec *tree, char *file);
 
 void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
+
+void	handle_heredoc(t_exec *tree);
+void	execute_heredocs(t_exec *tree, t_shell *shell);
+void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
+void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc);
+char	*heredoc_alloc_name(t_shell *shell, char *temp, int i);
+char	*get_random_name(t_shell *shell);
+void	get_heredoc_input(t_exec *tree, t_hdc *heredoc);
+void	free_heredoc_struct(t_hdc *heredoc);
+
+//signals
+void	handle_sigint(int sig);
+void	setup_signals_prompt(void);
+void	handle_signals_child(void);
 
 #endif
