@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   850_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:02:05 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/11 16:18:18 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:48:07 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Implements the export builtin command.

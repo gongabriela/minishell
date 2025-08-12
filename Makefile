@@ -26,7 +26,12 @@ SRC = \
 	./src/400_pre_parsing/410_pre_parsing.c \
 	./src/500_tokenizer/510_tokenizer.c \
 	./src/500_tokenizer/520_tokenizer_utils.c \
-	./src/500_tokenizer/530_rl_test.c \
+	./src/500_tokenizer/530_tokenizer_utils_2.c \
+	./src/500_tokenizer/540_tk_expander.c \
+	./src/500_tokenizer/550_tk_exp_dolar.c \
+	./src/500_tokenizer/560_tk_exp_quotes.c \
+	./src/500_tokenizer/570_tk_exp_join.c \
+	./src/500_tokenizer/580_tk_exp_utils.c \
 	./src/600_ast/610_create_ast.c \
 	./src/600_ast/620_create_node_ast.c \
 	./src/600_ast/630_ast_utils.c \

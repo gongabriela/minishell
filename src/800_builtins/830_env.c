@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   830_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:48:51 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/11 16:19:52 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:48:01 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Implements the env builtin command.

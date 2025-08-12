@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   820_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:44:30 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/11 16:19:52 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/12 15:47:58 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Checks for the presence of the -n flag in echo arguments.
