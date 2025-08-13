@@ -53,8 +53,8 @@ void	ft_free_shell(t_shell *shell)
 		ft_free_ast(shell->tree);
 	if (shell->pids != NULL)
 		free(shell->pids);
-	if (shell->envp != NULL)
-		free_envp_array(shell->envp);
+	/*if (shell->envp != NULL)
+		free_envp_array(shell->envp);*/
 	init_structs(shell);
 }
 

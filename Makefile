@@ -27,7 +27,6 @@ SRC = \
 	./src/500_tokenizer/510_tokenizer.c \
 	./src/500_tokenizer/520_tokenizer_utils.c \
 	./src/500_tokenizer/530_tokenizer_utils_2.c \
-	./src/500_tokenizer/540_rl_test.c \
 	./src/600_ast/610_create_ast.c \
 	./src/600_ast/620_create_node_ast.c \
 	./src/600_ast/630_ast_utils.c \

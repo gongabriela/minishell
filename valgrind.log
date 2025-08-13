@@ -1,0 +1,297 @@
+==10093== Memcheck, a memory error detector
+==10093== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10093== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10093== Command: ./minishell
+==10093== 
+==10093== 
+==10093== HEAP SUMMARY:
+==10093==     in use at exit: 232,864 bytes in 234 blocks
+==10093==   total heap usage: 611 allocs, 377 frees, 272,163 bytes allocated
+==10093== 
+==10093== LEAK SUMMARY:
+==10093==    definitely lost: 0 bytes in 0 blocks
+==10093==    indirectly lost: 0 bytes in 0 blocks
+==10093==      possibly lost: 0 bytes in 0 blocks
+==10093==    still reachable: 0 bytes in 0 blocks
+==10093==         suppressed: 232,864 bytes in 234 blocks
+==10093== 
+==10093== For lists of detected and suppressed errors, rerun with: -s
+==10093== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10109== Memcheck, a memory error detector
+==10109== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10109== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10109== Command: ./minishell
+==10109== 
+==10109== 
+==10109== HEAP SUMMARY:
+==10109==     in use at exit: 232,884 bytes in 234 blocks
+==10109==   total heap usage: 614 allocs, 380 frees, 272,255 bytes allocated
+==10109== 
+==10109== LEAK SUMMARY:
+==10109==    definitely lost: 0 bytes in 0 blocks
+==10109==    indirectly lost: 0 bytes in 0 blocks
+==10109==      possibly lost: 0 bytes in 0 blocks
+==10109==    still reachable: 0 bytes in 0 blocks
+==10109==         suppressed: 232,884 bytes in 234 blocks
+==10109== 
+==10109== For lists of detected and suppressed errors, rerun with: -s
+==10109== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10127== Memcheck, a memory error detector
+==10127== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10127== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10127== Command: ./minishell
+==10127== 
+command not found: No such file or directory
+==10128== 
+==10128== HEAP SUMMARY:
+==10128==     in use at exit: 237,599 bytes in 357 blocks
+==10128==   total heap usage: 660 allocs, 303 frees, 273,725 bytes allocated
+==10128== 
+==10128== 3 bytes in 3 blocks are still reachable in loss record 1 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10E4B9: ft_strdup (ft_strdup.c:21)
+==10128==    by 0x10E55D: ft_substr (ft_substr.c:23)
+==10128==    by 0x109785: create_env_node (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109826: get_env (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10961F: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 4 bytes in 1 blocks are still reachable in loss record 4 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10E597: ft_substr (ft_substr.c:27)
+==10128==    by 0x10A56C: create_token (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10A78C: handle_word (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10A4AA: tokenize (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B1B: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 4 bytes in 1 blocks are still reachable in loss record 5 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10E4B9: ft_strdup (ft_strdup.c:21)
+==10128==    by 0x10ABD1: get_simple_cmd (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10B19F: create_node_cmd (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10AE49: create_node_ast (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10AA88: create_ast (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B51: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 4 bytes in 1 blocks are still reachable in loss record 6 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10C0FD: pre_execution (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B6C: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 16 bytes in 1 blocks are still reachable in loss record 17 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10ABAD: get_simple_cmd (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10B19F: create_node_cmd (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10AE49: create_node_ast (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10AA88: create_ast (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B51: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 28 bytes in 1 blocks are still reachable in loss record 22 of 90
+==10128==    at 0x484DB80: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x49D0A97: getcwd (getcwd.c:86)
+==10128==    by 0x10986C: get_env (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10961F: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 32 bytes in 1 blocks are still reachable in loss record 24 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10A543: create_token (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10A78C: handle_word (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10A4AA: tokenize (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B1B: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 42 bytes in 1 blocks are still reachable in loss record 25 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10E456: ft_calloc (ft_calloc.c:19)
+==10128==    by 0x10A1D2: get_full_prompt (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109F02: create_prompt (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109BCC: get_input (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B07: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 72 bytes in 1 blocks are still reachable in loss record 31 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10AD64: create_node_ast (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10AA88: create_ast (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109B51: minishell (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 393 bytes in 37 blocks are still reachable in loss record 39 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10E597: ft_substr (ft_substr.c:27)
+==10128==    by 0x109703: create_env_node (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109826: get_env (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10961F: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 1,184 bytes in 37 blocks are still reachable in loss record 53 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10966C: create_env_node (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109826: get_env (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10961F: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== 2,889 bytes in 34 blocks are still reachable in loss record 59 of 90
+==10128==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10128==    by 0x10E597: ft_substr (ft_substr.c:27)
+==10128==    by 0x109785: create_env_node (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x109826: get_env (in /home/gongabriela/minishell/minishell)
+==10128==    by 0x10961F: main (in /home/gongabriela/minishell/minishell)
+==10128== 
+==10128== LEAK SUMMARY:
+==10128==    definitely lost: 0 bytes in 0 blocks
+==10128==    indirectly lost: 0 bytes in 0 blocks
+==10128==      possibly lost: 0 bytes in 0 blocks
+==10128==    still reachable: 4,671 bytes in 119 blocks
+==10128==         suppressed: 232,928 bytes in 238 blocks
+==10128== 
+==10128== For lists of detected and suppressed errors, rerun with: -s
+==10128== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10127== 
+==10127== HEAP SUMMARY:
+==10127==     in use at exit: 232,884 bytes in 234 blocks
+==10127==   total heap usage: 607 allocs, 373 frees, 272,125 bytes allocated
+==10127== 
+==10127== LEAK SUMMARY:
+==10127==    definitely lost: 0 bytes in 0 blocks
+==10127==    indirectly lost: 0 bytes in 0 blocks
+==10127==      possibly lost: 0 bytes in 0 blocks
+==10127==    still reachable: 0 bytes in 0 blocks
+==10127==         suppressed: 232,884 bytes in 234 blocks
+==10127== 
+==10127== For lists of detected and suppressed errors, rerun with: -s
+==10127== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10144== Memcheck, a memory error detector
+==10144== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10144== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10144== Command: ./minishell
+==10144== 
+==10144== 
+==10144== HEAP SUMMARY:
+==10144==     in use at exit: 232,884 bytes in 234 blocks
+==10144==   total heap usage: 613 allocs, 379 frees, 272,249 bytes allocated
+==10144== 
+==10144== LEAK SUMMARY:
+==10144==    definitely lost: 0 bytes in 0 blocks
+==10144==    indirectly lost: 0 bytes in 0 blocks
+==10144==      possibly lost: 0 bytes in 0 blocks
+==10144==    still reachable: 0 bytes in 0 blocks
+==10144==         suppressed: 232,884 bytes in 234 blocks
+==10144== 
+==10144== For lists of detected and suppressed errors, rerun with: -s
+==10144== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10160== Memcheck, a memory error detector
+==10160== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10160== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10160== Command: ./minishell
+==10160== 
+bash: cd: too many arguments
+==10160== 
+==10160== HEAP SUMMARY:
+==10160==     in use at exit: 232,884 bytes in 234 blocks
+==10160==   total heap usage: 613 allocs, 379 frees, 272,225 bytes allocated
+==10160== 
+==10160== 256 bytes in 1 blocks are still reachable in loss record 25 of 74
+==10160==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10160==    by 0x489DC97: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==10160==    by 0x4893EE1: rl_extend_line_buffer (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==10160==    by 0x48941F4: rl_replace_line (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==10160==    by 0x10E032: handle_sigint (in /home/gongabriela/minishell/minishell)
+==10160==    by 0x48FB32F: ??? (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==10160==    by 0x49D1172: open (open64.c:41)
+==10160==    by 0x10A020: get_hostname (in /home/gongabriela/minishell/minishell)
+==10160==    by 0x109EC6: create_prompt (in /home/gongabriela/minishell/minishell)
+==10160==    by 0x109BCC: get_input (in /home/gongabriela/minishell/minishell)
+==10160==    by 0x109B07: minishell (in /home/gongabriela/minishell/minishell)
+==10160==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10160== 
+==10160== LEAK SUMMARY:
+==10160==    definitely lost: 0 bytes in 0 blocks
+==10160==    indirectly lost: 0 bytes in 0 blocks
+==10160==      possibly lost: 0 bytes in 0 blocks
+==10160==    still reachable: 256 bytes in 1 blocks
+==10160==         suppressed: 232,628 bytes in 233 blocks
+==10160== 
+==10160== For lists of detected and suppressed errors, rerun with: -s
+==10160== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10176== Memcheck, a memory error detector
+==10176== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10176== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10176== Command: ./minishell
+==10176== 
+==10176== 
+==10176== HEAP SUMMARY:
+==10176==     in use at exit: 232,864 bytes in 234 blocks
+==10176==   total heap usage: 614 allocs, 380 frees, 272,213 bytes allocated
+==10176== 
+==10176== 256 bytes in 1 blocks are still reachable in loss record 25 of 74
+==10176==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==10176==    by 0x489DC97: xrealloc (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==10176==    by 0x4893EE1: rl_extend_line_buffer (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==10176==    by 0x48941F4: rl_replace_line (in /usr/lib/x86_64-linux-gnu/libreadline.so.8.2)
+==10176==    by 0x10E032: handle_sigint (in /home/gongabriela/minishell/minishell)
+==10176==    by 0x48FB32F: ??? (in /usr/lib/x86_64-linux-gnu/libc.so.6)
+==10176==    by 0x49D1172: open (open64.c:41)
+==10176==    by 0x10A020: get_hostname (in /home/gongabriela/minishell/minishell)
+==10176==    by 0x109EC6: create_prompt (in /home/gongabriela/minishell/minishell)
+==10176==    by 0x109BCC: get_input (in /home/gongabriela/minishell/minishell)
+==10176==    by 0x109B07: minishell (in /home/gongabriela/minishell/minishell)
+==10176==    by 0x109633: main (in /home/gongabriela/minishell/minishell)
+==10176== 
+==10176== LEAK SUMMARY:
+==10176==    definitely lost: 0 bytes in 0 blocks
+==10176==    indirectly lost: 0 bytes in 0 blocks
+==10176==      possibly lost: 0 bytes in 0 blocks
+==10176==    still reachable: 256 bytes in 1 blocks
+==10176==         suppressed: 232,608 bytes in 233 blocks
+==10176== 
+==10176== For lists of detected and suppressed errors, rerun with: -s
+==10176== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10192== Memcheck, a memory error detector
+==10192== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10192== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10192== Command: ./minishell
+==10192== 
+==10192== 
+==10192== HEAP SUMMARY:
+==10192==     in use at exit: 232,878 bytes in 234 blocks
+==10192==   total heap usage: 614 allocs, 380 frees, 272,240 bytes allocated
+==10192== 
+==10192== LEAK SUMMARY:
+==10192==    definitely lost: 0 bytes in 0 blocks
+==10192==    indirectly lost: 0 bytes in 0 blocks
+==10192==      possibly lost: 0 bytes in 0 blocks
+==10192==    still reachable: 0 bytes in 0 blocks
+==10192==         suppressed: 232,878 bytes in 234 blocks
+==10192== 
+==10192== For lists of detected and suppressed errors, rerun with: -s
+==10192== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==10208== Memcheck, a memory error detector
+==10208== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==10208== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==10208== Command: ./minishell
+==10208== 
+==10208== 
+==10208== Process terminating with default action of signal 2 (SIGINT)
+==10208==    at 0x4025B6F: __open_nocancel (open64_nocancel.c:39)
+==10208==    by 0x4005CBB: open_verify.constprop.0 (dl-load.c:1623)
+==10208==    by 0x4006299: open_path (dl-load.c:1863)
+==10208==    by 0x40095F2: _dl_map_object (dl-load.c:2100)
+==10208==    by 0x4002A2C: openaux (dl-deps.c:64)
+==10208==    by 0x400151B: _dl_catch_exception (dl-catch.c:237)
+==10208==    by 0x4002E66: _dl_map_object_deps (dl-deps.c:232)
+==10208==    by 0x402241B: dl_main (rtld.c:1965)
+==10208==    by 0x401EF45: _dl_sysdep_start (dl-sysdep.c:140)
+==10208==    by 0x402075D: _dl_start_final (rtld.c:494)
+==10208==    by 0x402075D: _dl_start (rtld.c:581)
+==10208==    by 0x401F547: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+==10208== 
+==10208== HEAP SUMMARY:
+==10208==     in use at exit: 0 bytes in 0 blocks
+==10208==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==10208== 
+==10208== All heap blocks were freed -- no leaks are possible
+==10208== 
+==10208== For lists of detected and suppressed errors, rerun with: -s
+==10208== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

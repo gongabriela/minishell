@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:01:20 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 16:27:41 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/13 10:42:39 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
 	split_paths = ft_split(env_value, ':');
 	if (!split_paths)
 		return (perror("malloc failed"), NULL);
-	printf("ok");
 	path = find_exec_path(split_paths, cmd[0]);
 	ft_free_split(split_paths);
 	if (!path || path[0] == '\0')

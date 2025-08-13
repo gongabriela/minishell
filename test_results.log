@@ -1,0 +1,70 @@
+Starting tests...
+\n===== TEST: cd =====
+[0;31mKO[0m cd
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd
+< gongabriela@LAPTOP-D1TGFKAQ:~$ 
+\ No newline at end of file
+Valgrind run complete.
+\n===== TEST: cd . =====
+[0;31mKO[0m cd .
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd .
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ 
+\ No newline at end of file
+Valgrind run complete.
+\n===== TEST: cd. =====
+[0;31mKO[0m cd.
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd.
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ 
+\ No newline at end of file
+1c1
+< command not found: No such file or directory
+---
+> /bin/bash: line 1: cd.: command not found
+Valgrind run complete.
+\n===== TEST: unset HOME; cd =====
+[0;31mKO[0m unset HOME; cd
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ unset HOME; cd
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ 
+\ No newline at end of file
+0a1
+> /bin/bash: line 1: cd: HOME not set
+Valgrind run complete.
+\n===== TEST: cd src a =====
+[0;31mKO[0m cd src a
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd src a
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ 
+\ No newline at end of file
+1c1
+< bash: cd: too many arguments
+---
+> /bin/bash: line 1: cd: too many arguments
+Valgrind run complete.
+\n===== TEST: cd ../../../.. =====
+[0;31mKO[0m cd ../../../..
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd ../../../..
+< gongabriela@LAPTOP-D1TGFKAQ:/$ 
+\ No newline at end of file
+Valgrind run complete.
+\n===== TEST: cd /usr/bin =====
+[0;31mKO[0m cd /usr/bin
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd /usr/bin
+< gongabriela@LAPTOP-D1TGFKAQ:/usr/bin$ 
+\ No newline at end of file
+Valgrind run complete.
+\n===== TEST: cd  ls =====
+[0;31mKO[0m cd  ls
+1,2d0
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ cd  ls
+< gongabriela@LAPTOP-D1TGFKAQ:~/minishell$ 
+\ No newline at end of file
+1c1
+< bash: cd: No such file or directory: ls
+---
+> /bin/bash: line 1: cd: ls: No such file or directory
