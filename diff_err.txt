@@ -1,4 +1,0 @@
-1c1
-< bash: cd: No such file or directory: ls
----
-> /bin/bash: line 1: cd: ls: No such file or directory
