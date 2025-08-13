@@ -13,9 +13,9 @@
 #include "../../inc/minishell.h"
 
 /**
- * @brief Creates the Abstract Syntax Tree (AST) for the shell commands.
+ * @brief Creates the AST for the shell commands.
  *
- * Iterates through the token list, creates AST nodes, and builds the tree structure.
+ * Iterates through the token list, creates AST nodes, building the tree struct.
  * Sets the root of the tree in the shell structure.
  * @param shell Pointer to the shell state structure.
  * @param tokens Pointer to the head of the token list.
@@ -44,7 +44,7 @@ int	create_ast(t_shell *shell, t_token *tokens)
 /**
  * @brief Adds a node to the AST according to its type.
  *
- * Handles command, filename, delimiter, and operator nodes, updating the tree structure.
+ * Handles command, filename, delimiter, and operator nodes.
  * @param node The node to add.
  * @param root Pointer to the root of the AST.
  */

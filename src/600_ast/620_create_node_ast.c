@@ -13,9 +13,10 @@
 #include "../../inc/minishell.h"
 
 /**
- * @brief Creates a new AST node based on the current token and updates the token pointer.
+ * @brief Creates a new AST node based on the curr token & updates token pointer.
  *
- * Allocates and initializes a t_exec node, determines its type, and fills its fields accordingly.
+ * Allocates and initializes a t_exec node, determines its type,
+ * and fills its fields accordingly.
  * Handles errors and syntax validation for pipes and redirections.
  * @param tokens Pointer to the token list pointer.
  * @param shell Pointer to the shell state structure.
@@ -49,9 +50,10 @@ t_exec	*create_node_ast(t_token **tokens, t_shell *shell)
 }
 
 /**
- * @brief Initializes a t_exec node with default values and sets its type/content.
+ * @brief Init a t_exec node with default values and sets its type/content.
  *
- * Sets all pointers to NULL, file descriptors to STDIN/STDOUT, and copies content for filename/delimiter types.
+ * Sets all pointers to NULL, file descriptors to STDIN/STDOUT,
+ * and copies content for filename/delimiter types.
  * @param node Pointer to the node to initialize.
  * @param tokens Pointer to the token list pointer.
  */
@@ -98,7 +100,8 @@ int	create_node_pipe(t_exec *node, t_token **tokens, t_shell *shell)
 /**
  * @brief Initializes a redirection node and checks for syntax errors.
  *
- * Duplicates the redirection operator string and validates the next token, updating its type if needed.
+ * Duplicates the redir operator str and validates the next token,
+ * updating its type if needed.
  * @param node Pointer to the node to initialize.
  * @param tokens Pointer to the token list pointer.
  * @param shell Pointer to the shell state structure.
@@ -129,9 +132,9 @@ int	create_node_redir(t_exec *node, t_token **tokens, t_shell *shell)
 }
 
 /**
- * @brief Initializes a command node by extracting command and arguments from tokens.
+ * @brief Init a command node by extracting command and arguments from tokens.
  *
- * Allocates and fills the cmd array for the node, handling both simple and full commands.
+ * Allocates and fills the cmd array for the node.
  * @param node Pointer to the node to initialize.
  * @param tokens Pointer to the token list pointer.
  * @param shell Pointer to the shell state structure.

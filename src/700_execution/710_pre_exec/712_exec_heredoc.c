@@ -13,9 +13,9 @@
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Recursively executes heredoc processing for all HEREDOC nodes in the AST.
+ * @brief Recursively executes heredoc for all HEREDOC nodes in the AST.
  *
- * Allocates heredoc structures and processes heredocs for each HEREDOC node found.
+ * Allocates heredoc structures and processes heredocs for each HEREDOC node.
  * @param tree Pointer to the root of the AST.
  * @param shell Pointer to the shell state structure.
  */
@@ -57,4 +57,3 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 	waitpid(pid, &exit_code, 0);
 	shell->exit_code = exit_code;
 }
-

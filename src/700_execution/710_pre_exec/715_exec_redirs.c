@@ -37,4 +37,3 @@ void	execute_redirs(t_exec *tree, int **pipe_fds, int *i)
 	execute_redirs(tree->left, pipe_fds, i);
 	execute_redirs(tree->right, pipe_fds, i);
 }
-

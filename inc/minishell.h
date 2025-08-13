@@ -203,7 +203,7 @@ void	get_exit_code(t_shell *shell, char **args);
 
 // --------- Builtin: cd ------------------------------------
 char	*get_env_value_cd(t_env *env, const char *key);
-void	cd_error(char *msg, char *arg);
+void	cd_error(char *msg, char *arg, t_shell *shell, int exit_code);
 int		cd_too_many_args(char **args);
 char	*cd_get_path(char **args, char *home, char *oldpwd);
 void	update_pwd_env(t_shell *shell, char *oldpwd);
@@ -261,6 +261,10 @@ void	redir_io(t_exec *tree, t_shell *shell);
 void	close_unused_pipes(t_exec *tree, t_shell *shell);
 char	*get_cmd_path(char **cmd, t_shell *shell);
 char	*find_exec_path(char **split_paths, char *cmd);
+int		check_for_slash(char *cmd);
+void	get_envp(t_shell *shell);
+void	copy_envp_values(char **envp, t_env *env);
+void	free_envp_array(char **envp);
 void	ft_free_split(char **split);
 
 void	pre_execution(t_exec *tree, t_shell *shell);

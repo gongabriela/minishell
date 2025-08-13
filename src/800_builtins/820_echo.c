@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   820_echo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:44:30 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 15:47:58 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/12 16:28:02 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /**
  * @brief Checks for the presence of the -n flag in echo arguments.
  *
- * Iterates through the arguments to detect one or more -n flags, which suppress the trailing newline.
+ * Iterates through the args to detect one or more -n flags,
+ * which suppress the trailing newline.
  * Sets n_flag to 1 if found.
  * @param n_flag Pointer to the flag variable to set if -n is present.
  * @param args Array of argument strings.
@@ -44,7 +45,8 @@ int	check_n_flag(int *n_flag, char **args)
 /**
  * @brief Implements the echo builtin command.
  *
- * Prints the arguments to standard output, separated by spaces. If the -n flag is not present, prints a trailing newline.
+ * Prints the args to stdout, separated by spaces.
+ * If the -n flag is not present, prints a trailing newline.
  * Sets the shell's exit code to 0.
  * @param shell Pointer to the shell state structure.
  * @param args Array of argument strings.

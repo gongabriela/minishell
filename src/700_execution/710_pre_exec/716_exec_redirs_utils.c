@@ -13,9 +13,9 @@
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Opens the heredoc file for reading and sets up input/output for the left child.
+ * @brief Opens the heredoc file and sets up input/output for the left child.
  *
- * Updates the left child's stdin and stdout based on the heredoc and parent node.
+ * Updates the left child's stdin and stdout based on the heredoc.
  * @param tree Pointer to the AST node containing the heredoc.
  */
 void	handle_heredoc(t_exec *tree)
@@ -33,9 +33,9 @@ void	handle_heredoc(t_exec *tree)
 }
 
 /**
- * @brief Sets up the pipe file descriptors for the left and right children of a PIPE node.
+ * @brief Sets up the pipe file descriptors for the childrens of a PIPE node.
  *
- * Updates stdin and stdout for the left and right children and decrements the pipe index.
+ * Updates stdin/stdout for the childrens and decrements the pipe index.
  * @param tree Pointer to the PIPE node in the AST.
  * @param pipe_fds Array of pipe file descriptors.
  * @param i Pointer to the current pipe index.
@@ -56,7 +56,7 @@ void	handle_pipe(t_exec *tree, int **pipe_fds, int *i)
 /**
  * @brief Handles input redirection for a command node.
  *
- * Opens the input file and sets the left child's stdin, handling errors as needed.
+ * Opens the input file and sets the left child's stdin.
  * @param tree Pointer to the AST node.
  * @param file Name of the input file.
  */
@@ -88,7 +88,7 @@ void	handle_infile(t_exec *tree, char *file)
 /**
  * @brief Handles output redirection for a command node.
  *
- * Opens the output file and sets the left child's stdout, handling errors as needed.
+ * Opens the output file and sets the left child's stdout.
  * @param tree Pointer to the AST node.
  * @param file Name of the output file.
  */
@@ -118,7 +118,7 @@ void	handle_outfile(t_exec *tree, char *file)
 /**
  * @brief Handles append redirection for a command node.
  *
- * Opens the file in append mode and sets the left child's stdout, handling errors as needed.
+ * Opens the file in append mode and sets the left child's stdout.
  * @param tree Pointer to the AST node.
  * @param file Name of the file to append to.
  */

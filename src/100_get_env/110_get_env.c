@@ -15,7 +15,7 @@
 /**
  * @brief Creates a new environment variable node from a string.
  *
- * Allocates and initializes a t_env node from a "KEY=VALUE" string.
+ * Alloc and init a t_env node from a "KEY=VALUE" string.
  * If allocation fails, calls ft_error and exits.
  *
  * @param env The environment string ("KEY=VALUE").

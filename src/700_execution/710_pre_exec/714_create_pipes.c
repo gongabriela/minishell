@@ -14,10 +14,11 @@
 /**
  * @brief Initializes the array of pipe file descriptors for command execution.
  *
- * Allocates memory for the required number of pipes based on the total number of commands.
+ * Allocates memory for the pipes based on the total number of commands.
  * Each pipe is represented as an array of two integers.
  * @param shell Pointer to the shell state structure.
- * @return Pointer to the allocated array of pipe file descriptors, or NULL on failure.
+ * @return Pointer to the allocated array of pipe file descriptors,
+ * or NULL on failure.
  */
 int	**init_pipes(t_shell *shell)
 {
@@ -42,7 +43,8 @@ int	**init_pipes(t_shell *shell)
 /**
  * @brief Recursively creates pipes for each PIPE node in the AST.
  *
- * Traverses the AST and creates a pipe for each PIPE node, storing file descriptors in pipe_fds.
+ * Traverses the AST and creates a pipe for each PIPE node,
+ * storing fds in pipe_fds.
  * @param shell Pointer to the shell state structure.
  * @param tree Pointer to the root of the AST.
  * @param pipe_fds Array of pipe file descriptors.
