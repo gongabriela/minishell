@@ -42,16 +42,17 @@ char	*get_env_value_cd(t_env *env, const char *key)
  * @param msg The main error message.
  * @param arg Optional argument to include in the error message (can be NULL).
  */
-void	cd_error(char *msg, char *arg)
+void	cd_error(char *msg, char *arg, t_shell *shell, int exit_code)
 {
 	ft_putstr_fd("bash: cd: ", 2);
-	ft_putstr_fd(msg, 2);
 	if (arg)
 	{
-		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(arg, 2);
+		ft_putstr_fd(": ", 2);
 	}
+	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
+	shell->exit_code = exit_code;
 }
 
 /**

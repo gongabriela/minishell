@@ -39,7 +39,6 @@ void	init_structs(t_shell *shell)
 {
 	shell->input = NULL;
 	shell->prompt = NULL;
-	shell->exit_code = 0;
 	shell->envp = NULL;
 	shell->tokens = NULL;
 	shell->tree = NULL;
@@ -56,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 
 	check_args(argc, argv, envp);
 	init_structs(&shell);
+	shell.exit_code = 0;
 	shell.env = NULL;
 	shell.pwd = NULL;
 	get_env(&shell, envp);

@@ -30,17 +30,17 @@ void	cd(t_shell *shell, char **args)
 	home = get_env_value_cd(shell->env, "HOME");
 	oldpwd = get_env_value_cd(shell->env, "OLDPWD");
 	if (cd_too_many_args(args))
-		return (cd_error("too many arguments", NULL), (void)0);
+		return (cd_error("too many arguments", NULL, shell, 1), (void)0);
 	path = cd_get_path(args, home, oldpwd);
 	if (!path)
 	{
 		if (!args[1] || args[1][0] == '~')
-			return (cd_error("HOME not set", NULL), (void)0);
+			return (cd_error("HOME not set", NULL, shell, 1), (void)0);
 		if (!ft_strncmp(args[1], "-", 2))
-			return (cd_error("OLDPWD not set", NULL), (void)0);
+			return (cd_error("OLDPWD not set", NULL, shell, 1), (void)0);
 	}
 	if (chdir(path) == -1)
-		cd_error("No such file or directory", path);
+		cd_error("No such file or directory", path, shell, 1);
 	else
 		update_pwd_env(shell, shell->pwd);
 	free(path);

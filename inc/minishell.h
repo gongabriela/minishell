@@ -203,7 +203,7 @@ void	get_exit_code(t_shell *shell, char **args);
 
 // --------- Builtin: cd ------------------------------------
 char	*get_env_value_cd(t_env *env, const char *key);
-void	cd_error(char *msg, char *arg);
+void	cd_error(char *msg, char *arg, t_shell *shell, int exit_code);
 int		cd_too_many_args(char **args);
 char	*cd_get_path(char **args, char *home, char *oldpwd);
 void	update_pwd_env(t_shell *shell, char *oldpwd);
