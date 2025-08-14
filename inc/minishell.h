@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <signal.h>
+# include <sys/stat.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
