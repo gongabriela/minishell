@@ -37,6 +37,8 @@ void	pre_execution(t_exec *tree, t_shell *shell)
 	execute_redirs(tree, shell->pipe_fds, pipe_index);
 	/*if (check_builtin(shell, tree))
 		return ;*/
+	if (shell->cmd_total == 1 && is_builtin(tree->cmd))
+		return ;
 	shell->pids = malloc(sizeof(pid_t) * shell->cmd_total);
 	if (!shell->pids)
 		perror("malloc failed");

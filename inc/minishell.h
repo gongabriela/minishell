@@ -194,7 +194,7 @@ int		check_n_flags(int *n_flag, char **args);
 void	pwd(t_shell *shell);
 
 // --------- Builtin: env -----------------------------------
-void	env(t_shell *shell);
+void	env(t_shell *shell, char **cmd);
 void	print_env_list(t_env *env);
 
 // --------- Builtin: exit ----------------------------------

@@ -37,7 +37,7 @@ void	execute_builtin(t_shell *shell, t_exec *tree, char **cmd)
 	if (ft_strncmp(cmd[0], "echo", 5) == 0)
 		echo(shell, cmd);
 	else if (ft_strncmp(cmd[0], "env", 4) == 0)
-		env(shell);
+		env(shell, cmd);
 	else if (ft_strncmp(cmd[0], "pwd", 4) == 0)
 		pwd(shell);
 	else if (ft_strncmp(cmd[0], "exit", 5) == 0)
