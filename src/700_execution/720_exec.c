@@ -46,7 +46,7 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 	}
 	path = get_cmd_path(tree->cmd, shell);
 	if (!path)
-		exit(1);
+		exit(shell->exit_code);
 	get_envp(shell);
 	execve(path, tree->cmd, shell->envp);
 	perror("exceve failed");
