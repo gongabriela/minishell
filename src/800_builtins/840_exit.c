@@ -21,7 +21,8 @@
  */
 void	ft_exit_builtin(t_shell *shell, char **args)
 {
-	check_exit_args(shell, args);
+	if (check_exit_args(shell, args))
+		return ;
 	get_exit_code(shell, args);
 	ft_exit(shell, shell->exit_code);
 }
@@ -33,17 +34,17 @@ void	ft_exit_builtin(t_shell *shell, char **args)
  * @param shell Pointer to the shell state structure.
  * @param args  Arguments passed to the exit command.
  */
-void	check_exit_args(t_shell *shell, char **args)
+int	check_exit_args(t_shell *shell, char **args)
 {
 	int	i;
 
 	if (!args[1])
-		return ;
+		return (0);
 	if (args[2])
 	{
-		perror("bash: exit: too many arguments");
+		error_msg("too many arguments", args[0], NULL);
 		shell->exit_code = 1;
-		return ;
+		return (1);
 	}
 	i = 0;
 	if (args[1][0] == '-')
@@ -52,12 +53,13 @@ void	check_exit_args(t_shell *shell, char **args)
 	{
 		if (!ft_isdigit(args[1][i]))
 		{
-			perror("bash: exit: numeric argument required");
+			error_msg("numeric argument required", args[0], args[1]);
 			shell->exit_code = 255;
-			return ;
+			return (0);
 		}
 		i++;
 	}
+	return (0);
 }
 
 /**
