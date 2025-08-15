@@ -27,7 +27,7 @@ void	cd(t_shell *shell, char **args)
 	char	*oldpwd;
 	char	*path;
 
-	if (args[1][0] == '\0' && args[2] == NULL)
+	if (args[1] && args[1][0] == '\0' && args[2] == NULL)
 		return ;
 	home = get_env_value_cd(shell->env, "HOME");
 	oldpwd = get_env_value_cd(shell->env, "OLDPWD");

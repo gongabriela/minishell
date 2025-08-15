@@ -38,8 +38,8 @@ void	minishell(t_shell *shell)
 				close_all_pipes(shell);
 				wait_pids(shell);
 			}
-			ft_free_shell(shell);
 		}
+		ft_free_shell(shell);
 	}
 }
 
@@ -61,7 +61,7 @@ int	get_input(t_shell *shell)
 	if (!shell->input)
 		ft_exit(shell, 0);
 	add_history(shell->input);
-	if (pre_parsing(shell->input))
+	if (shell->input[0] != '\0' && pre_parsing(shell->input))
 		return (1);
 	return (0);
 }
