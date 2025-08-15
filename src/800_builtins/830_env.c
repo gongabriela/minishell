@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:48:51 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 16:28:12 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/14 15:32:37 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@
  * Prints env vars to stdout and sets the shell->exit_code to 0.
  * @param shell Pointer to the shell state structure.
  */
-void	env(t_shell *shell)
+void	env(t_shell *shell, char **cmd)
 {
+	if (cmd[1])
+	{
+		printf("env: '%s': No such file or directory\n", cmd[1]);
+		shell->exit_code = 127;
+		return;
+	}
 	print_env_list(shell->env);
 	shell->exit_code = 0;
 }

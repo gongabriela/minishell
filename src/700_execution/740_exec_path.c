@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:01:20 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/13 10:42:39 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:47:05 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,19 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
 	char	**split_paths;
 	char	*env_value;
 	char	*path;
+	int		result;
 
-	if (check_for_slash(cmd[0]) == 0)
+	result = check_for_slash(cmd[0], shell);
+	if (result == 0)
 		return (ft_strdup(cmd[0]));
-	else if (check_for_slash(cmd[0]) == 1)
-		return (error_msg("Permission denied", cmd[0], NULL), NULL);
+	else if (result == 1)
+		return (NULL);
 	env_value = get_env_value(shell->env, "PATH");
 	if (!env_value || env_value[0] == '\0')
+	{
+		shell->exit_code = 127;
 		return (error_msg("No such file or directory", cmd[0], NULL), NULL);
+	}
 	split_paths = ft_split(env_value, ':');
 	if (!split_paths)
 		return (perror("malloc failed"), NULL);
@@ -57,7 +62,10 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
 		if (!path)
 			return (perror("malloc failed"), NULL);
 		else
-			return (perror("command not found"), NULL);
+		{
+			shell->exit_code = 127;
+			return (error_msg("command not found", cmd[0], NULL), NULL);
+		}
 	}
 	return (path);
 }
@@ -72,15 +80,36 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
  * @return A newly allocated string with the command path if executable,
  *  or NULL otherwise.
  */
-int	check_for_slash(char *cmd)
+int	check_for_slash(char *cmd, t_shell *shell)
 {
+	struct	stat st;
+
 	if (cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
 	{
 		if (access(cmd, X_OK) == 0)
+		{
+			if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
+			{
+				shell->exit_code = 126;
+				return (error_msg("Is a directory", cmd, NULL), 1); //codigo 126
+			}
 			return (0);
+		}
 		else
+		{
+			if (errno == EACCES)
+			{
+				error_msg("Permission denied", cmd, NULL); //codigo 126
+				shell->exit_code = 126;
+			}
+			else if (errno == ENOENT)
+			{
+				error_msg("No such file or directory", cmd, NULL); //codigo 127
+				shell->exit_code = 127;
+			}
 			return (1);
+		}
 	}
 	return (-1);
 }

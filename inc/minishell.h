@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <signal.h>
+# include <sys/stat.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -193,12 +194,12 @@ int		check_n_flags(int *n_flag, char **args);
 void	pwd(t_shell *shell);
 
 // --------- Builtin: env -----------------------------------
-void	env(t_shell *shell);
+void	env(t_shell *shell, char **cmd);
 void	print_env_list(t_env *env);
 
 // --------- Builtin: exit ----------------------------------
 void	ft_exit_builtin(t_shell *shell, char **args);
-void	check_exit_args(t_shell *shell, char **args);
+int		check_exit_args(t_shell *shell, char **args);
 void	get_exit_code(t_shell *shell, char **args);
 
 // --------- Builtin: cd ------------------------------------
@@ -261,11 +262,13 @@ void	redir_io(t_exec *tree, t_shell *shell);
 void	close_unused_pipes(t_exec *tree, t_shell *shell);
 char	*get_cmd_path(char **cmd, t_shell *shell);
 char	*find_exec_path(char **split_paths, char *cmd);
-int		check_for_slash(char *cmd);
+int		check_for_slash(char *cmd, t_shell *shell);
 void	get_envp(t_shell *shell);
 void	copy_envp_values(char **envp, t_env *env);
 void	free_envp_array(char **envp);
 void	ft_free_split(char **split);
+
+void	error_msg(char *msg, char *cmd, char *arg);
 
 void	pre_execution(t_exec *tree, t_shell *shell);
 int		get_cmd_total(t_token *head);
