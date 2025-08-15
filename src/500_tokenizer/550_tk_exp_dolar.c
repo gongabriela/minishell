@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tk_exp_dolar.c                                     :+:      :+:    :+:   */
+/*   550_tk_exp_dolar.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 12:06:48 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 12:07:34 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/15 05:40:02 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*expand_dollar(t_shell *shell, char *str, int *i)
 	(*i)++;
 	if (!str[*i])
 		return (ft_strdup("$"));
+	if (str[*i] == '$')
+		return((*i)++, ft_itoa(getpid()));
 	if (str[*i] == '?')
 		return ((*i)++, ft_itoa(shell->exit_code));
 	if (!is_valid_var_start(str[*i]))
