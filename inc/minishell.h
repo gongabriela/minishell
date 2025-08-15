@@ -212,6 +212,7 @@ void	cd(t_shell *shell, char **args);
 
 // --------- Builtin: unset ---------------------------------
 void	unset(t_shell *shell, char **args);
+int		check_invalid_option(char **args);
 
 // --------- Builtin: export --------------------------------
 int		parse_export_args(t_shell *shell, char *arg);

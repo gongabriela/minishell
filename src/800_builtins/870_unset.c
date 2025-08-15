@@ -79,14 +79,17 @@ static void	unset_one(t_shell *shell, char *arg)
  */
 void	unset(t_shell *shell, char **args)
 {
-	int	i;
+	int		i;
+	char	temp[2];
 
-	i = 1;
 	if (!args[1])
 		return ((void)(shell->exit_code = 0));
-	if (args[1][0] == '-' && args[1][1] != '\0')
+	i = check_invalid_option(args);
+	if (i > 0)
 	{
-		printf("-bash: unset: %s: invalid option\n", args[1]);
+		temp[0] = '-';
+		temp[1] = args[1][i];
+		printf("-bash: unset: %s: invalid option\n", temp);
 		shell->exit_code = 2;
 		return ;
 	}
@@ -96,4 +99,21 @@ void	unset(t_shell *shell, char **args)
 		i++;
 	}
 	shell->exit_code = 0;
+}
+
+int	check_invalid_option(char **args)
+{
+	int	i;
+
+	i = 1;
+	if (args[1][0] == '-')
+	{
+		while (args[1][i])
+		{
+			if (args[1][i] != 'n')
+				return (i);
+			i++;
+		}
+	}
+	return (0);
 }
