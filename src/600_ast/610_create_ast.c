@@ -27,6 +27,8 @@ int	create_ast(t_shell *shell, t_token *tokens)
 	t_exec	*root;
 
 	root = NULL;
+	if (!tokens)
+		return (0);
 	while (tokens)
 	{
 		node = create_node_ast(&tokens, shell);

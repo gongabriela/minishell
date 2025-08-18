@@ -14,6 +14,8 @@
 
 void	execution(t_exec *tree, t_shell *shell, int *pid_index)
 {
+	if (!tree)
+		return ;
 	if (tree->type == CMD)
 	{
 		exec_cmd(tree, shell, *pid_index);
