@@ -26,9 +26,13 @@ void	handle_heredoc(t_exec *tree)
 		perror("open failed");
 		return ;
 	}
-	if (tree->left)
-		tree->left->stdin = tree->heredoc->fd;
-	if (tree->stdout != STDOUT_FILENO)
+	// Traverse down to the leftmost CMD node
+	t_exec	*cmd = tree->left;
+	while (cmd && cmd->type != CMD)
+		cmd = cmd->left;
+	if (cmd && cmd->stdin == STDIN_FILENO)
+		cmd->stdin = tree->heredoc->fd;
+	if (tree->left && tree->stdout != STDOUT_FILENO)
 		tree->left->stdout = tree->stdout;
 }
 

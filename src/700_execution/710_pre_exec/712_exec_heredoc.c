@@ -23,13 +23,13 @@ void	execute_heredocs(t_exec *tree, t_shell *shell)
 {
 	if (!tree)
 		return ;
+	execute_heredocs(tree->left, shell);
+	execute_heredocs(tree->right, shell);
 	if (tree->type == HEREDOC)
 	{
 		tree->heredoc = malloc(sizeof(t_hdc));
 		process_heredoc(tree, shell, tree->heredoc);
 	}
-	execute_heredocs(tree->left, shell);
-	execute_heredocs(tree->right, shell);
 }
 
 /**
