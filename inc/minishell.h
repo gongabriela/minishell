@@ -130,10 +130,10 @@ char	*get_hostname_line(int fd);
 int		pre_parsing(char *input);
 int		get_input(t_shell *shell);
 
-// --------- Main tokenizer ------------------------------
+// --------------- Main tokenizer ------------------------
 t_token	*tokenize(char *input);
 
-// --------- tokenizer utilities -------------------------------
+// ---------- tokenizer utilities ----------------------
 
 // operator checks
 int		is_operator(char c);
@@ -162,10 +162,11 @@ char	*ft_expander(t_shell *sh, char *token);
 char	*expand_var(t_shell *shell, char *token);
 char	*ft_get_var(t_env *env, const char *key);
 
-// dolar and quotes
+// dolar, quotes and tilde
 char	*expand_dollar(t_shell *shell, char *str, int *i);
 char	*expand_single_quotes(char *str, int *i);
 char	*expand_double_quotes(t_shell *shell, char *str, int *i);
+char	*expand_tilde(t_shell *shell, char *token, int *i);
 
 // helper functions
 void	add_str_to_list(t_list **list, void *content);
