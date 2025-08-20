@@ -68,7 +68,7 @@ void	handle_infile(t_exec *tree, char *file)
 {
 	int	fd;
 
-	if (tree->stdin != STDIN_FILENO)
+	if (tree->stdin != STDIN_FILENO && tree->left)
 	{
 		tree->left->stdin = tree->stdin;
 		return ;
@@ -82,10 +82,15 @@ void	handle_infile(t_exec *tree, char *file)
 			printf("-bash: %s: Permission denied\n", file);
 		else
 			perror("open failed");
+		if (tree->left)
+			tree->left->stdin = -1;
 	}
 	else
-		tree->left->stdin = fd;
-	if (tree->stdout != 1)
+	{
+		if (tree->left)
+			tree->left->stdin = fd;
+	}
+	if (tree->stdout != 1 && tree->left)
 		tree->left->stdout = tree->stdout;
 }
 
@@ -105,17 +110,24 @@ void	handle_outfile(t_exec *tree, char *file)
 	{
 		if (errno == EACCES)
 			printf("-bash: %s: Permission denied\n", file);
+		if (errno == EISDIR)
+			printf("-bash: %s: Is a directory\n", file);
 		else
-			perror("pipex");
+			perror("Error creating/opening file");
+		if (tree->left)
+			tree->left->stdout = -1;
 	}
-	if (tree->stdout != STDOUT_FILENO)
+	if (tree->left && tree->stdout != STDOUT_FILENO)
 	{
 		tree->left->stdout = tree->stdout;
 		close(fd);
 	}
 	else
-		tree->left->stdout = fd;
-	if (tree->stdin != 0)
+	{
+		if (tree->left)
+			tree->left->stdout = fd;
+	}
+	if (tree->stdin != 0 && tree->left)
 		tree->left->stdin = tree->stdin;
 }
 

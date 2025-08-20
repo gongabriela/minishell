@@ -6,11 +6,13 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:02:05 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 16:28:19 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/20 14:35:06 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+#define METACHAR '$'
 
 /**
  * @brief Implements the export builtin command.
@@ -42,3 +44,4 @@ void	export(t_shell *shell, char **args)
 		i++;
 	}
 }
+
