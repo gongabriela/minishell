@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   540_tk_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 04:13:26 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/15 12:42:04 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/20 17:47:33 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*exp_handler(t_shell *sh, char *token, int *i)
 		return (expand_single_quotes(token, i));
 	else if (token[*i] == '\"')
 		return (expand_double_quotes(sh, token, i));
+	else if (token[*i] == '~' && *i == 0)
+		return (expand_tilde(sh, token, i));
 	else
 		return (NULL);
 }
@@ -46,7 +48,7 @@ char	*ft_expander(t_shell *sh, char *token)
 	start = 0;
 	while (token[i])
 	{
-		if (token[i] == '$' || token[i] == '\'' || token[i] == '\"')
+		if (token[i] == '$' || token[i] == '\'' || token[i] == '\"' || token[i] == '~')
 		{
 			add_str_to_list(&parts, ft_substr(token, start, i - start));
 			add_str_to_list(&parts, exp_handler(sh, token, &i));
