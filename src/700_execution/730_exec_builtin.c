@@ -14,6 +14,8 @@
 
 int	is_builtin(char **cmd)
 {
+	if (!cmd || !cmd[0])
+		return (0);
 	if (ft_strncmp(cmd[0], "echo", 5) == 0)
 		return (1);
 	else if (ft_strncmp(cmd[0], "env", 4) == 0)

@@ -259,6 +259,7 @@ void	execution(t_exec *tree, t_shell *shell, int *pid_index);
 int		is_builtin(char **cmd);
 
 void	execute_external_cmd(t_exec *tree, t_shell *shell, int pid_index);
+void	check_invalid_fds(t_exec *tree, t_shell *shell);
 void	redir_io(t_exec *tree, t_shell *shell);
 void	close_unused_pipes(t_exec *tree, t_shell *shell);
 char	*get_cmd_path(char **cmd, t_shell *shell);
@@ -302,5 +303,6 @@ void	free_heredoc_struct(t_hdc *heredoc);
 void	handle_sigint(int sig);
 void	setup_signals_prompt(void);
 void	handle_signals_child(void);
+void	handle_signals_shell(void);
 
 #endif

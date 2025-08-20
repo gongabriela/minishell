@@ -38,8 +38,9 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 	if (tree->stdin < 0 || tree->stdout < 0)
 	{
 		shell->exit_code = 1;
-		exit(1);
+		exit(shell->exit_code);
 	}
+	check_invalid_fds(tree, shell);
 	redir_io(tree, shell);
 	if (is_builtin(tree->cmd))
 	{
@@ -53,6 +54,16 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 	execve(path, tree->cmd, shell->envp);
 	perror("exceve failed");
 	exit(127);
+}
+
+void	check_invalid_fds(t_exec *tree, t_shell *shell)
+{
+	if (tree->stdin == -1 || tree->stdout == -1)
+	{
+		ft_free_ast(tree);
+		shell->exit_code = 1;
+		exit(1);
+	}
 }
 
 void	exec_cmd(t_exec *tree, t_shell *shell, int index)

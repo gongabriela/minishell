@@ -33,6 +33,7 @@ void	minishell(t_shell *shell)
 			shell->cmd_total = get_cmd_total(shell->tokens);
 			if (create_ast(shell, shell->tokens))
 			{
+
 				pre_execution(shell->tree, shell);
 				execution(shell->tree, shell, &pid_index);
 				close_all_pipes(shell);
