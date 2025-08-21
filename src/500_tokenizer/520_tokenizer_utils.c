@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   520_tokenizer_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:21:18 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/13 09:52:15 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:13:36 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_token	*create_token(char *str, t_token_type type, int len)
 	new_token->content = ft_substr(str, 0, len);
 	new_token->type = type;
 	new_token->len = len;
+	new_token->was_variable = 0;
+	new_token->is_assign = false;
 	new_token->to_del = (new_token->content[0] != '\''
 			&& new_token->content[0] != '\"');
 	new_token->next = NULL;

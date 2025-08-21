@@ -6,11 +6,29 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 22:26:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/15 15:40:32 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:46:06 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+bool	is_assignment(char *input, int start, int end)
+{
+	int	i;
+
+	i = start;
+	if (!ft_isalpha(input[i]) && input[i] != '_')
+		return (false);
+	while (i < end)
+	{
+		if (input[i] == '=')
+			return (i > start);
+		if (!ft_isalnum(input[i]) && input[i] != '_')
+			return (false);
+		i++;
+	}
+	return (false);
+}
 
 /**
  * @brief Extracts a word (command or argument) from the input string.
@@ -24,19 +42,24 @@
  */
 t_token	*handle_word(char *input, int *i)
 {
-	int	start;
+	int		start;
 	char	quote_state;
+	t_token	*token;
 
 	quote_state = 0;
 	start = *i;
 	while (input[*i])
 	{
 		quote_state = update_quote_state(quote_state, input[*i]);
-		if (!quote_state && (input[*i] == ' ' || input[*i] == '\t' || is_operator(input[*i])))
+		if (!quote_state && (input[*i] == ' ' || input[*i] == '\t'
+				|| is_operator(input[*i])))
 			break ;
 		(*i)++;
 	}
-	return (create_token(&input[start], CMD, *i - start));
+	token = create_token(&input[start], CMD, *i - start);
+	if (token)
+		token->is_assign = is_assignment(input, start, *i);
+	return (token);
 }
 
 /**

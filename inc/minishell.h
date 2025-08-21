@@ -76,6 +76,7 @@ typedef struct s_token
 	t_token_type	type;
 	int				len;
 	int				was_variable;
+	bool			is_assign;
 	bool			to_del;
 	struct s_token	*next;
 }	t_token;
