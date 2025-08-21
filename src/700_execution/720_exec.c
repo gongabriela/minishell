@@ -36,24 +36,21 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 
 	handle_signals_child();
 	if (tree->stdin < 0 || tree->stdout < 0)
-	{
-		shell->exit_code = 1;
-		exit(shell->exit_code);
-	}
+		free_exit_child(shell, 1);
 	check_invalid_fds(tree, shell);
 	redir_io(tree, shell);
 	if (is_builtin(tree->cmd))
 	{
 		execute_builtin(shell, tree, tree->cmd);
-		exit(shell->exit_code);
+		free_exit_child(shell, shell->exit_code);
 	}
 	path = get_cmd_path(tree->cmd, shell);
 	if (!path)
-		exit(shell->exit_code);
+		free_exit_child(shell, shell->exit_code);
 	get_envp(shell);
 	execve(path, tree->cmd, shell->envp);
 	perror("exceve failed");
-	exit(127);
+	free_exit_child(shell, 127);
 }
 
 void	check_invalid_fds(t_exec *tree, t_shell *shell)

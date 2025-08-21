@@ -307,4 +307,6 @@ void	setup_signals_prompt(void);
 void	handle_signals_child(void);
 void	handle_signals_shell(void);
 
+void	free_exit_child(t_shell *shell, int exit_code);
+
 #endif

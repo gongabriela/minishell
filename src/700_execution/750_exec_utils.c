@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:51:47 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/12 15:13:50 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/21 11:36:11 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,13 @@ void	free_envp_array(char **envp)
 	while (envp[i])
 		free(envp[i++]);
 	free(envp);
+}
+
+void	free_exit_child(t_shell *shell, int exit_code)
+{
+	ft_free_shell(shell);
+	free_struct_env(shell->env);
+	if (shell->pwd != NULL)
+		free(shell->pwd);
+	exit(exit_code);
 }
