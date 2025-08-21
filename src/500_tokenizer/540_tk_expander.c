@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 04:13:26 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/20 17:47:33 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/21 02:53:49 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ char	*ft_expander(t_shell *sh, char *token)
 	start = 0;
 	while (token[i])
 	{
-		if (token[i] == '$' || token[i] == '\'' || token[i] == '\"' || token[i] == '~')
+		if (token[i] == '$' || token[i] == '\'' || token[i] == '\"'
+			|| token[i] == '~')
 		{
 			add_str_to_list(&parts, ft_substr(token, start, i - start));
 			add_str_to_list(&parts, exp_handler(sh, token, &i));
@@ -59,6 +60,33 @@ char	*ft_expander(t_shell *sh, char *token)
 	}
 	add_str_to_list(&parts, ft_substr(token, start, i - start));
 	return (ft_join_list_and_free(&parts, '\0'));
+}
+
+static void	remove_empty_tokens(t_shell *shell)
+{
+	t_token	*curr;
+	t_token	*prev;
+	t_token	*next;
+
+	curr = shell->tokens;
+	prev = NULL;
+	while (curr)
+	{
+		next = curr->next;
+		if (curr->type == CMD && (!curr->content || curr->content[0] == '\0')
+			&& curr->was_variable)
+		{
+			if (prev)
+				prev->next = next;
+			else
+				shell->tokens = next;
+			free(curr->content);
+			free(curr);
+		}
+		else
+			prev = curr;
+		curr = next;
+	}
 }
 
 /**
@@ -79,13 +107,16 @@ void	expand_tokens(t_shell *sh)
 	{
 		if (curr->type == CMD && curr->content)
 		{
+			curr->was_variable = (ft_strchr(curr->content, '$') != NULL);
 			temp = ft_expander(sh, curr->content);
 			free(curr->content);
 			curr->content = temp;
 		}
 		curr = curr->next;
 	}
+	remove_empty_tokens(sh);
 }
+
 /*
 void	handle_quotes(t_shell *shell)
 {
