@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 11:39:49 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/12 15:42:32 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/21 03:03:57 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*expand_single_quotes(char *str, int *i)
  * @param i Pointer to current index in the input string (gets updated).
  * @return Newly allocated expanded string.
  */
-char	*expand_double_quotes(t_shell *shell, char *str, int *i)
+static char	*process_double_quotes(t_shell *shell, char *str, int *i)
 {
 	char	*result;
 	char	*temp;
@@ -57,7 +57,6 @@ char	*expand_double_quotes(t_shell *shell, char *str, int *i)
 	result = ft_strdup("");
 	if (!result)
 		return (NULL);
-	(*i)++;
 	start = *i;
 	while (str[*i] && str[*i] != '"')
 	{
@@ -74,6 +73,17 @@ char	*expand_double_quotes(t_shell *shell, char *str, int *i)
 	}
 	temp = ft_substr(str, start, *i - start);
 	result = ft_strjoin_free(result, temp, 3);
+	return (result);
+}
+
+char	*expand_double_quotes(t_shell *shell, char *str, int *i)
+{
+	char	*result;
+
+	if (str[*i] != '"')
+		return (NULL);
+	(*i)++;
+	result = process_double_quotes(shell, str, i);
 	if (str[*i] == '"')
 		(*i)++;
 	return (result);
