@@ -85,7 +85,7 @@ fclean: clean
 	rm -rf $(NAME)
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp ./$(NAME)
 re: fclean all
 
 test: all

@@ -35,8 +35,6 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 	char	*path;
 
 	handle_signals_child();
-	if (tree->stdin < 0 || tree->stdout < 0)
-		free_exit_child(shell, 1);
 	check_invalid_fds(tree, shell);
 	redir_io(tree, shell);
 	if (is_builtin(tree->cmd))
@@ -55,12 +53,8 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 
 void	check_invalid_fds(t_exec *tree, t_shell *shell)
 {
-	if (tree->stdin == -1 || tree->stdout == -1)
-	{
-		ft_free_ast(tree);
-		shell->exit_code = 1;
-		exit(1);
-	}
+	if (tree->stdin < 0 || tree->stdout < 1)
+		free_exit_child(shell, 1);
 }
 
 void	exec_cmd(t_exec *tree, t_shell *shell, int index)

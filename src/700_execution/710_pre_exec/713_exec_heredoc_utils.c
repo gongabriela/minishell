@@ -122,18 +122,3 @@ void	get_heredoc_input(t_exec *tree, t_hdc *heredoc)
 	}
 }
 
-/**
- * @brief Frees the heredoc structure and deletes the associated temporary file.
- *
- * Unlinks and frees the heredoc filename, then frees the structure itself.
- * @param heredoc Pointer to the heredoc structure to free.
- */
-void	free_heredoc_struct(t_hdc *heredoc)
-{
-	if (heredoc->file_name)
-	{
-		unlink(heredoc->file_name);
-		free(heredoc->file_name);
-	}
-	free(heredoc);
-}
