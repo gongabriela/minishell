@@ -29,9 +29,9 @@ void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 		perror("open failed");
 		ft_exit(shell, -1);
 	}
-	get_heredoc_input(tree, heredoc);
+	get_heredoc_input(shell, tree, heredoc);
 	close(heredoc->fd);
-	exit(0);
+	free_exit_child(shell, 0);
 }
 
 /**
@@ -96,7 +96,7 @@ char	*get_random_name(t_shell *shell)
  * @param tree Pointer to the AST node containing the delimiter.
  * @param heredoc Pointer to the heredoc structure with the file descriptor.
  */
-void	get_heredoc_input(t_exec *tree, t_hdc *heredoc)
+void	get_heredoc_input(t_shell *shell, t_exec *tree, t_hdc *heredoc)
 {
 	char	*input;
 	int	line_number = 1; // You may want to pass this in or increment as needed
@@ -106,8 +106,8 @@ void	get_heredoc_input(t_exec *tree, t_hdc *heredoc)
 		input = readline("> ");
 		if (!input)
 		{
-			fprintf(stderr, "bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", line_number, tree->right->delimiter);
-			break;
+			printf("bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", line_number, tree->right->delimiter);
+			free_exit_child(shell, 0);
 		}
 		if (!ft_strncmp(input, tree->right->delimiter,
 				ft_strlen(tree->right->delimiter)))
@@ -121,4 +121,3 @@ void	get_heredoc_input(t_exec *tree, t_hdc *heredoc)
 		line_number++;
 	}
 }
-

@@ -45,6 +45,7 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 	pid_t	pid;
 	int		exit_code;
 
+	heredoc->fd = -1;
 	heredoc->file_name = get_random_name(shell);
 	pid = fork();
 	if (pid < 0)

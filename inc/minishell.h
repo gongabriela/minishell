@@ -98,7 +98,10 @@ typedef struct s_exec
 	struct s_exec		*left;
 	struct s_exec		*right;
 	int					stdin;
+	bool				in_file;
 	int					stdout;
+	bool				out_file;
+	bool				created_out;
 	struct s_hdc		*heredoc;
 }	t_exec;
 
@@ -298,7 +301,7 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 char	*heredoc_alloc_name(t_shell *shell, char *temp, int i);
 char	*get_random_name(t_shell *shell);
-void	get_heredoc_input(t_exec *tree, t_hdc *heredoc);
+void	get_heredoc_input(t_shell *shell, t_exec *tree, t_hdc *heredoc);
 void	free_heredoc_struct(t_hdc *heredoc);
 
 //signals
@@ -309,4 +312,8 @@ void	handle_signals_shell(void);
 
 void	free_exit_child(t_shell *shell, int exit_code);
 
+void	error_msg_redir(t_exec *tree, int err_code, char *file, int std);
+void	close_opened_fds(t_exec *tree, int std);
+void	close_all_fds(t_exec *tree);
+void	unlink_heredocs(t_exec *tree);
 #endif

@@ -54,7 +54,7 @@ void	ft_free_shell(t_shell *shell)
 	if (shell->pids != NULL)
 		free(shell->pids);
 	/*if (shell->envp != NULL)
-		free_envp_array(shell->envp);*/
+		free_envp_array(shell->envp);*/ //colocar isso no free child
 	init_structs(shell);
 }
 
@@ -70,6 +70,7 @@ void	ft_free_shell(t_shell *shell)
  */
 void	ft_exit(t_shell *shell, int exit_code)
 {
+	unlink_heredocs(shell->tree);
 	ft_free_shell(shell);
 	if (shell->pwd != NULL)
 		free(shell->pwd);
@@ -101,20 +102,32 @@ void	free_struct_tokens(t_token *tokens)
 void	free_heredoc_struct(t_hdc *heredoc)
 {
 	if (heredoc->file_name)
-	{
-		unlink(heredoc->file_name);
 		free(heredoc->file_name);
-		//if (heredoc->fd != -1)
-			//close(heredoc->fd);
-	}
+	if (heredoc->fd != -1)
+		close(heredoc->fd);
 	free(heredoc);
 }
 
 void	free_exit_child(t_shell *shell, int exit_code)
 {
+	close_all_fds(shell->tree);
+	close_all_pipes(shell);
 	ft_free_shell(shell);
 	free_struct_env(shell->env);
 	if (shell->pwd != NULL)
 		free(shell->pwd);
 	exit(exit_code);
+}
+
+void	unlink_heredocs(t_exec *tree)
+{
+	if (!tree)
+		return ;
+	if (tree->type == HEREDOC)
+	{
+		if (tree->heredoc && tree->heredoc->file_name)
+			unlink(tree->heredoc->file_name);
+	}
+	unlink_heredocs(tree->left);
+	unlink_heredocs(tree->right);
 }

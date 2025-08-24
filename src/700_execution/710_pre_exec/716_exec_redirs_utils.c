@@ -21,11 +21,6 @@
 void	handle_heredoc(t_exec *tree)
 {
 	tree->heredoc->fd = open(tree->heredoc->file_name, O_RDONLY);
-	if (tree->heredoc->fd < 0)
-	{
-		perror("open failed");
-		return ;
-	}
 	// Traverse down to the leftmost CMD node
 	t_exec	*cmd = tree->left;
 	while (cmd && cmd->type != CMD)
@@ -33,7 +28,11 @@ void	handle_heredoc(t_exec *tree)
 	if (cmd && cmd->stdin == STDIN_FILENO)
 		cmd->stdin = tree->heredoc->fd;
 	if (tree->left && tree->stdout != STDOUT_FILENO)
+	{
+		close_opened_fds(tree->left, 2);
 		tree->left->stdout = tree->stdout;
+	}
+
 }
 
 /**
@@ -46,13 +45,20 @@ void	handle_heredoc(t_exec *tree)
  */
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i)
 {
+	close_opened_fds(tree->left, 1);
 	if (tree->left)
 		tree->left->stdout = pipe_fds[*i][1];
 	if (tree->right)
 	{
+		close_opened_fds(tree->right, 0);
 		tree->right->stdin = pipe_fds[*i][0];
+		tree->right->in_file = false;
 		if (tree->stdout != STDOUT_FILENO)
+		{
+			close_opened_fds(tree->right, 1);
 			tree->right->stdout = tree->stdout;
+			tree->right->out_file = false;
+		}
 	}
 	(*i)--;
 }
@@ -68,30 +74,37 @@ void	handle_infile(t_exec *tree, char *file)
 {
 	int	fd;
 
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		error_msg_redir(tree, errno, file, 0);
+	if (!tree->left && fd > 0)
+		close(fd);
 	if (tree->stdin != STDIN_FILENO && tree->left)
 	{
 		tree->left->stdin = tree->stdin;
-		return ;
-	}
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		if (errno == ENOENT)
-			printf("-bash: %s: No such file or directory\n", file);
-		else if (errno == EACCES)
-			printf("-bash: %s: Permission denied\n", file);
-		else
-			perror("open failed");
-		if (tree->left)
-			tree->left->stdin = -1;
+		if (tree->in_file == true)
+			tree->left->in_file = true;
+		if (fd > 0)
+			close(fd);
+		// return ; ? e esse if estava antes do fd antes, nao lembro se tem um motivo especifico
 	}
 	else
 	{
 		if (tree->left)
+		{
+			close_opened_fds(tree->left, 0);
 			tree->left->stdin = fd;
+			tree->left->in_file = true;
+		}
+
 	}
 	if (tree->stdout != 1 && tree->left)
+	{
+		close_opened_fds(tree->left, 1);
 		tree->left->stdout = tree->stdout;
+		tree->left->out_file = true;
+	}
+
 }
 
 /**
@@ -104,31 +117,40 @@ void	handle_infile(t_exec *tree, char *file)
 void	handle_outfile(t_exec *tree, char *file)
 {
 	int	fd;
+	int	if_exist;
 
+	if_exist = (access(file, F_OK));
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-	{
-		if (errno == EACCES)
-			printf("-bash: %s: Permission denied\n", file);
-		if (errno == EISDIR)
-			printf("-bash: %s: Is a directory\n", file);
-		else
-			perror("Error creating/opening file");
-		if (tree->left)
-			tree->left->stdout = -1;
-	}
+		error_msg_redir(tree, errno, file, 1);
+	if (if_exist == 0 && fd > 0)
+		tree->created_out = true; //depois criar funcao para se node for filename, se create_out for true, unlink
+	if (!tree->left && fd > 0)
+		close(fd);
 	if (tree->left && tree->stdout != STDOUT_FILENO)
 	{
 		tree->left->stdout = tree->stdout;
-		close(fd);
+		if (tree->out_file == true)
+			tree->left->out_file = true;
+		if (fd > 0)
+			close(fd);
 	}
 	else
 	{
 		if (tree->left)
+		{
+			close_opened_fds(tree->left, 1);
 			tree->left->stdout = fd;
+			tree->left->out_file = true;
+		}
 	}
 	if (tree->stdin != 0 && tree->left)
+	{
+		close_opened_fds(tree->left, 0);
 		tree->left->stdin = tree->stdin;
+		tree->left->in_file = true;
+	}
+
 }
 
 /**
@@ -144,12 +166,71 @@ void	handle_append(t_exec *tree, char *file)
 
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-	{
-		if (errno == EACCES)
-			printf("-bash: %s: Permission denied\n", file);
-		else
-			perror("pipex");
-	}
+		error_msg_redir(tree, errno, file, 1);
 	else
+	{
+		close_opened_fds(tree->left, 1);
 		tree->left->stdout = fd;
+		tree->left->out_file = true;
+	}
+
+}
+
+void	error_msg_redir(t_exec *tree, int err_code, char *file, int std)
+{
+
+	if (err_code == ENOENT)
+		printf("-bash: %s: No such file or directory\n", file);
+	else if (err_code == EACCES)
+		printf("-bash: %s: Permission denied\n", file);
+	else if (err_code == EISDIR)
+			printf("-bash: %s: Is a directory\n", file);
+	else if (std == 2)
+		printf("-bash: heredoc failed\n");
+	else
+		perror("open failed: Error creating/opening file");
+	if (std == 2)
+	{
+		tree->heredoc->fd = -1;
+		free_heredoc_struct(tree->heredoc);
+	}
+	if (!tree->left)
+		return ;
+	close_opened_fds(tree, std);
+	if (std == 0 || std == 2)
+		tree->left->stdin = -1;
+	if (std == 1)
+		tree->left->stdout = -1;
+
+}
+
+void	close_opened_fds(t_exec *tree, int std)
+{
+	if (!tree)
+		return ;
+	if (tree->type != CMD)
+		return ;
+	if (std == 0 || std == 2)
+	{
+		if (tree->stdin > 0 && tree->in_file == true)
+			close(tree->stdin);
+	}
+	else if (std == 1)
+	{
+		if (tree->stdout > 1 && tree->out_file == true)
+			close(tree->stdout);
+	}
+}
+
+void	close_all_fds(t_exec *tree)
+{
+	if (!tree)
+		return ;
+	if (tree->stdin > 0 && tree->in_file == true)
+		close(tree->stdin);
+	if (tree->stdout > 1 && tree->out_file == true)
+		close(tree->stdout);
+	close_all_fds(tree->left);
+	close_all_fds(tree->right);
+
 }
