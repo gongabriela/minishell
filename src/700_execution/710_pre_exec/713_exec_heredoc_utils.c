@@ -108,7 +108,7 @@ void	get_heredoc_input(t_shell *shell, t_exec *tree, t_hdc *heredoc)
 		if (!input)
 		{
 			printf("bash: warning:");
-			printf(" here-document at line %d delimited", line_number,);
+			printf(" here-document at line %d delimited", line_number);
 			printf(" by end-of-file (wanted `%s')\n", tree->right->delimiter);
 			free_exit_child(shell, 0);
 		}
