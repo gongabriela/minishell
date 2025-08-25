@@ -47,4 +47,3 @@ void	cd(t_shell *shell, char **args)
 		update_pwd_env(shell, shell->pwd);
 	free(path);
 }
-

@@ -99,14 +99,17 @@ char	*get_random_name(t_shell *shell)
 void	get_heredoc_input(t_shell *shell, t_exec *tree, t_hdc *heredoc)
 {
 	char	*input;
-	int	line_number = 1; // You may want to pass this in or increment as needed
+	int		line_number;
 
+	line_number = 1;
 	while (1)
 	{
 		input = readline("> ");
 		if (!input)
 		{
-			printf("bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", line_number, tree->right->delimiter);
+			printf("bash: warning:");
+			printf(" here-document at line %d delimited", line_number,);
+			printf(" by end-of-file (wanted `%s')\n", tree->right->delimiter);
 			free_exit_child(shell, 0);
 		}
 		if (!ft_strncmp(input, tree->right->delimiter,

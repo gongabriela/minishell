@@ -20,9 +20,10 @@
  */
 void	handle_heredoc(t_exec *tree)
 {
+	t_exec	*cmd;
+
 	tree->heredoc->fd = open(tree->heredoc->file_name, O_RDONLY);
-	// Traverse down to the leftmost CMD node
-	t_exec	*cmd = tree->left;
+	cmd = tree->left;
 	while (cmd && cmd->type != CMD)
 		cmd = cmd->left;
 	if (cmd && cmd->stdin == STDIN_FILENO)
@@ -32,7 +33,6 @@ void	handle_heredoc(t_exec *tree)
 		close_opened_fds(tree->left, 2);
 		tree->left->stdout = tree->stdout;
 	}
-
 }
 
 /**
@@ -80,14 +80,7 @@ void	handle_infile(t_exec *tree, char *file)
 	if (!tree->left && fd > 0)
 		close(fd);
 	if (tree->stdin != STDIN_FILENO && tree->left)
-	{
-		tree->left->stdin = tree->stdin;
-		if (tree->in_file == true)
-			tree->left->in_file = true;
-		if (fd > 0)
-			close(fd);
-		// return ; ? e esse if estava antes do fd antes, nao lembro se tem um motivo especifico
-	}
+		handle_infile_redir(tree, fd);
 	else
 	{
 		if (tree->left)
@@ -96,7 +89,6 @@ void	handle_infile(t_exec *tree, char *file)
 			tree->left->stdin = fd;
 			tree->left->in_file = true;
 		}
-
 	}
 	if (tree->stdout != 1 && tree->left)
 	{
@@ -104,7 +96,6 @@ void	handle_infile(t_exec *tree, char *file)
 		tree->left->stdout = tree->stdout;
 		tree->left->out_file = true;
 	}
-
 }
 
 /**
@@ -124,33 +115,16 @@ void	handle_outfile(t_exec *tree, char *file)
 	if (fd == -1)
 		error_msg_redir(tree, errno, file, 1);
 	if (if_exist == 0 && fd > 0)
-		tree->created_out = true; //depois criar funcao para se node for filename, se create_out for true, unlink
+		tree->created_out = true;
 	if (!tree->left && fd > 0)
 		close(fd);
-	if (tree->left && tree->stdout != STDOUT_FILENO)
-	{
-		tree->left->stdout = tree->stdout;
-		if (tree->out_file == true)
-			tree->left->out_file = true;
-		if (fd > 0)
-			close(fd);
-	}
-	else
-	{
-		if (tree->left)
-		{
-			close_opened_fds(tree->left, 1);
-			tree->left->stdout = fd;
-			tree->left->out_file = true;
-		}
-	}
+	handle_outfile_redir(tree, fd);
 	if (tree->stdin != 0 && tree->left)
 	{
 		close_opened_fds(tree->left, 0);
 		tree->left->stdin = tree->stdin;
 		tree->left->in_file = true;
 	}
-
 }
 
 /**
@@ -173,64 +147,4 @@ void	handle_append(t_exec *tree, char *file)
 		tree->left->stdout = fd;
 		tree->left->out_file = true;
 	}
-
-}
-
-void	error_msg_redir(t_exec *tree, int err_code, char *file, int std)
-{
-
-	if (err_code == ENOENT)
-		printf("-bash: %s: No such file or directory\n", file);
-	else if (err_code == EACCES)
-		printf("-bash: %s: Permission denied\n", file);
-	else if (err_code == EISDIR)
-			printf("-bash: %s: Is a directory\n", file);
-	else if (std == 2)
-		printf("-bash: heredoc failed\n");
-	else
-		perror("open failed: Error creating/opening file");
-	if (std == 2)
-	{
-		tree->heredoc->fd = -1;
-		free_heredoc_struct(tree->heredoc);
-	}
-	if (!tree->left)
-		return ;
-	close_opened_fds(tree, std);
-	if (std == 0 || std == 2)
-		tree->left->stdin = -1;
-	if (std == 1)
-		tree->left->stdout = -1;
-
-}
-
-void	close_opened_fds(t_exec *tree, int std)
-{
-	if (!tree)
-		return ;
-	if (tree->type != CMD)
-		return ;
-	if (std == 0 || std == 2)
-	{
-		if (tree->stdin > 0 && tree->in_file == true)
-			close(tree->stdin);
-	}
-	else if (std == 1)
-	{
-		if (tree->stdout > 1 && tree->out_file == true)
-			close(tree->stdout);
-	}
-}
-
-void	close_all_fds(t_exec *tree)
-{
-	if (!tree)
-		return ;
-	if (tree->stdin > 0 && tree->in_file == true)
-		close(tree->stdin);
-	if (tree->stdout > 1 && tree->out_file == true)
-		close(tree->stdout);
-	close_all_fds(tree->left);
-	close_all_fds(tree->right);
-
 }

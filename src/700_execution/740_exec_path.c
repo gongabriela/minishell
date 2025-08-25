@@ -6,12 +6,11 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:01:20 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/14 17:47:05 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:18:59 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 void	error_msg(char *msg, char *cmd, char *arg)
 {
@@ -58,15 +57,7 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
 	path = find_exec_path(split_paths, cmd[0]);
 	ft_free_split(split_paths);
 	if (!path || path[0] == '\0')
-	{
-		if (!path)
-			return (perror("malloc failed"), NULL);
-		else
-		{
-			shell->exit_code = 127;
-			return (error_msg("command not found", cmd[0], NULL), NULL);
-		}
-	}
+		return (error_cmd_path(path, cmd, shell), NULL);
 	return (path);
 }
 
@@ -82,7 +73,7 @@ char	*get_cmd_path(char **cmd, t_shell *shell)
  */
 int	check_for_slash(char *cmd, t_shell *shell)
 {
-	struct	stat st;
+	struct stat	st;
 
 	if (cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
@@ -92,22 +83,13 @@ int	check_for_slash(char *cmd, t_shell *shell)
 			if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
 			{
 				shell->exit_code = 126;
-				return (error_msg("Is a directory", cmd, NULL), 1); //codigo 126
+				return (error_msg("Is a directory", cmd, NULL), 1);
 			}
 			return (0);
 		}
 		else
 		{
-			if (errno == EACCES)
-			{
-				error_msg("Permission denied", cmd, NULL); //codigo 126
-				shell->exit_code = 126;
-			}
-			else if (errno == ENOENT)
-			{
-				error_msg("No such file or directory", cmd, NULL); //codigo 127
-				shell->exit_code = 127;
-			}
+			check_for_slash_error_msg(errno, shell, cmd);
 			return (1);
 		}
 	}

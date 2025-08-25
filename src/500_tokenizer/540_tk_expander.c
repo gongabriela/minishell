@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   540_tk_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 04:13:26 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/21 02:53:49 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:37:27 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,53 +116,3 @@ void	expand_tokens(t_shell *sh)
 	}
 	remove_empty_tokens(sh);
 }
-
-/*
-void	handle_quotes(t_shell *shell)
-{
-	t_token *tokens;
-	char	*content;
-	int	i;
-
-	tokens = shell->tokens;
-	while (tokens)
-	{
-		content = tokens->content; //se os operadores nao tem, precisamos colocar
-		i = 0;
-		while (content[i])
-		{
-			if (content[i] == "/'")
-				handle_single_quotes(shell, &tokens, &content, &i);
-			if (content[i] == "/"")
-				handle_double_quotes(shell, &tokens, &content, &i);
-			if (content[i] == "/$")
-				handle_expansion();
-			i++;
-		}
-	}
-}
-
-void	handle_single_quotes(t_shell *shell, t_tokens **tokens, char **content, int *i)
-{
-	char *CMD;
-	t_token og_token_node;
-
-	og_token_node = *tokens;
-	CMD = NULL;
-	*i++;
-	while (*content[i] != "/'")
-	{
-		i++;
-		if (*content[i] == "\0" || *content[i] == "/'")
-		{
-					cmd = (get_full_token());
-		}
-
-	char *temp = ft_substr(*content, 0, *i);
-	if (!cmd)
-		cmd = temp;
-	else
-		cmd = ft_strjoin(cmd, temp);
-	free(temp);
-}
-*/

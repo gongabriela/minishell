@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   750_exec_utils.c                                   :+:      :+:    :+:   */
+/*   760_exec_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:51:47 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/22 11:16:08 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:30:43 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	get_envp(t_shell *shell)
 {
-	t_env *env;
-	int	i;
+	t_env	*env;
+	int		i;
 
 	i = 0;
 	env = shell->env;
@@ -59,4 +59,10 @@ void	free_envp_array(char **envp)
 	while (envp[i])
 		free(envp[i++]);
 	free(envp);
+}
+
+void	check_invalid_fds(t_exec *tree, t_shell *shell)
+{
+	if (tree->stdin < 0 || tree->stdout < 1)
+		free_exit_child(shell, 1);
 }

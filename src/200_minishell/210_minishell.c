@@ -12,41 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-void	print_ast(t_exec *node, int level)
-{
-    int i;
-
-    if (!node)
-        return;
-    for (i = 0; i < level; i++)
-        printf("  "); // Indentação para visualizar a hierarquia
-    if (node->type == CMD)
-    {
-        printf("CMD: ");
-        for (int j = 0; node->cmd && node->cmd[j]; j++)
-            printf("%s ", node->cmd[j]);
-        printf("\n");
-    }
-    else if (node->type == FILENAME)
-    {
-        printf("FILENAME: %s\n", node->filename);
-    }
-    else if (node->type == DELIMITER)
-    {
-        printf("DELIMITER: %s\n", node->delimiter);
-    }
-    else
-    {
-        printf("OP: %s\n", node->oprt);
-    }
-    printf("stdin: %d\n", node->stdin);
-    printf("stdout: %d\n", node->stdout);
-	printf("is in_file: %d\n", node->in_file);
-	printf("is out_file: %d\n", node->out_file);
-    print_ast(node->left, level + 1);
-    print_ast(node->right, level + 1);
-}
-
 /**
  * @brief Main loop of the minishell program.
  *
@@ -69,7 +34,6 @@ void	minishell(t_shell *shell)
 			if (create_ast(shell, shell->tokens))
 			{
 				pre_execution(shell->tree, shell);
-				print_ast(shell->tree, 0);
 				execution(shell->tree, shell, &pid_index);
 				close_all_fds(shell->tree);
 				close_all_pipes(shell);

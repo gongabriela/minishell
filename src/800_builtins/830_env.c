@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:48:51 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/14 15:32:37 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:39:22 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env(t_shell *shell, char **cmd)
 	{
 		printf("env: '%s': No such file or directory\n", cmd[1]);
 		shell->exit_code = 127;
-		return;
+		return ;
 	}
 	print_env_list(shell->env);
 	shell->exit_code = 0;

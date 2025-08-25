@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 12:02:05 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/20 14:35:06 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:39:06 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,3 @@ void	export(t_shell *shell, char **args)
 		i++;
 	}
 }
-

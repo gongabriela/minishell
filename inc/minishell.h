@@ -316,4 +316,11 @@ void	error_msg_redir(t_exec *tree, int err_code, char *file, int std);
 void	close_opened_fds(t_exec *tree, int std);
 void	close_all_fds(t_exec *tree);
 void	unlink_heredocs(t_exec *tree);
+
+void	check_for_slash_error_msg(int errno_code, t_shell *shell, char *cmd);
+void	error_cmd_path(char *path, char **cmd, t_shell *shell);
+
+void	handle_infile_redir(t_exec *tree, int fd);
+void	handle_outfile_redir(t_exec *tree, int fd);
+
 #endif

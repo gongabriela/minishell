@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   530_tokenizer_utils_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 22:26:23 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/15 15:40:32 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/25 16:37:02 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  */
 t_token	*handle_word(char *input, int *i)
 {
-	int	start;
+	int		start;
 	char	quote_state;
 
 	quote_state = 0;
@@ -32,7 +32,8 @@ t_token	*handle_word(char *input, int *i)
 	while (input[*i])
 	{
 		quote_state = update_quote_state(quote_state, input[*i]);
-		if (!quote_state && (input[*i] == ' ' || input[*i] == '\t' || is_operator(input[*i])))
+		if (!quote_state && (input[*i] == ' ' || input[*i] == '\t'
+				|| is_operator(input[*i])))
 			break ;
 		(*i)++;
 	}
