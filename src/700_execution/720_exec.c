@@ -59,6 +59,9 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 
 	if (shell->cmd_total == 1 && is_builtin(tree->cmd))
 	{
+		if (tree->stdin < 0 || tree->stdout < 1)
+			return ;
+		redir_io(tree, shell);
 		execute_builtin(shell, tree, tree->cmd);
 		return ;
 	}
