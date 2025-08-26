@@ -36,14 +36,15 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 
 	handle_signals_child();
 	check_invalid_fds(tree, shell);
-	path = get_cmd_path(tree->cmd, shell);
-	if (!path)
-		free_exit_child(shell, shell->exit_code);
+	if (!is_builtin(tree->cmd))
+	{
+		path = get_cmd_path(tree->cmd, shell);
+		if (!path)
+			free_exit_child(shell, shell->exit_code);
+	}
 	redir_io(tree, shell);
 	if (is_builtin(tree->cmd))
 	{
-		if (path)
-			free(path);
 		execute_builtin(shell, tree, tree->cmd);
 		free_exit_child(shell, shell->exit_code);
 	}

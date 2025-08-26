@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <stddef.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -296,7 +297,7 @@ void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
 
 void	handle_heredoc(t_exec *tree);
-void	execute_heredocs(t_exec *tree, t_shell *shell);
+int		execute_heredocs(t_exec *tree, t_shell *shell);
 void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 char	*heredoc_alloc_name(t_shell *shell, char *temp, int i);
@@ -322,5 +323,13 @@ void	error_cmd_path(char *path, char **cmd, t_shell *shell);
 
 void	handle_infile_redir(t_exec *tree, int fd);
 void	handle_outfile_redir(t_exec *tree, int fd);
+
+void	hangle_sigint_heredoc(int sig, t_shell *shell);
+
+void	heredoc_signal_setup(t_shell *shell);
+void	heredoc_sigint_handler(int sig);
+t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
+
+void	close_fds_pipes(t_shell *shell);
 
 #endif

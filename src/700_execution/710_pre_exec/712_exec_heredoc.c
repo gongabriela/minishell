@@ -19,17 +19,22 @@
  * @param tree Pointer to the root of the AST.
  * @param shell Pointer to the shell state structure.
  */
-void	execute_heredocs(t_exec *tree, t_shell *shell)
+int	execute_heredocs(t_exec *tree, t_shell *shell)
 {
 	if (!tree)
-		return ;
-	execute_heredocs(tree->left, shell);
-	execute_heredocs(tree->right, shell);
+		return (0);
+	if (execute_heredocs(tree->left, shell) == 1)
+		return (1);
+	if (execute_heredocs(tree->right, shell) == 1)
+		return (1);
 	if (tree->type == HEREDOC)
 	{
 		tree->heredoc = malloc(sizeof(t_hdc));
 		process_heredoc(tree, shell, tree->heredoc);
+		if (shell->exit_code == 130)
+			return (1);
 	}
+	return (0);
 }
 
 /**
@@ -56,5 +61,8 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 	if (pid == 0)
 		heredoc_child_process(tree, shell, heredoc);
 	waitpid(pid, &exit_code, 0);
-	shell->exit_code = exit_code;
+	if (WIFSIGNALED(exit_code))
+		shell->exit_code = 128 + WTERMSIG(exit_code);
+	else if (WIFEXITED(exit_code))
+		shell->exit_code = WEXITSTATUS(exit_code);
 }
