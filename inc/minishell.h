@@ -324,12 +324,13 @@ void	error_cmd_path(char *path, char **cmd, t_shell *shell);
 void	handle_infile_redir(t_exec *tree, int fd);
 void	handle_outfile_redir(t_exec *tree, int fd);
 
-void	hangle_sigint_heredoc(int sig, t_shell *shell);
+void	handle_sigint_heredoc(int sig);
 
 void	heredoc_signal_setup(t_shell *shell);
 void	heredoc_sigint_handler(int sig);
 t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
 
 void	close_fds_pipes(t_shell *shell);
+void	print_newline_sigint(int *flag);
 
 #endif
