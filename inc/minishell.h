@@ -293,7 +293,7 @@ void	handle_infile(t_exec *tree, char *file);
 void	handle_outfile(t_exec *tree, char *file);
 void	handle_append(t_exec *tree, char *file);
 
-void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
+void	execute_redirs(t_shell *shell, t_exec *tree, int **pipe_fds, int *i);
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
 
 void	handle_heredoc(t_exec *tree);
@@ -332,5 +332,9 @@ t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
 
 void	close_fds_pipes(t_shell *shell);
 void	print_newline_sigint(int *flag);
+
+void	set_redir_exit_code(t_shell *shell, int err_code);
+
+int	redir_io_builtin(t_exec *tree, t_shell *shell);
 
 #endif

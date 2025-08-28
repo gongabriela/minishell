@@ -57,13 +57,16 @@ void	exec_cmd_child(t_exec *tree, t_shell *shell)
 void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 {
 	pid_t	pid;
+	int		saved_stdout;
 
 	if (shell->cmd_total == 1 && is_builtin(tree->cmd))
 	{
 		if (tree->stdin < 0 || tree->stdout < 1)
 			return ;
-		redir_io(tree, shell);
+		saved_stdout = redir_io_builtin(tree, shell);
 		execute_builtin(shell, tree, tree->cmd);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
 		return ;
 	}
 	signal(SIGINT, SIG_IGN);
@@ -98,7 +101,7 @@ void	close_unused_pipes(t_exec *tree, t_shell *shell)
 
 void	redir_io(t_exec *tree, t_shell *shell)
 {
-	if (tree->stdin != STDIN_FILENO)
+	if (!is_builtin(tree->cmd) && tree->stdin != STDIN_FILENO)
 	{
 		dup2(tree->stdin, STDIN_FILENO);
 		close(tree->stdin);

@@ -20,7 +20,7 @@
  * @param pipe_fds Array of pipe file descriptors.
  * @param i Pointer to the current pipe index.
  */
-void	execute_redirs(t_exec *tree, int **pipe_fds, int *i)
+void	execute_redirs(t_shell *shell, t_exec *tree, int **pipe_fds, int *i)
 {
 	if (!tree)
 		return ;
@@ -34,6 +34,15 @@ void	execute_redirs(t_exec *tree, int **pipe_fds, int *i)
 		handle_heredoc(tree);
 	else if (tree->type == PIPE)
 		handle_pipe(tree, pipe_fds, i);
-	execute_redirs(tree->left, pipe_fds, i);
-	execute_redirs(tree->right, pipe_fds, i);
+	set_redir_exit_code(shell, errno);
+	execute_redirs(shell, tree->left, pipe_fds, i);
+	execute_redirs(shell, tree->right, pipe_fds, i);
+}
+
+void	set_redir_exit_code(t_shell *shell, int err_code)
+{
+	if (err_code == ENOENT)
+		shell->exit_code = 127;
+	else if (err_code == EACCES || err_code == EISDIR)
+		shell->exit_code = 126;
 }
