@@ -59,6 +59,7 @@ SRC = \
 	./src/800_builtins/850_export.c \
 	./src/800_builtins/851_export_utils.c \
 	./src/800_builtins/852_export_utils_2.c \
+	./src/800_builtins/853_export_utils_3.c \
 	./src/800_builtins/860_pwd.c \
 	./src/800_builtins/870_unset.c \
 	./src/900_signals/910_signals.c \

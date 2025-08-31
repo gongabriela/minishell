@@ -250,6 +250,8 @@ void	print_sorted_env(t_env *sorted);
 void	free_env_list(t_env *lst);
 void	print_export_table(t_shell *shell);
 
+char	*remove_quotes(char *str);
+
 // --------- Builtin: argument parsing/testing ---------------
 int		skip_spaces(const char *s);
 int		skip_quotes(const char *s, char quote);

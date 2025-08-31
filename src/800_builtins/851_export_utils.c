@@ -69,17 +69,6 @@ t_env	*search_var_in_env(t_shell *shell, char *arg)
 	return (NULL);
 }
 
-char *remove_quotes(char *str)
-{
-    int len = ft_strlen(str);
-
-    if (len >= 2 && str[0] == '"' && str[len-1] == '"')
-        return (ft_substr(str, 1, len - 2));
-    if (len >= 2 && str[0] == '\'' && str[len-1] == '\'')
-        return (ft_substr(str, 1, len - 2));
-    return (ft_strdup(str));
-}
-
 /**
  * @brief Updates the value of an existing environment variable.
  *
