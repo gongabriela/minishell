@@ -69,6 +69,17 @@ t_env	*search_var_in_env(t_shell *shell, char *arg)
 	return (NULL);
 }
 
+char *remove_quotes(char *str)
+{
+    int len = ft_strlen(str);
+
+    if (len >= 2 && str[0] == '"' && str[len-1] == '"')
+        return (ft_substr(str, 1, len - 2));
+    if (len >= 2 && str[0] == '\'' && str[len-1] == '\'')
+        return (ft_substr(str, 1, len - 2));
+    return (ft_strdup(str));
+}
+
 /**
  * @brief Updates the value of an existing environment variable.
  *
@@ -78,10 +89,13 @@ t_env	*search_var_in_env(t_shell *shell, char *arg)
  */
 void	update_env_var(t_shell *shell, t_env *var, char *arg)
 {
+	char	*raw_value;
+
 	if (ft_strchr(arg, '='))
 	{
 		free(var->content);
-		var->content = ft_strdup(ft_strchr(arg, '=') + 1);
+		raw_value = ft_strchr(arg, '=') + 1;
+		var->content = remove_quotes(raw_value);
 		var->env = true;
 	}
 	var->export = true;
@@ -129,6 +143,7 @@ void	insert_env_sorted(t_shell *shell, t_env *new)
 void	create_new_env_var(t_shell *shell, char *arg)
 {
 	t_env	*new;
+	char	*raw_value;
 
 	new = malloc(sizeof(t_env));
 	if (!new)
@@ -136,7 +151,8 @@ void	create_new_env_var(t_shell *shell, char *arg)
 	if (ft_strchr(arg, '='))
 	{
 		new->key = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
-		new->content = ft_strdup(ft_strchr(arg, '=') + 1);
+		raw_value = ft_strchr(arg, '=') + 1;
+		new->content = remove_quotes(raw_value);
 		new->env = true;
 	}
 	else

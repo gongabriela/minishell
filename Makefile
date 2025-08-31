@@ -25,14 +25,18 @@ SRC = \
 	./src/300_prompt/320_prompt_utils.c \
 	./src/400_pre_parsing/410_pre_parsing.c \
 	./src/500_tokenizer/510_tokenizer.c \
-	./src/500_tokenizer/520_tokenizer_utils.c \
-	./src/500_tokenizer/530_tokenizer_utils_2.c \
-	./src/500_tokenizer/540_tk_expander.c \
-	./src/500_tokenizer/550_tk_exp_dolar.c \
-	./src/500_tokenizer/560_tk_exp_quotes.c \
-	./src/500_tokenizer/570_tk_exp_tilde.c \
-	./src/500_tokenizer/580_tk_exp_join.c \
-	./src/500_tokenizer/590_tk_exp_utils.c \
+	./src/500_tokenizer/511_tokenizer_utils.c \
+	./src/500_tokenizer/512_tokenizer_utils_2.c \
+	./src/500_tokenizer/520_tk_expander.c \
+	./src/500_tokenizer/521_tk_exp_dolar.c \
+	./src/500_tokenizer/522_tk_exp_quotes.c \
+	./src/500_tokenizer/523_tk_exp_tilde.c \
+	./src/500_tokenizer/524_tk_exp_join.c \
+	./src/500_tokenizer/525_tk_exp_utils.c \
+	./src/500_tokenizer/530_assignment.c \
+	./src/500_tokenizer/531_tk_assignment_utils.c \
+	./src/500_tokenizer/532_tk_assignment_utils_2.c \
+	./src/500_tokenizer/533_tk_assignment_utils_3.c \
 	./src/600_ast/610_create_ast.c \
 	./src/600_ast/620_create_node_ast.c \
 	./src/600_ast/630_ast_utils.c \
@@ -43,6 +47,7 @@ SRC = \
 	./src/700_execution/710_pre_exec/711_pre_exec.c \
 	./src/700_execution/710_pre_exec/712_exec_heredoc.c \
 	./src/700_execution/710_pre_exec/713_exec_heredoc_utils.c \
+	./src/700_execution/710_pre_exec/713_exec_heredoc_utils2.c \
 	./src/700_execution/710_pre_exec/714_create_pipes.c \
 	./src/700_execution/710_pre_exec/715_exec_redirs.c \
 	./src/700_execution/710_pre_exec/716_exec_redirs_utils.c \

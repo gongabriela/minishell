@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 04:13:26 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/21 18:54:37 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/31 16:42:14 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,16 @@ char	*ft_expander(t_shell *sh, char *token)
 	return (ft_join_list_and_free(&parts, '\0'));
 }
 
+/**
+ * @brief Removes empty tokens from the token list.
+ *
+ * Iterates through the token list and removes any CMD type tokens
+ * that have empty content and were originally variables. This cleanup
+ * is necessary after variable expansion when some variables expand to
+ * empty strings.
+ *
+ * @param shell Pointer to the shell struct containing the tokens list.
+ */
 static void	remove_empty_tokens(t_shell *shell)
 {
 	t_token	*curr;
@@ -90,6 +100,40 @@ static void	remove_empty_tokens(t_shell *shell)
 }
 
 /**
+ * @brief Handles the expansion of a single token containing variables.
+ *
+ * Expands variables in the token content and handles word splitting
+ * if the expanded content contains spaces or tabs and was originally
+ * a variable that wasn't quoted.
+ *
+ * @param sh Pointer to the shell struct.
+ * @param curr Pointer to the current token to expand.
+ * @return Pointer to the next token to process.
+ */
+static t_token	*handle_token_expansion(t_shell *sh, t_token *curr)
+{
+	char		*temp;
+	t_token		*next_token;
+	t_token		**new_tokens;
+
+	curr->was_variable = (ft_strchr(curr->content, '$') != NULL);
+	temp = ft_expander(sh, curr->content);
+	if (temp && (ft_strchr(temp, ' ') || ft_strchr(temp, '\t'))
+		&& curr->was_variable && !was_quoted(curr->content))
+	{
+		new_tokens = split_token_content(temp);
+		next_token = curr->next;
+		replace_token_with_multiple(&sh->tokens, curr,
+			get_prev_token(sh->tokens, curr), new_tokens);
+		free(temp);
+		return (next_token);
+	}
+	free(curr->content);
+	curr->content = temp;
+	return (curr->next);
+}
+
+/**
  * @brief Iterates through all tokens and expands variables
  * only in CMD type tokens.
  *
@@ -99,7 +143,6 @@ static void	remove_empty_tokens(t_shell *shell)
  */
 void	expand_tokens(t_shell *sh)
 {
-	char	*temp;
 	t_token	*curr;
 
 	curr = sh->tokens;
@@ -107,10 +150,8 @@ void	expand_tokens(t_shell *sh)
 	{
 		if (curr->type == CMD && curr->content)
 		{
-			curr->was_variable = (ft_strchr(curr->content, '$') != NULL);
-			temp = ft_expander(sh, curr->content);
-			free(curr->content);
-			curr->content = temp;
+			curr = handle_token_expansion(sh, curr);
+			continue ;
 		}
 		curr = curr->next;
 	}

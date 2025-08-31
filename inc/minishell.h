@@ -109,6 +109,8 @@ typedef struct s_hdc
 	int		fd;
 }	t_hdc;
 
+void debug_tokens(t_token *tokens);
+
 // --------- Funções principais -------------------------------
 
 void	check_args(int argc, char **argv, char **envp);
@@ -174,6 +176,23 @@ char	*expand_tilde(t_shell *shell, char *token, int *i);
 void	add_str_to_list(t_list **list, void *content);
 char	*ft_join_list_and_free(t_list **lst, char sep);
 char	*ft_strjoin_free(char *s1, char *s2, int free_flag);
+
+// ------------------- Assigment --------------------
+
+void process_assignments(t_shell *shell);
+
+// utils 1
+t_token	**split_token_content(char *content);
+
+// utils 2
+int		count_words(char *str);
+void	replace_token_with_multiple(t_token **head, t_token *old_token,
+		t_token *prev, t_token **new_tokens);
+
+// utils 3
+bool	was_quoted(char *str);
+int		skip_whitespace(char *content, int i);
+t_token	*get_prev_token(t_token *head, t_token *target);
 
 // --------- Funções de free -----------------------------------
 
@@ -299,7 +318,7 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 char	*heredoc_alloc_name(t_shell *shell, char *temp, int i);
 char	*get_random_name(t_shell *shell);
-void	get_heredoc_input(t_exec *tree, t_hdc *heredoc);
+void	get_heredoc_input(t_exec *tree, t_hdc *heredoc, t_shell *shell);
 void	free_heredoc_struct(t_hdc *heredoc);
 
 //signals

@@ -30,6 +30,7 @@ void	minishell(t_shell *shell)
 		{
 			shell->tokens = tokenize(shell->input);
 			expand_tokens(shell);
+			process_assignments(shell);
 			shell->cmd_total = get_cmd_total(shell->tokens);
 			if (create_ast(shell, shell->tokens))
 			{
