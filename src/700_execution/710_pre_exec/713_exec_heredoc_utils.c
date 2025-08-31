@@ -29,7 +29,7 @@ void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 		perror("open failed");
 		ft_exit(shell, -1);
 	}
-	get_heredoc_input(tree, heredoc);
+	get_heredoc_input(tree, heredoc, shell);
 	close(heredoc->fd);
 	exit(0);
 }
@@ -87,39 +87,6 @@ char	*get_random_name(t_shell *shell)
 	file_name = heredoc_alloc_name(shell, temp, i++);
 	free(pid);
 	return (file_name);
-}
-
-/**
- * @brief Reads user input for a heredoc and writes it to the heredoc file.
- *
- * Continues reading lines until the delimiter is encountered.
- * @param tree Pointer to the AST node containing the delimiter.
- * @param heredoc Pointer to the heredoc structure with the file descriptor.
- */
-void	get_heredoc_input(t_exec *tree, t_hdc *heredoc)
-{
-	char	*input;
-	int	line_number = 1; // You may want to pass this in or increment as needed
-
-	while (1)
-	{
-		input = readline("> ");
-		if (!input)
-		{
-			fprintf(stderr, "bash: warning: here-document at line %d delimited by end-of-file (wanted `%s')\n", line_number, tree->right->delimiter);
-			break;
-		}
-		if (!ft_strncmp(input, tree->right->delimiter,
-				ft_strlen(tree->right->delimiter)))
-		{
-			free(input);
-			break ;
-		}
-		write(heredoc->fd, input, ft_strlen(input));
-		write(heredoc->fd, "\n", 1);
-		free(input);
-		line_number++;
-	}
 }
 
 /**
