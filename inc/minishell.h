@@ -324,11 +324,7 @@ void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 char	*heredoc_alloc_name(t_shell *shell, char *temp, int i);
 char	*get_random_name(t_shell *shell);
-<<<<<<< HEAD
 void	get_heredoc_input(t_exec *tree, t_hdc *heredoc, t_shell *shell);
-=======
-void	get_heredoc_input(t_shell *shell, t_exec *tree, t_hdc *heredoc);
->>>>>>> origin/exec
 void	free_heredoc_struct(t_hdc *heredoc);
 
 //signals

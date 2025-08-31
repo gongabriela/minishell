@@ -29,11 +29,7 @@ void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 		perror("open failed");
 		ft_exit(shell, -1);
 	}
-<<<<<<< HEAD
 	get_heredoc_input(tree, heredoc, shell);
-=======
-	get_heredoc_input(shell, tree, heredoc);
->>>>>>> origin/exec
 	close(heredoc->fd);
 	free_exit_child(shell, 0);
 }
@@ -99,7 +95,7 @@ char	*get_random_name(t_shell *shell)
  * Unlinks and frees the heredoc filename, then frees the structure itself.
  * @param heredoc Pointer to the heredoc structure to free.
  */
-void	free_heredoc_struct(t_hdc *heredoc)
+/* void	free_heredoc_struct(t_hdc *heredoc)
 {
 	if (heredoc->file_name)
 	{
@@ -107,4 +103,4 @@ void	free_heredoc_struct(t_hdc *heredoc)
 		free(heredoc->file_name);
 	}
 	free(heredoc);
-}
+} */

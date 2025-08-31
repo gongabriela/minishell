@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   713_exec_heredoc_utils2.c                          :+:      :+:    :+:   */
+/*   714_exec_heredoc_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 05:45:55 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/31 06:07:39 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/31 19:09:44 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static bool	delimiter_is_quoted(char *delimiter)
 void	get_heredoc_input(t_exec *tree, t_hdc *heredoc, t_shell *shell)
 {
 	char	*input;
-	int		line_number; // You may want to pass this in or increment as needed
+	int		line_number;
 	bool	should_expand;
 
 	line_number = 1;

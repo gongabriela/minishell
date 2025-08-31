@@ -50,12 +50,12 @@ SRC = \
 	./src/700_execution/710_pre_exec/711_pre_exec.c \
 	./src/700_execution/710_pre_exec/712_exec_heredoc.c \
 	./src/700_execution/710_pre_exec/713_exec_heredoc_utils.c \
-	./src/700_execution/710_pre_exec/713_exec_heredoc_utils2.c \
-	./src/700_execution/710_pre_exec/714_exec_heredoc_signals.c \
-	./src/700_execution/710_pre_exec/715_create_pipes.c \
-	./src/700_execution/710_pre_exec/716_exec_redirs.c \
-	./src/700_execution/710_pre_exec/717_exec_redirs_utils.c \
-	./src/700_execution/710_pre_exec/718_exec_redirs_utils_2.c \
+	./src/700_execution/710_pre_exec/714_exec_heredoc_utils_2.c \
+	./src/700_execution/710_pre_exec/715_exec_heredoc_signals.c \
+	./src/700_execution/710_pre_exec/716_create_pipes.c \
+	./src/700_execution/710_pre_exec/717_exec_redirs.c \
+	./src/700_execution/710_pre_exec/718_exec_redirs_utils.c \
+	./src/700_execution/710_pre_exec/719_exec_redirs_utils_2.c \
 	./src/800_builtins/810_cd.c \
 	./src/800_builtins/811_cd_utils.c \
 	./src/800_builtins/820_echo.c \

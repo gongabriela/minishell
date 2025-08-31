@@ -6,7 +6,7 @@
 /*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 05:23:40 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/31 14:16:59 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/08/31 19:07:04 by adias-do         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ t_env	*search_any_var_in_env(t_shell *shell, char *key)
 	return (NULL);
 }
 
+/**
+ * @brief Creates a new environment variable for variable assignments.
+ *
+ * Allocates and initializes a new environment variable node with the
+ * specified key and value. The variable is marked as env=true but
+ * export=false, meaning it's available for expansion but not exported
+ * to child processes unless explicitly exported later.
+ *
+ * @param shell Pointer to the shell struct.
+ * @param key Variable name.
+ * @param value Variable value.
+ */
 void	create_assignment_var(t_shell *shell, char *key, char *value)
 {
 	t_env	*new_var;
@@ -41,6 +53,16 @@ void	create_assignment_var(t_shell *shell, char *key, char *value)
 	shell->env = new_var;
 }
 
+/**
+ * @brief Processes a variable assignment string and updates the environment.
+ *
+ * Parses an assignment string (key=value), expands variables in the value,
+ * and either updates an existing variable or creates a new one. Handles
+ * proper memory management for all temporary strings created during processing.
+ *
+ * @param shell Pointer to the shell struct.
+ * @param assignment_str String containing the assignment (format: key=value).
+ */
 void	handle_assignment(t_shell *shell, char *assignment_str)
 {
 	char	*key;
@@ -81,6 +103,16 @@ static void	remove_assignment_token(t_shell *shell, t_token *curr,
 	free(curr);
 }
 
+/**
+ * @brief Processes all variable assignment tokens in the token list.
+ *
+ * Iterates through the token list and processes assignment tokens that
+ * appear before any command. Assignments after commands are treated as
+ * arguments. Properly handles the context around pipes and redirections
+ * to reset the "after_command" state.
+ *
+ * @param shell Pointer to the shell struct containing the token list.
+ */
 void	process_assignments(t_shell *shell)
 {
 	t_token	*curr;
