@@ -53,8 +53,6 @@ void	ft_free_shell(t_shell *shell)
 		ft_free_ast(shell->tree);
 	if (shell->pids != NULL)
 		free(shell->pids);
-	/*if (shell->envp != NULL)
-		free_envp_array(shell->envp);*/
 	init_structs(shell);
 }
 
@@ -70,6 +68,7 @@ void	ft_free_shell(t_shell *shell)
  */
 void	ft_exit(t_shell *shell, int exit_code)
 {
+	unlink_heredocs(shell->tree);
 	ft_free_shell(shell);
 	if (shell->pwd != NULL)
 		free(shell->pwd);
@@ -90,4 +89,19 @@ void	free_struct_tokens(t_token *tokens)
 		free(tokens);
 		tokens = tmp;
 	}
+}
+
+/**
+ * @brief Frees the heredoc structure and deletes the associated temporary file.
+ *
+ * Unlinks and frees the heredoc filename, then frees the structure itself.
+ * @param heredoc Pointer to the heredoc structure to free.
+ */
+void	free_heredoc_struct(t_hdc *heredoc)
+{
+	if (heredoc->file_name)
+		free(heredoc->file_name);
+	if (heredoc->fd != -1)
+		close(heredoc->fd);
+	free(heredoc);
 }

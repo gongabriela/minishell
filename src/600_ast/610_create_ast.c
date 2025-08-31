@@ -58,6 +58,8 @@ void	add_node_ast(t_exec *node, t_exec **root)
 			(*root)->left = node;
 		else if (!(*root)->right)
 			(*root)->right = node;
+		else
+			ft_free_node(node);
 	}
 	else if (node->type == FILENAME || node->type == DELIMITER)
 		(*root)->right = node;

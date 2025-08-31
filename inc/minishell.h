@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <stddef.h>
 
 //estrutura principal--------------------------------------------
 typedef struct s_shell
@@ -99,7 +100,10 @@ typedef struct s_exec
 	struct s_exec		*left;
 	struct s_exec		*right;
 	int					stdin;
+	bool				in_file;
 	int					stdout;
+	bool				out_file;
+	bool				created_out;
 	struct s_hdc		*heredoc;
 }	t_exec;
 
@@ -315,12 +319,16 @@ void	execute_redirs(t_exec *tree, int **pipe_fds, int *i);
 void	handle_pipe(t_exec *tree, int **pipe_fds, int *i);
 
 void	handle_heredoc(t_exec *tree);
-void	execute_heredocs(t_exec *tree, t_shell *shell);
+int		execute_heredocs(t_exec *tree, t_shell *shell);
 void	process_heredoc(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc);
 char	*heredoc_alloc_name(t_shell *shell, char *temp, int i);
 char	*get_random_name(t_shell *shell);
+<<<<<<< HEAD
 void	get_heredoc_input(t_exec *tree, t_hdc *heredoc, t_shell *shell);
+=======
+void	get_heredoc_input(t_shell *shell, t_exec *tree, t_hdc *heredoc);
+>>>>>>> origin/exec
 void	free_heredoc_struct(t_hdc *heredoc);
 
 //signals
@@ -330,5 +338,24 @@ void	handle_signals_child(void);
 void	handle_signals_shell(void);
 
 void	free_exit_child(t_shell *shell, int exit_code);
+
+void	error_msg_redir(t_exec *tree, int err_code, char *file, int std);
+void	close_opened_fds(t_exec *tree, int std);
+void	close_all_fds(t_exec *tree);
+void	unlink_heredocs(t_exec *tree);
+
+void	check_for_slash_error_msg(int errno_code, t_shell *shell, char *cmd);
+void	error_cmd_path(char *path, char **cmd, t_shell *shell);
+
+void	handle_infile_redir(t_exec *tree, int fd);
+void	handle_outfile_redir(t_exec *tree, int fd);
+
+void	hangle_sigint_heredoc(int sig, t_shell *shell);
+
+void	heredoc_signal_setup(t_shell *shell);
+void	heredoc_sigint_handler(int sig);
+t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
+
+void	close_fds_pipes(t_shell *shell);
 
 #endif

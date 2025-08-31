@@ -72,7 +72,11 @@ void	ft_free_ast(t_exec *tree)
 		free(tree->delimiter);
 	if (tree->filename)
 		free(tree->filename);
-	if (tree->heredoc)
+	if (tree->type == HEREDOC && tree->heredoc)
 		free_heredoc_struct(tree->heredoc);
+	if (tree->stdin > 0)
+		close(tree->stdin);
+	if (tree->stdout > 1)
+		close(tree->stdout);
 	free(tree);
 }

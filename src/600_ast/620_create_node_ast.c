@@ -69,6 +69,9 @@ void	init_node(t_exec *node, t_token **tokens)
 	node->stdout = STDOUT_FILENO;
 	node->type = (*tokens)->type;
 	node->heredoc = NULL;
+	node->in_file = false;
+	node->out_file = false;
+	node->created_out = false;
 	if (node->type == FILENAME)
 		node->filename = ft_strdup((*tokens)->content);
 	else if (node->type == DELIMITER)

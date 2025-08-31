@@ -22,16 +22,20 @@
  */
 void	heredoc_child_process(t_exec *tree, t_shell *shell, t_hdc *heredoc)
 {
-	handle_signals_child();
+	heredoc_signal_setup(shell);
 	heredoc->fd = open(heredoc->file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (heredoc->fd < 0)
 	{
 		perror("open failed");
 		ft_exit(shell, -1);
 	}
+<<<<<<< HEAD
 	get_heredoc_input(tree, heredoc, shell);
+=======
+	get_heredoc_input(shell, tree, heredoc);
+>>>>>>> origin/exec
 	close(heredoc->fd);
-	exit(0);
+	free_exit_child(shell, 0);
 }
 
 /**
