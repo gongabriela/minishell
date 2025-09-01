@@ -49,6 +49,21 @@ void	init_structs(t_shell *shell)
 	shell->envp = NULL;
 }
 
+void	increment_shlvl(t_shell *shell)
+{
+	t_env	*shlvl;
+	int		value;
+
+	shlvl = NULL;
+	shlvl = search_var_in_env(shell, "SHLVL");
+	if (!shlvl)
+		return ;
+	value = ft_atoi(shlvl->content);
+	value++;
+	free(shlvl->content);
+	shlvl->content = ft_itoa(value);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
@@ -60,6 +75,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.pwd = NULL;
 	get_env(&shell, envp);
 	shell.envp = envp;
+	increment_shlvl(&shell);
 	minishell(&shell);
 	return (0);
 }
