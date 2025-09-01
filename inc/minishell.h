@@ -113,7 +113,7 @@ typedef struct s_hdc
 	int		fd;
 }	t_hdc;
 
-void debug_tokens(t_token *tokens);
+void	debug_tokens(t_token *tokens);
 
 // --------- Funções principais -------------------------------
 
@@ -183,7 +183,7 @@ char	*ft_strjoin_free(char *s1, char *s2, int free_flag);
 
 // ------------------- Assigment --------------------
 
-void process_assignments(t_shell *shell);
+void	process_assignments(t_shell *shell);
 
 // utils 1
 t_token	**split_token_content(char *content);
@@ -191,7 +191,7 @@ t_token	**split_token_content(char *content);
 // utils 2
 int		count_words(char *str);
 void	replace_token_with_multiple(t_token **head, t_token *old_token,
-		t_token *prev, t_token **new_tokens);
+			t_token *prev, t_token **new_tokens);
 
 // utils 3
 bool	was_quoted(char *str);
@@ -355,9 +355,12 @@ t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
 void	close_fds_pipes(t_shell *shell);
 void	print_newline_sigint(int *flag);
 
-
 void	set_redir_exit_code(t_shell *shell, int err_code);
 
-int	redir_io_builtin(t_exec *tree, t_shell *shell);
+int		redir_io_builtin(t_exec *tree, t_shell *shell);
+
+void	reset_stdout_builtin(int saved_stdout);
+
+void	minishell_the_second(t_shell *shell, int **pid_index);
 
 #endif

@@ -35,17 +35,20 @@ void	minishell(t_shell *shell)
 			if (create_ast(shell, shell->tokens))
 			{
 				if (!execute_heredocs(shell->tree, shell))
-				{
-					pre_execution(shell->tree, shell);
-					execution(shell->tree, shell, &pid_index);
-					close_fds_pipes(shell);
-					wait_pids(shell);
-				}
+					minishell_the_second(shell, &pid_index);
 			}
 		}
 		unlink_heredocs(shell->tree);
 		ft_free_shell(shell);
 	}
+}
+
+void	minishell_the_second(t_shell *shell, int **pid_index)
+{
+	pre_execution(shell->tree, shell);
+	execution(shell->tree, shell, &pid_index);
+	close_fds_pipes(shell);
+	wait_pids(shell);
 }
 
 /**
@@ -69,26 +72,6 @@ int	get_input(t_shell *shell)
 	if (shell->input[0] != '\0' && pre_parsing(shell->input))
 		return (1);
 	return (0);
-}
-
-/**
- * @brief Counts the total number of commands separated by pipes.
- *
- * @param head Pointer to the head of the token list.
- * @return The total number of commands.
- */
-int	get_cmd_total(t_token *head)
-{
-	int	cmds;
-
-	cmds = 0;
-	while (head)
-	{
-		if (head->type == PIPE)
-			cmds++;
-		head = head->next;
-	}
-	return (cmds + 1);
 }
 
 /**
@@ -124,7 +107,7 @@ void	wait_pids(t_shell *shell)
 {
 	int		status;
 	int		i;
-	int	newline_flag;
+	int		newline_flag;
 
 	newline_flag = 0;
 	i = 0;

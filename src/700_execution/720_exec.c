@@ -65,11 +65,7 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 			return ;
 		saved_stdout = redir_io_builtin(tree, shell);
 		execute_builtin(shell, tree, tree->cmd);
-		if (saved_stdout > 0)
-		{
-			dup2(saved_stdout, STDOUT_FILENO);
-			close(saved_stdout);
-		}
+		reset_stdout_builtin(saved_stdout);
 		return ;
 	}
 	signal(SIGINT, SIG_IGN);

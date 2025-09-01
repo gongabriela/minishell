@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   714_exec_heredoc_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adias-do <adias-do@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 05:45:55 by adias-do          #+#    #+#             */
-/*   Updated: 2025/08/31 19:09:44 by adias-do         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:01:39 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	get_heredoc_input(t_exec *tree, t_hdc *heredoc, t_shell *shell)
 			break ;
 		}
 		if (!ft_strncmp(input, tree->right->delimiter,
-				ft_strlen(tree->right->delimiter)))
+				ft_strlen(tree->right->delimiter))
+			&& ft_strlen(input) == ft_strlen(tree->right->delimiter))
 		{
 			free(input);
 			break ;

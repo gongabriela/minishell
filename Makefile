@@ -47,6 +47,7 @@ SRC = \
 	./src/700_execution/740_exec_path.c \
 	./src/700_execution/750_exec_path_utils.c \
 	./src/700_execution/760_exec_utils.c \
+	./src/700_execution/770_exec_utils_2.c \
 	./src/700_execution/710_pre_exec/711_pre_exec.c \
 	./src/700_execution/710_pre_exec/712_exec_heredoc.c \
 	./src/700_execution/710_pre_exec/713_exec_heredoc_utils.c \
