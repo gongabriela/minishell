@@ -124,7 +124,9 @@ void	wait_pids(t_shell *shell)
 {
 	int		status;
 	int		i;
+	int	newline_flag;
 
+	newline_flag = 0;
 	i = 0;
 	status = 0;
 	if (!shell->pids)
@@ -133,6 +135,9 @@ void	wait_pids(t_shell *shell)
 	{
 		if (shell->pids[i] > 0)
 			waitpid(shell->pids[i], &status, 0);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT
+			&& newline_flag == 0)
+			print_newline_sigint(&newline_flag);
 		if (i == shell->cmd_total - 1)
 		{
 			if (WIFEXITED(status))

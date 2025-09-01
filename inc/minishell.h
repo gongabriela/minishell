@@ -353,6 +353,10 @@ void	heredoc_sigint_handler(int sig);
 t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
 
 void	close_fds_pipes(t_shell *shell);
+void	print_newline_sigint(int *flag);
+
+
+void	set_redir_exit_code(t_shell *shell, int err_code);
 
 int	redir_io_builtin(t_exec *tree, t_shell *shell);
 

@@ -72,6 +72,7 @@ void	exec_cmd(t_exec *tree, t_shell *shell, int index)
 		}
 		return ;
 	}
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{

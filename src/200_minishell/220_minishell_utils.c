@@ -17,3 +17,9 @@ void	close_fds_pipes(t_shell *shell)
 	close_all_fds(shell->tree);
 	close_all_pipes(shell);
 }
+
+void	print_newline_sigint(int *flag)
+{
+	write(1, "\n", 1);
+	*flag = 1;
+}
