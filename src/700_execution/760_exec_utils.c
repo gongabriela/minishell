@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:51:47 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/09/01 17:00:38 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:16:14 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,9 @@ int	redir_io_builtin(t_exec *tree, t_shell *shell)
 {
 	int	saved_stdout;
 
-	if (tree->stdout > 1)
-		saved_stdout = dup(STDOUT_FILENO);
-	if (tree->stdout != STDOUT_FILENO)
+	if (tree->stdout > STDOUT_FILENO)
 	{
+		saved_stdout = dup(STDOUT_FILENO);
 		dup2(tree->stdout, STDOUT_FILENO);
 		close(tree->stdout);
 	}

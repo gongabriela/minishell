@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 17:00:24 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/09/01 17:05:11 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:17:48 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	reset_stdout_builtin(int saved_stdout)
 {
-	if (stdout > 0)
+	if (saved_stdout > 0)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
