@@ -361,6 +361,6 @@ int		redir_io_builtin(t_exec *tree, t_shell *shell);
 
 void	reset_stdout_builtin(int saved_stdout);
 
-void	minishell_the_second(t_shell *shell, int **pid_index);
+void	minishell_the_second(t_shell *shell, int *pid_index);
 
 #endif

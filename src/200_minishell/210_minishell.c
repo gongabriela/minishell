@@ -43,10 +43,10 @@ void	minishell(t_shell *shell)
 	}
 }
 
-void	minishell_the_second(t_shell *shell, int **pid_index)
+void	minishell_the_second(t_shell *shell, int *pid_index)
 {
 	pre_execution(shell->tree, shell);
-	execution(shell->tree, shell, &pid_index);
+	execution(shell->tree, shell, pid_index);
 	close_fds_pipes(shell);
 	wait_pids(shell);
 }
