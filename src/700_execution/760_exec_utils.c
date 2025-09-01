@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:51:47 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/09/01 17:16:14 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:59:32 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	get_envp(t_shell *shell)
 	env = shell->env;
 	while (env)
 	{
-		i++;
+		if (env->env == true)
+			i++;
 		env = env->next;
 	}
 	shell->envp = malloc(sizeof(char *) * (i + 1));
@@ -42,11 +43,14 @@ void	copy_envp_values(char **envp, t_env *env)
 	i = 0;
 	while (env)
 	{
-		temp = ft_strjoin(env->key, "=");
-		envp[i] = ft_strjoin(temp, env->content);
-		free(temp);
-		env = env->next;
-		i++;
+		if (env->env == true)
+		{
+			temp = ft_strjoin(env->key, "=");
+			envp[i] = ft_strjoin(temp, env->content);
+			free(temp);
+			env = env->next;
+			i++;
+		}
 	}
 	envp[i] = NULL;
 }

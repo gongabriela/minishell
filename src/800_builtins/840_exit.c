@@ -21,9 +21,12 @@
  */
 void	ft_exit_builtin(t_shell *shell, char **args)
 {
-	if (check_exit_args(shell, args))
+	bool	is_non_numeric;
+
+	is_non_numeric = false;
+	if (check_exit_args(shell, args, &is_non_numeric))
 		return ;
-	get_exit_code(shell, args);
+	get_exit_code(shell, args, is_non_numeric);
 	ft_exit(shell, shell->exit_code);
 }
 
@@ -34,7 +37,7 @@ void	ft_exit_builtin(t_shell *shell, char **args)
  * @param shell Pointer to the shell state structure.
  * @param args  Arguments passed to the exit command.
  */
-int	check_exit_args(t_shell *shell, char **args)
+int	check_exit_args(t_shell *shell, char **args, bool *is_non_numeric)
 {
 	int	i;
 
@@ -47,14 +50,15 @@ int	check_exit_args(t_shell *shell, char **args)
 		return (1);
 	}
 	i = 0;
-	if (args[1][0] == '-')
+	if (args[1][0] == '-' || args[1][0] == '+')
 		i++;
 	while (args[1][i])
 	{
 		if (!ft_isdigit(args[1][i]))
 		{
 			error_msg("numeric argument required", args[0], args[1]);
-			shell->exit_code = 255;
+			shell->exit_code = 2;
+			*is_non_numeric = true;
 			return (0);
 		}
 		i++;
@@ -68,22 +72,15 @@ int	check_exit_args(t_shell *shell, char **args)
  * @param shell Pointer to the shell state structure.
  * @param args  Arguments passed to the exit command.
  */
-void	get_exit_code(t_shell *shell, char **args)
+void	get_exit_code(t_shell *shell, char **args, bool is_non_numeric)
 {
-	int	i;
-
-	i = 0;
+	if (is_non_numeric == true)
+		return ;
 	if (!args[1])
 	{
 		shell->exit_code = 0;
 		return ;
 	}
-	while (args[1][i])
-		i++;
-	if (i > 3)
-		shell->exit_code = ft_atoi(args[1]) % 256;
-	else
-		shell->exit_code = ft_atoi(args[1]);
-	if (shell->exit_code < 0)
-		shell->exit_code = ((shell->exit_code % 256) + 256) % 256;
+	shell->exit_code = ft_atoi(args[1]);
+	shell->exit_code = ((shell->exit_code % 256) + 256) % 256;
 }

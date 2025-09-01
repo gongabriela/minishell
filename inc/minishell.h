@@ -225,8 +225,8 @@ void	print_env_list(t_env *env);
 
 // --------- Builtin: exit ----------------------------------
 void	ft_exit_builtin(t_shell *shell, char **args);
-int		check_exit_args(t_shell *shell, char **args);
-void	get_exit_code(t_shell *shell, char **args);
+int		check_exit_args(t_shell *shell, char **args, bool *is_non_numeric);
+void	get_exit_code(t_shell *shell, char **args, bool is_non_numeric);
 
 // --------- Builtin: cd ------------------------------------
 char	*get_env_value_cd(t_env *env, const char *key);

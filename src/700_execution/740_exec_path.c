@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 15:01:20 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/09/01 17:36:45 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:47:57 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ int	check_for_slash(char *cmd, t_shell *shell)
 	struct stat	st;
 
 	if (cmd[0] == '\0')
-	{
-		printf("bash: '': command not found\n");
-		return (1);
-	}
+		return (printf("bash: '': command not found\n"), 1);
 	if (cmd[0] == '/' || ft_strncmp(cmd, "./", 2) == 0
 		|| ft_strncmp(cmd, "../", 3) == 0)
 	{
