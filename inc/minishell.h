@@ -354,4 +354,6 @@ t_shell	*heredoc_shell_singleton(t_shell *shell, int set);
 
 void	close_fds_pipes(t_shell *shell);
 
+int	redir_io_builtin(t_exec *tree, t_shell *shell);
+
 #endif

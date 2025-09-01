@@ -6,7 +6,7 @@
 /*   By: ggoncalv <ggoncalv@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:51:47 by ggoncalv          #+#    #+#             */
-/*   Updated: 2025/08/25 16:30:43 by ggoncalv         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:42:35 by ggoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,22 @@ void	check_invalid_fds(t_exec *tree, t_shell *shell)
 {
 	if (tree->stdin < 0 || tree->stdout < 1)
 		free_exit_child(shell, 1);
+}
+
+int	redir_io_builtin(t_exec *tree, t_shell *shell)
+{
+	int	saved_stdout;
+
+	if (tree->stdout > 1)
+		saved_stdout = dup(STDOUT_FILENO);
+	if (tree->stdout != STDOUT_FILENO)
+	{
+		dup2(tree->stdout, STDOUT_FILENO);
+		close(tree->stdout);
+	}
+	else
+		saved_stdout = -1;
+	if (shell->pipe_fds)
+		close_unused_pipes(tree, shell);
+	return (saved_stdout);
 }
