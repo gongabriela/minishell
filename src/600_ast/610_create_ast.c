@@ -33,7 +33,7 @@ int	create_ast(t_shell *shell, t_token *tokens)
 	{
 		node = create_node_ast(&tokens, shell);
 		if (!node)
-			return (0);
+			return (ft_free_ast(root), 0);
 		if (!root)
 			root = node;
 		else

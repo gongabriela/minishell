@@ -69,7 +69,7 @@ int	get_input(t_shell *shell)
 	if (!shell->input)
 		ft_exit(shell, 0);
 	add_history(shell->input);
-	if (shell->input[0] != '\0' && pre_parsing(shell->input))
+	if (shell->input[0] != '\0' && pre_parsing(shell, shell->input))
 		return (1);
 	return (0);
 }

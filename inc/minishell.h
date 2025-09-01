@@ -135,7 +135,7 @@ char	*get_cwd(t_env *env, char *pwd);
 char	*get_full_prompt(char *logname, char *name, char *cwd);
 char	*get_hostname(void);
 char	*get_hostname_line(int fd);
-int		pre_parsing(char *input);
+int		pre_parsing(t_shell *shell, char *input);
 int		get_input(t_shell *shell);
 
 // --------------- Main tokenizer ------------------------

@@ -23,7 +23,7 @@
  * If any quote is unclosed, it prints a syntax error message and returns 0.
  * Returns 1 if the input is valid (all quotes are closed), or 0 otherwise.
  */
-int	pre_parsing(char *input)
+int	pre_parsing(t_shell *shell, char *input)
 {
 	int		i;
 	int		single_quote;
@@ -43,6 +43,9 @@ int	pre_parsing(char *input)
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 		return (printf("syntax error: unclosed quotes\n"), 0);
 	if (input[0] == '|')
+	{
+		shell->exit_code = 2;
 		return (printf("-bash: syntax error near unexpected token `|'\n"), 0);
+	}
 	return (1);
 }
